@@ -88,5 +88,5 @@ Now you can run npm run dev in the terminal and the Client Side should start wor
 
 ## Copyright
 
-Copyright 2023 © [AswanthKrishna](https://github.com/aswanthkris)
+Copyright 2023 © [Mohammed Afzal](https://github.com/afzal123afzal)
 
