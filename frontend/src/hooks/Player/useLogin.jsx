@@ -16,10 +16,11 @@ export const useLogin = () => {
 
         try {
             const result = await axiosPlayersInstance.post("/login", { email, password })
-            console.log(result);
+            console.log("Result",result);
 
             if (result.status === 200) {
                 console.log("success");
+                console.log("localstorage",JSON.stringify(result));
                 //save the user to local storage
                 localStorage.setItem('player', JSON.stringify(result))
 

@@ -14,20 +14,20 @@ const PlayerNavbar = () => {
   return (
     <header>
       <div className="container">
-        <Link to="/user/home">
-          <h1>Players Connect</h1>
+        <Link to="/player/home">
+          <h1>Soccer Circle</h1>
         </Link>
         <nav>
           {player && (
             <div>
-              <span>{player.data.email}</span>
+              <span>{player.data.name}</span>
               <button onClick={handleClick}>Log out</button>
             </div>
           )}
           {!player && (
             <div>
-              <Link to="/user/login">Login</Link>
-              <Link to="/user/signup">Signup</Link>
+              <Link to="/player/login">Login</Link>
+              <Link to="/player/signup">Signup</Link>
             </div>
           )}
         </nav>

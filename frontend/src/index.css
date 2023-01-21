@@ -12,7 +12,9 @@ body {
   background: #f1f1f1;
   margin: 0;
   font-family: "Poppins";
+    /* font-family: Roboto, Helvetica, Arial, sans-serif; */
 }
+
 header {
   background: #fff;
   /* width: 1500px; */
@@ -22,6 +24,7 @@ header {
 header .container {
   background-color: #fff;
   max-width: 1400px;
+  /* width:100%; */
   margin: 0 auto;
   padding: 10px 20px;
   display: flex;
@@ -33,11 +36,12 @@ header a {
   text-decoration: none;
 }
 .pages{
-  max-width: 1400px;
-  padding: 20px;
+  /* max-width: 1400px; */
+  width: 100%;
+  /* padding: 20px; */
   margin: 0 auto;
-}
+} 
 
 /* @tailwind base; */
-/* @tailwind components;
-@tailwind utilities; */
+@tailwind components;
+@tailwind utilities;

@@ -26,7 +26,7 @@ function ClubRoutes() {
             />
             <Route
               path="/club/signup"
-              element={!club ? <ClubSignup /> : <Navigate to="/club/home"/>}
+              element={!club ? <ClubSignup /> : <Navigate to="/club/home" />}
             />
           </Routes>
         </div>

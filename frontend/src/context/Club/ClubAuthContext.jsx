@@ -1,4 +1,4 @@
-import { createContext, useReducer ,useEffect} from 'react'
+import { createContext, useReducer, useEffect } from 'react'
 
 export const ClubAuthContext = createContext()
 
@@ -18,12 +18,12 @@ export const ClubAuthContextProvider = ({ children }) => {
     club: null
   })
 
-  useEffect(()=>{
+  useEffect(() => {
     const club = JSON.parse(localStorage.getItem('club'))
-    if(club){
-      dispatch({type:'CLUBLOGIN',payload:club})
+    if (club) {
+      dispatch({ type: 'CLUBLOGIN', payload: club })
     }
-  },[])
+  }, [])
 
   console.log('ClubAuthContext state:', state)
 

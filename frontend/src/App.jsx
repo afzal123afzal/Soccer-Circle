@@ -22,13 +22,13 @@ function App() {
       </Fragment>
 
 
-      <Fragment>
+       <Fragment>
         <ClubAuthContextProvider>
           <ClubsContextProvider>
             <ClubRoutes />
           </ClubsContextProvider>
         </ClubAuthContextProvider>
-      </Fragment>
+      </Fragment> 
 
 
 
