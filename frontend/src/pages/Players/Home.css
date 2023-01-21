@@ -1,0 +1,67 @@
+.container {
+    width: 100%;
+}
+
+.carousel {
+    width: 100%;
+    /* background-color: blue; */
+    background: linear-gradient(rgb(5, 177, 188));
+    display: flex;
+    height: 10rem;
+    justify-content: center;
+    align-items: center;
+    font-weight: bolder;
+    font-size: 43px;
+    color: #fff;
+}
+
+#grad1 {
+    height: 200px;
+    background-color: blue;
+    /* For browsers that do not support gradients */
+    background-image: linear-gradient(rgb(5, 177, 188), rgb(165, 212, 231));
+}
+
+///////////banner/////
+.object-fit-fill {
+    object-fit: fill;
+  }
+  
+  .object-fit-contain {
+    object-fit: contain;
+  }
+  
+  .object-fit-cover {
+    object-fit: cover;
+  }
+  
+  .object-fit-none {
+    object-fit: none;
+  }
+  
+  .object-fit-scale-down {
+    object-fit: scale-down;
+  }
+
+  .ml-96 {
+    margin-left: 31rem/* 384px */;
+}
+
+
+
+@media (max-width: 640px) {
+    .players {
+        margin: center;
+        justify-content: center;
+    }
+    .ml-96 {
+        margin-left: 9rem/* 384px */;
+    }
+}
+
+@media (max-width: 768px) {
+    
+    .ml-96 {
+        margin-left: 9rem/* 384px */;
+    }
+}

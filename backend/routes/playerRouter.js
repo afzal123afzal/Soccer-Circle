@@ -7,7 +7,8 @@ const { signUp,
     getPlayer,
     login,
     getClubs,
-    getClub
+    getClub,
+    payment
 } = require('../Controller/playerController')
 const requireAuth = require('../middleware/requireAuth')
 
@@ -20,22 +21,30 @@ router.post('/signup', signUp)
 router.post('/login', login)
 
 // require auth for all workout routes
-router.use(requireAuth)
+// router.use(requireAuth)
 
 ///Get all club
 router.get('/clubs', getClubs)
 
 ///Get a club
-router.get('/club/:id', getClub)
+// router.get('/club/:id', getClub)
+router.post('/club',getClub)
 
 ///////// add more details
 router.patch('/add-details/:id', addDetails)
+// router.patch('/add-details', addDetails)
+
 
 /////Get All Players
 router.get('/', getPlayers)
 
 ///////// Get a specific player
-router.get('/:id', getPlayer)
+router.post('/player', getPlayer)
+// router.get('/player/:id', getPlayer)
+
+
+///////////// Stripe payment
+router.post('/create-checkout-session',payment)
 
 
 

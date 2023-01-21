@@ -1,8 +1,0 @@
-.players{
-    max-width: 950px;
-    margin: 40px auto;
-    padding: 20px;
-    border-radius: 4px;
-    display: flex;
-    flex-wrap: wrap;
-}

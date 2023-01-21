@@ -16,7 +16,6 @@ export const useSignup = () => {
 
         try {
             const result = await axiosPlayersInstance.post("/signup", { name, email, mobile, password })
-            console.log(result);
 
             if (result.status === 200) {
                 console.log("success");

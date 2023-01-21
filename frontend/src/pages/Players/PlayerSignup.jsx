@@ -2,6 +2,7 @@ import { useState } from "react"
 import { useSignup } from "../../hooks/Player/useSignup"
 import './PlayerSignup.css'
 import PlayerNavbar from '../../components/Players/PlayerNavbar'
+import Nav from "../../components/Players/Nav"
 
 const PlayerSignup = () => {
   const [name, setName] = useState('')
@@ -18,38 +19,39 @@ const PlayerSignup = () => {
 
   return (
     <div>
-      <PlayerNavbar/>
-    <form className="login" onSubmit={handleSubmit}>
-      <h3>Signup</h3>
+      {/* <PlayerNavbar/> */}
+      <Nav />
+      <form className="login" onSubmit={handleSubmit}>
+        <h3>Signup</h3>
 
-      <label>Name:</label>
-      <input
-        type="text"
-        onChange={(e) => setName(e.target.value)}
-        value={name}
-      />
-      <label>Email address:</label>
-      <input
-        type="email"
-        onChange={(e) => setEmail(e.target.value)}
-        value={email}
-      />
-      <label>Mobile:</label>
-      <input
-        type="number"
-        onChange={(e) => setMobile(e.target.value)}
-        value={mobile}
-      />
-      <label>Password:</label>
-      <input
-        type="password"
-        onChange={(e) => setPassword(e.target.value)}
-        value={password}
-      />
+        <label>Name:</label>
+        <input
+          type="text"
+          onChange={(e) => setName(e.target.value)}
+          value={name}
+        />
+        <label>Email address:</label>
+        <input
+          type="email"
+          onChange={(e) => setEmail(e.target.value)}
+          value={email}
+        />
+        <label>Mobile:</label>
+        <input
+          type="number"
+          onChange={(e) => setMobile(e.target.value)}
+          value={mobile}
+        />
+        <label>Password:</label>
+        <input
+          type="password"
+          onChange={(e) => setPassword(e.target.value)}
+          value={password}
+        />
 
-      <button disabled={isLoading}>Sign up</button>
-      {error && <div className="error">{error}</div>}
-    </form>
+        <button disabled={isLoading}>Sign up</button>
+        {error && <div className="error">{error}</div>}
+      </form>
     </div>
   )
 }

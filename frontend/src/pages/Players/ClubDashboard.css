@@ -1,0 +1,37 @@
+.container1 {
+  padding: 20px !important;
+  background-color: antiquewhite;
+}
+
+.dash {
+  padding: 20px !important;
+}
+
+.carousel {
+  width: 100%;
+  /* background-color: blue; */
+  background: linear-gradient(rgb(5, 177, 188));
+  display: flex;
+  height: 10rem;
+  justify-content: center;
+  align-items: center;
+  font-weight: bolder;
+  font-size: 43px;
+  color: #fff;
+  align-content: center !important;
+}
+
+#grad1 {
+  height: 200px;
+  background-color: blue;
+  /* For browsers that do not support gradients */
+  background-image: linear-gradient(rgb(5, 177, 188), rgb(165, 212, 231));
+}
+
+.name-center {
+  padding: 75px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+}

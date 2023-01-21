@@ -16,15 +16,20 @@ const playerSchema = new Schema(
 
     blockStatus: { type: Boolean },
 
+    payment: { type: Boolean },
+    
+    image: { type: String },
+
+
     age: { type: Number },
 
     position: { type: String },
 
-    weight: { type: Number },
+    // weight: { type: Number },
 
-    prevClub: { type: String },
+    // prevClub: { type: String },
 
-    currClub: { type: String },
+    club: { type: String },
 
     place: { type: String },
   },
@@ -71,7 +76,7 @@ playerSchema.statics.signup = async function (name, email, mobile, password) {
   const salt = await bcrypt.genSalt(10)
   const hash = await bcrypt.hash(password, salt)
 
-  const player = await this.create({ name, email, mobile, password: hash, blockStatus: false })
+  const player = await this.create({ name, email, mobile, password: hash, blockStatus: false ,payment:false})
 
   return player
 }
