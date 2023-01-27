@@ -47,7 +47,7 @@ function EditForm(props) {
   const handleSubmit = async(e)=>{
     e.preventDefault()
     
-     updateDetails()
+     await updateDetails()
      
      props.state()
   }

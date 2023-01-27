@@ -9,6 +9,7 @@ import ClubRoutes from './routes/Clubs/ClubRoutes'
 
 import { ClubAuthContextProvider } from './context/Club/ClubAuthContext'
 import { ClubsContextProvider } from './context/Club/ClubsContext'
+import AdminRoutes from './routes/Admin/AdminRoutes'
 
 function App() {
   return (
@@ -29,6 +30,10 @@ function App() {
           </ClubsContextProvider>
         </ClubAuthContextProvider>
       </Fragment> 
+
+      <Fragment>
+        <AdminRoutes/>
+      </Fragment>
 
 
 

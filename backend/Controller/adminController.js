@@ -26,6 +26,28 @@ const login = async (req, res) => {
 }
 
 
+//////////GEt all Player
+const getAllPlayers = async (req, res) => {
+    try {
+        const players = await Player.find({}, { password: 0 }).sort({ createdAt: -1 });
+        console.log(players, "hello");
+        res.status(200).json(players)
+    } catch (err) {
+        res.status(400).json({ error: err.message })
+    }
+}
+
+//////////GEt all Clubs
+const getAllClubs = async (req, res) => {
+    try {
+        const clubs = await Club.find({}, { password: 0 }).sort({ createdAt: -1 });
+       
+        res.status(200).json(clubs)
+    } catch (err) {
+        res.status(400).json({ error: err.message })
+    }
+}
+
 /////////Delete a player
 
 const deletePlayer = async (req, res) => {
@@ -159,7 +181,9 @@ module.exports = {
     unblockPlayer,
     unblockClub,
     login,
-    signUp
+    signUp,
+    getAllPlayers,
+    getAllClubs
 }
 
 //////login

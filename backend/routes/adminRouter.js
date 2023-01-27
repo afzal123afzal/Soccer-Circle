@@ -9,14 +9,22 @@ const { deletePlayer,
     unblockPlayer,
     unblockClub,
     login,
-    signUp
+    signUp,
+    getAllPlayers,
+    getAllClubs
 } = require('../Controller/adminController')
 
 ////////////login
 router.post('/login', login)
 
+//////////////getAllPlayers
+router.get('/players',getAllPlayers)
+
 //////////delete player
 router.delete('/player/:id', deletePlayer)
+
+//////////////getAllClubs
+router.get('/clubs',getAllClubs)
 
 ///////////delete club
 router.delete('/club/:id', deleteClub)

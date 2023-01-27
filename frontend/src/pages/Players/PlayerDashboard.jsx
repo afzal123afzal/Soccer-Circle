@@ -36,44 +36,43 @@ const PlayerDashboard = () => {
 
 
   useEffect(() => {
-    const fetchPlayer = async () => {
-      try {
-        const response = await axiosPlayersInstance.post('/player', { email: player.data.email })
-        const obj = response.data
-        console.log(obj);
-        const Data = Object.values(obj).map((value) => {
-          return value
-        })
-        //https://www.javascripttutorial.net/object/convert-an-object-to-an-array-in-javascript/
-        console.log(Data);
-        if (response.status === 200) {
-          dispatch({ type: 'SET_PLAYERS', payload: obj })
-          setPlayerDetails(obj)
-        }
-      } catch (err) {
-        console.log(err.message);
-      }
-    }
     fetchPlayer()
-  }, [dispatch, player,edit])
-
+    console.log("hi");
+  }, [dispatch, player, edit])
   
-
+  const fetchPlayer = async () => {
+    try {
+      const response = await axiosPlayersInstance.post('/player', { email: player.data.email })
+      const obj = response.data
+      console.log(obj);
+      // const Data = Object.values(obj).map((value) => {
+      //   return value
+      // })
+      //https://www.javascripttutorial.net/object/convert-an-object-to-an-array-in-javascript/
+      // console.log(Data);
+      if (response.status === 200) {
+        dispatch({ type: 'SET_PLAYERS', payload: obj })
+        setPlayerDetails(obj)
+      }
+    } catch (err) {
+      console.log(err.message);
+    }
+  }
+ 
   const handleClick = () => {
-    
+
     setEdit(true)
 
   }
 
 
-    const editMode = () => {
+  const editMode = () => {
+    setEdit(false)
+  }
 
-      setEdit(false)
-    }
-   
-  
- 
- 
+
+
+
 
   return (
     <div>
@@ -85,7 +84,7 @@ const PlayerDashboard = () => {
         {/* <h1 className='dash'>PlayerDashboard</h1> */}
         {/* <button className='align-middle' onClick={handleClick}>BUTTON</button> */}
 
-        {edit ? <EditForm state={editMode} detail={email} _id={id}/> :
+        {edit ? <EditForm state={editMode} detail={email} _id={id} /> :
           <PlayerProfileStatistics key={player.data._id} edit={handleClick} user={players != null ? players : null} />}
         {/* <PlayerProfileStatistics key={1} user={players != null ? players : null} /> */}
 
