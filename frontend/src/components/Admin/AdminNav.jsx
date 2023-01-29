@@ -1,16 +1,29 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Transition } from "@headlessui/react";
 import { Link } from "react-router-dom";
 import { useLogout } from "../../hooks/Player/useLogout";
 import { useAuthContext } from "../../hooks/Player/useAuthContext";
+import { useDispatch, useSelector } from 'react-redux'
+import { logoutAdmin } from "../../redux-toolkit/loginReducer";
 
 function AdminNav() {
     const [isOpen, setIsOpen] = useState(false);
+  
     // const { logout } = useLogout()
     // const { player } = useAuthContext()
+    const dispatch = useDispatch()
+    const state1 = useSelector((state) => {
+        return state
+    })
+    const name = state1.admin.adminDetails.email
+    
+
+
+    console.log(state1.admin.adminDetails.email, "state1");
 
     const handleClick = () => {
         console.log('hi');
+        dispatch(logoutAdmin())
         // logout()
     }
     return (
@@ -67,12 +80,12 @@ function AdminNav() {
                                         Reports
                                     </Link> */}
 
-<>
-                                            <Link className="text-cyan-300">Admin</Link>
-                                            <button onClick={handleClick} class="bg-blue-500 hover:bg-blue-300 text-white font-bold py-2 px-3 align-center rounded-full">
-                                                LogOut
-                                            </button>
-                                        </>
+                                    <>
+                                        <Link className="text-cyan-300">{name}</Link>
+                                        <button onClick={handleClick} class="bg-blue-500 hover:bg-blue-300 text-white font-bold py-2 px-3 align-center rounded-full">
+                                            LogOut
+                                        </button>
+                                    </>
 
                                 </div>
                             </div>
@@ -170,13 +183,13 @@ function AdminNav() {
                                 >
                                     Reports
                                 </a>
-                                
-                                    <>
-                                        <Link className="block px-3 py-2 font-medium " >Admin</Link> <br></br>
-                                        <button onClick={handleClick} class="bg-blue-500 hover:bg-blue-300 text-white font-bold py-2 px-3 align-center rounded">
-                                            LogOut
-                                        </button>
-                                    </>
+
+                                <>
+                                    <Link className="block px-3 py-2 font-medium " >Admin</Link> <br></br>
+                                    <button onClick={handleClick} class="bg-blue-500 hover:bg-blue-300 text-white font-bold py-2 px-3 align-center rounded">
+                                        LogOut
+                                    </button>
+                                </>
 
                             </div>
 

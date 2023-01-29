@@ -10,7 +10,12 @@ import ClubRoutes from './routes/Clubs/ClubRoutes'
 import { ClubAuthContextProvider } from './context/Club/ClubAuthContext'
 import { ClubsContextProvider } from './context/Club/ClubsContext'
 import AdminRoutes from './routes/Admin/AdminRoutes'
-
+import {Provider} from 'react-redux'
+import store from './redux-toolkit/store'
+import { persistStore } from 'redux-persist';
+import { PersistGate } from 'redux-persist/integration/react';
+//...
+let persistor = persistStore(store);
 function App() {
   return (
     <div>
@@ -32,7 +37,11 @@ function App() {
       </Fragment> 
 
       <Fragment>
+      <Provider store={store}>
+      <PersistGate persistor={persistor}>
         <AdminRoutes/>
+        </PersistGate>
+        </Provider>
       </Fragment>
 
 

@@ -43,6 +43,7 @@ adminSchema.statics.signup = async function (email, password) {
 /////// static login method
 
 adminSchema.statics.login = async function (email, password) {
+  console.log(password);
   if (!email) {
     throw Error("Please fill the email");
   }
@@ -51,15 +52,26 @@ adminSchema.statics.login = async function (email, password) {
   }
 
 
-  const admin = await this.findOne({ email })
+ let admin = await this.findOne({ email})
+  console.log(admin,"adminLogin");
+
   if (!admin) {
     throw Error('Incorrect email')
   }
+  if(admin.password != password){
+    throw Error('Please fill the correct credentials')
+  }
+  return admin
+  // if(admin){
+  //   if(admin.password===password){
+  //     return admin
+  //   }
+  // }
   // const match = await bcrypt.compare(password, admin.password)
   // if (!match) {
   //   throw Error('Incorrect password')
   // }
-  return admin
+  // return admin
 
 }
 

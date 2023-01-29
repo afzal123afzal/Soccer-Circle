@@ -1,11 +1,15 @@
 import { useState } from "react";
 // import { useAuthContext } from './useAuthContext'
 import { axiosAdminInstance } from "../../instance/Axios";
+import { useDispatch } from "react-redux";
+import loginReducer from "../../redux-toolkit/loginReducer";
+import { loginAdmin } from "../../redux-toolkit/loginReducer";
 
 export const useLogin = () => {
     const [error, setError] = useState(null)
     const [isLoading, setIsLoading] = useState(null)
     // const { dispatch } = useAuthContext()
+    const dispatch = useDispatch()
 
 
 
@@ -26,7 +30,9 @@ export const useLogin = () => {
 
             //     //update the authContext
             //     dispatch({ type: 'LOGIN', payload: result })
-                setIsLoading(false)
+            dispatch(loginAdmin(result.data))
+            
+                // setIsLoading(false)
             }
 
         }

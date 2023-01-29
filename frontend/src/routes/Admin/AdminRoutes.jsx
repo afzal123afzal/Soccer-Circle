@@ -9,10 +9,15 @@ import Home from '../../pages/Admin/AdminHome';
 import AdminLogin from '../../pages/Admin/AdminLogin';
 import Clubs from '../../pages/Admin/Clubs';
 import Players from '../../pages/Admin/Players';
+import { useSelector } from 'react-redux';
 
 
 
 function AdminRoutes() {
+  const admin = useSelector((state)=>
+    state.admin.adminDetails
+  )
+  console.log("adminState",admin);
 
   return (
     <div>
@@ -22,19 +27,19 @@ function AdminRoutes() {
           <Routes>
             <Route
               path="/admin/home"
-              element={ <Home /> }
+              element={ admin ? <Home /> : <Navigate to="/admin/login" />}
             />
             <Route
               path="/admin/clubs"
-              element={ <Clubs /> }
+              element={admin ?  <Clubs /> : <Navigate to="/admin/login" /> }
             />
             <Route
               path="/admin/players"
-              element={ <Players /> }
+              element={ admin ?  <Players /> : <Navigate to="/admin/login" />}
             />
             <Route
               path="/admin/login"
-              element={ <AdminLogin /> }
+              element={ admin  ? <Navigate to="/admin/home" /> : <AdminLogin/>}
             />
             
           </Routes>
