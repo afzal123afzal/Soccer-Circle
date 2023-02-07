@@ -25,7 +25,7 @@ A matching system that connects players with clubs
 A  web platform to s to connect talented, hidden football players with the right clubs and channels built using React, Node js, Express js, and MongoDb.
 
 NOTE: Please read the RUN section before opening an issue.
->Warning: Serenity is still in development, constantly being optimized and isn't still stable enough to be used in production environments
+>Warning: SoccerCircle is still in development, constantly being optimized and isn't still stable enough to be used in production environments
 ## Demo
 
 ![This is an image]
