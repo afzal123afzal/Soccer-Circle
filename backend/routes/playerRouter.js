@@ -20,11 +20,7 @@ router.post('/signup', signUp)
 ///////////// Player login
 router.post('/login', login)
 
-// require auth for all workout routes
-// router.use(requireAuth)
 
-///Get all club
-router.get('/clubs', getClubs)
 
 ///Get a club
 // router.get('/club/:id', getClub)
@@ -47,7 +43,11 @@ router.post('/player', getPlayer)
 router.post('/create-checkout-session',payment)
 
 
+// require auth for all workout routes
+// router.use(requireAuth)
 
+///Get all club
+router.get('/clubs',requireAuth, getClubs)
 
 
 module.exports = router

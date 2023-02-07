@@ -1,11 +1,10 @@
-.players {
-    max-width: 950px;
-    margin: 40px auto;
-    padding: 20px;
-    border-radius: 4px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+.container1 {
+    padding: 20px !important;
+    background-color: antiquewhite;
+  }
+  
+  .dash {
+    padding: 20px !important;
   }
   
   .carousel {
@@ -19,6 +18,7 @@
     font-weight: bolder;
     font-size: 43px;
     color: #fff;
+    align-content: center !important;
   }
   
   #grad1 {
@@ -28,9 +28,10 @@
     background-image: linear-gradient(rgb(5, 177, 188), rgb(165, 212, 231));
   }
   
-  @media (max-width: 560px) {
-    .players {
-      margin: center;
-      justify-content: center;
-    }
+  .name-center {
+    padding: 75px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
   }

@@ -37,6 +37,7 @@ import {
 } from 'redux-persist';
 
 import loginReducer from './loginReducer'
+import clubLoginReducer from './clubLoginReducer';
 const persistConfig = {
     key: 'counter',
     storage,
@@ -44,7 +45,8 @@ const persistConfig = {
 
 const reducers = combineReducers(
     { 
-        admin:loginReducer 
+        admin:loginReducer ,
+        club:clubLoginReducer
     });
 const persistedReducer = persistReducer(persistConfig, reducers);
 

@@ -17,6 +17,9 @@ const clubSchema = new Schema(
     regNo: { type: String, required: true },
 
     blockStatus: { type: Boolean },
+    payment: { type: Boolean },
+    image: { type: String },
+
 
     place: { type: String },
   },
@@ -65,7 +68,7 @@ clubSchema.statics.signup = async function (name, email, mobile, password, regNo
   const salt = await bcrypt.genSalt(10)
   const hash = await bcrypt.hash(password, salt)
 
-  const club = await this.create({ name, email, mobile, password: hash, regNo, blockStatus: false })
+  const club = await this.create({ name, email, mobile, password: hash, regNo, blockStatus: false, payment: false })
 
   return club
 

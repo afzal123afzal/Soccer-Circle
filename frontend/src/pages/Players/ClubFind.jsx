@@ -26,7 +26,7 @@ const PlayersFind = () => {
 
       try {
         const response = await axiosPlayersInstance.get("/clubs"
-          // ,{  headers: { 'Authorization': `Bearer ${player.data.token}` }}
+          ,{  headers: { 'Authorization': `Bearer ${player.data.token}` }}  
         );
         console.log(response);
         if (response.status === 200) {

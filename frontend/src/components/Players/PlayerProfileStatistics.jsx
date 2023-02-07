@@ -56,7 +56,7 @@ function ProfilePage(props) {
     if (props.user[0]) {
       const email = props.user[0].email
       const response = await axiosPlayersInstance.post('/player', { email: email })
-      console.log(response.data[0].image);
+      // console.log(response.data[0].image);
       const imageUrl = response.data[0].image
       setUrl(imageUrl)
 

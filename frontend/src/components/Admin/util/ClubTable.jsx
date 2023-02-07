@@ -1,61 +1,65 @@
 // import axios from 'axios'
+//////////////---Evdennaan njan function and import thaazhe kond paste cheythath---///////
+// const [user,setUser]=useState([])
+//     useEffect(()=>{
+
+//     const token = localStorage.getItem('adminToken');
+//      getAllUsers();
+//     async function getAllUsers(){
+//         const config={
+//             headers:{
+//                 Accept:'application/json',
+//                 Authorization:token,
+//                 'Content-Type':'application/json',
+//             },
+//         }
+//             const response = await axios.get('http://localhost:4000/api/admin/userInfo',config)
+//             setUser(response.data.details)
+
+
+//     }
+// },[user])
+
+// async function block(id){
+//     const token =localStorage.getItem('adminToken');
+//     const config={
+//         headers:{
+//             Accept:'application/json',
+//         Authorization:token,
+//         'Content-Type':'application/json'
+//     }
+// }
+// const data = await axios.put(`http://localhost:4000/api/admin/block/${id}`,config) 
+// if(data.blocked){
+//     setUser(data.user)
+//     }
+// }
+// async function unblock(id){
+//     const token =localStorage.getItem('adminToken');
+//     const config={
+//         headers:{
+//             Accept:'application/json',
+//         Authorization:token,
+//         'Content-Type':'application/json'
+//     }
+// }
+// const data = await axios.put(`http://localhost:4000/api/admin/unblock/${id}`,config)
+// if(data.unblocked){
+//     window.relocation.reload(true)
+// setUser(data.user)
+// }
+// }
+
 import React, { useEffect, useState } from 'react'
 import DataTable from 'react-data-table-component'
 import { axiosAdminInstance } from '../../../instance/Axios'
+import { useDispatch } from 'react-redux'
+import { logoutClub } from '../../../redux-toolkit/clubLoginReducer'
 function ClubTable() {
-    // const [user,setUser]=useState([])
-    //     useEffect(()=>{
-
-    //     const token = localStorage.getItem('adminToken');
-    //      getAllUsers();
-    //     async function getAllUsers(){
-    //         const config={
-    //             headers:{
-    //                 Accept:'application/json',
-    //                 Authorization:token,
-    //                 'Content-Type':'application/json',
-    //             },
-    //         }
-    //             const response = await axios.get('http://localhost:4000/api/admin/userInfo',config)
-    //             setUser(response.data.details)
-
-
-    //     }
-    // },[user])
-
-    // async function block(id){
-    //     const token =localStorage.getItem('adminToken');
-    //     const config={
-    //         headers:{
-    //             Accept:'application/json',
-    //         Authorization:token,
-    //         'Content-Type':'application/json'
-    //     }
-    // }
-    // const data = await axios.put(`http://localhost:4000/api/admin/block/${id}`,config) 
-    // if(data.blocked){
-    //     setUser(data.user)
-    //     }
-    // }
-    // async function unblock(id){
-    //     const token =localStorage.getItem('adminToken');
-    //     const config={
-    //         headers:{
-    //             Accept:'application/json',
-    //         Authorization:token,
-    //         'Content-Type':'application/json'
-    //     }
-    // }
-    // const data = await axios.put(`http://localhost:4000/api/admin/unblock/${id}`,config)
-    // if(data.unblocked){
-    //     window.relocation.reload(true)
-    // setUser(data.user)
-    // }
-    // }
 
     const [user, setUser] = useState([])
 
-
+const dispatch = useDispatch()
 
     useEffect(() => {
         getAllClubs()
@@ -73,7 +77,10 @@ function ClubTable() {
         const response = await axiosAdminInstance.patch(`/club/block/${id}`)
         console.log(response);
         if (response.status === 200) {
+            dispatch(logoutClub())
             getAllClubs()
+
+
         }
     }
     const unblockClub = async (id) => {

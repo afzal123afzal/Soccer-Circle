@@ -1,11 +1,15 @@
 import { useState } from 'react'
 import { useClubAuthContext} from './useClubAuthContext'
 import { axiosClubsInstance } from '../../instance/Axios'
+import { useDispatch,useSelector } from 'react-redux'
+import { loginClub,paymentCheck, clubProfile,nameNav} from '../../redux-toolkit/clubLoginReducer'
+
 
 export const useClubSignup = () => {
   const [error, setError] = useState(null)
   const [isLoading, setIsLoading] = useState(null)
-  const { dispatch } = useClubAuthContext()
+  // const { dispatch } = useClubAuthContext()
+  const dispatch = useDispatch()
 
   const signup = async (name,email,mobile, password,regNo) => {
     setIsLoading(true)
@@ -20,7 +24,13 @@ export const useClubSignup = () => {
             localStorage.setItem('club', JSON.stringify(result))
 
             //update the ClubauthContext
-            dispatch({ type: 'CLUBLOGIN', payload: result })
+            // dispatch({ type: 'CLUBLOGIN', payload: result })
+            dispatch(loginClub(result.data))
+            dispatch(paymentCheck(result.data))
+            dispatch(nameNav(result.data.name))
+
+
+
             setIsLoading(false)
         }
 

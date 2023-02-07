@@ -2,6 +2,7 @@ import React from 'react'
 import AdminNav from '../../components/Admin/AdminNav'
 import { loginAdmin } from '../../redux-toolkit/loginReducer'
 import { useDispatch } from 'react-redux'
+import AdminBox from '../../components/Admin/util/AdminBox'
 
 function AdminHome() {
   const dispatch = useDispatch()
@@ -14,6 +15,7 @@ function AdminHome() {
     <div>
       <AdminNav/>
       <h2>AdminHome  </h2>
+      <AdminBox/>
       {/* <button onClick={handleClick}>login</button> */}
       </div>
   )

@@ -15,13 +15,12 @@ const login = async (req, res) => {
 
     try {
         const admin = await Admin.login(email, password)
-        console.log(admin,"admin");
         const id = admin._id
 
         // create a token
         const token = createToken(admin._id)
 
-        res.status(200).json({id, email, token })
+        res.status(200).json({id,email, token })
     } catch (error) {
         res.status(400).json({ error: error.message })
     }

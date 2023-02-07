@@ -1,0 +1,17 @@
+a {
+    text-decoration: none;
+}
+
+.ant-card-meta-title {
+    text-align: center !important;
+    text-decoration: none !important;
+}
+
+.ant-card-body {
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.ant-btn {
+    margin-left: 38px;
+}

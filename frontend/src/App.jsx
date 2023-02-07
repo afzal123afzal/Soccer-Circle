@@ -19,6 +19,9 @@ let persistor = persistStore(store);
 function App() {
   return (
     <div>
+      <>
+      <Provider store={store}>
+      <PersistGate persistor={persistor}>
       <Fragment>
         <AuthContextProvider>
           <PlayersContextProvider>
@@ -37,14 +40,15 @@ function App() {
       </Fragment> 
 
       <Fragment>
-      <Provider store={store}>
-      <PersistGate persistor={persistor}>
+      {/* <Provider store={store}>
+      <PersistGate persistor={persistor}> */}
         <AdminRoutes/>
-        </PersistGate>
-        </Provider>
+        {/* </PersistGate>
+        </Provider> */}
       </Fragment>
-
-
+      </PersistGate>
+        </Provider>
+      </>
 
 
     </div>

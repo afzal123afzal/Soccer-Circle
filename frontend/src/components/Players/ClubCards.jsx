@@ -2,7 +2,7 @@ import React from 'react';
 import { Card, Button } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import './ClubCards.css'
-import fcb from '../../assets/fcbarcelona.jpeg'
+import dp from '../../assets/dp.png'
 // import clubModel from '../../../../backend/model/clubModel';
 const { Meta } = Card;
 
@@ -28,7 +28,7 @@ const ClubCard = ({ club }) => {
                 justifyContent: 'center',
 
             }}
-            cover={<img alt="example" src={fcb} />}
+            cover={<img alt="example" src={club.image ? club.image : dp} />}
         >
             <Meta style={{ align: 'center' }} title={club.name} />
             <Button

@@ -6,7 +6,8 @@ const { signUp,
     getClub,
     editDetails,
     getPlayers,
-    getPlayer
+    getPlayer,
+    payment
 } = require('../Controller/clubController')
 
 const requireClubAuth = require('../middleware/requireClubAuth')
@@ -20,7 +21,7 @@ router.post('/signup', signUp)
 router.post('/login', login)
 
 // require auth for all club routes
-router.use(requireClubAuth)
+// router.use(requireClubAuth)
 
 //////Get all player
 router.get('/players', getPlayers)
@@ -36,6 +37,9 @@ router.get('/:id', getClub)
 
 //////Edit Details
 router.patch('/edit-club/:id', editDetails)
+
+///////////// Stripe payment
+router.post('/create-checkout-session',payment)
 
 
 
