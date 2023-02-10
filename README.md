@@ -25,13 +25,13 @@ A matching system that connects players with clubs
 A  web platform to s to connect talented, hidden football players with the right clubs and channels built using React, Node js, Express js, and MongoDb.
 
 NOTE: Please read the RUN section before opening an issue.
->Warning: Serenity is still in development, constantly being optimized and isn't still stable enough to be used in production environments
+>Warning: SoccerCircle is still in development, constantly being optimized and isn't still stable enough to be used in production environments
 ## Demo
 
 ![This is an image]
 ![This is an image]
 
-Serenity is an online consultation and community for people who are facing mental health issues such as anxiety, depression and so on. Here they can book individual sessions with experts and take therapy from them. In addition to that there is a community of patients and experts through which people can share their experiences , create and read blogs related to mental health.
+Soccer circle is a website that aimed to connect hidden football players with proper channels and football clubs, as well as helping clubs find new players in their area. The website allows players to create a profile and showcase their skills and experience, while also allowing clubs to search and find potential players
 
 
 
