@@ -6,6 +6,8 @@ const stripe = Stripe(process.env.STRIPE_KEY)
 
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
+const Chat = require('../model/chatModel');
+const Message = require('../model/messageModel');
 
 
 /////////// create a token
@@ -178,6 +180,80 @@ const payment = async (req, res) => {
   res.send({url:session.url})
 };
 
+///////////////////// Chat Controller
+
+const createChat = async (req, res) => {
+  const newChat = new Chat({
+    members: [req.body.senderId, req.body.receiverId],
+  });
+  try {
+    const chat = await Chat.findOne({
+      members: { $all: [req.body.senderId, req.body.receiverId] },
+    });
+    if(chat){
+      res.status(200).json({mssg:"Already Existed"})
+    }
+    if(!chat){
+      const result = await newChat.save();
+      res.status(200).json(result);
+    }
+    
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
+const userChats = async (req, res) => {
+  try {
+      if (!mongoose.Types.ObjectId.isValid(req.params.userId)) {
+          return res.status(500).json({ error: 'Invalid Id' })
+      }
+    const chat = await Chat.find({
+      members: { $in: [req.params.userId] },
+    });
+    res.status(200).json(chat);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
+const findChat = async (req, res) => {
+  try {
+    const chat = await Chat.findOne({
+      members: { $all: [req.params.firstId, req.params.secondId] },
+    });
+    res.status(200).json(chat)
+  } catch (error) {
+    res.status(500).json(error)
+  }
+};
+
+////////////////// Message Controller
+
+const addMessage = async (req, res) => {
+  const { chatId, senderId, text } = req.body;
+  const message = new Message({
+    chatId,
+    senderId,
+    text,
+  });
+  try {
+    const result = await message.save();
+    res.status(200).json(result);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
+const getMessages = async (req, res) => {
+  const { chatId } = req.params;
+  try {
+    const result = await Message.find({ chatId });
+    res.status(200).json(result);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
 
 
 module.exports = {
@@ -188,7 +264,12 @@ module.exports = {
   login,
   getClubs,
   getClub,
-  payment
+  payment,
+  createChat,
+  userChats,
+  findChat,
+  addMessage,
+  getMessages
 };
 
 

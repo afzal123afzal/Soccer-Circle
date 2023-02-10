@@ -15,6 +15,7 @@ import Home from '../../pages/Players/Home'
 import PlayerDashboard from '../../pages/Players/PlayerDashboard'
 import { useLocation } from 'react-router-dom'
 import CheckoutSuccess from '../../pages/Players/CheckoutSuccess'
+import Chat from '../../pages/Players/Chat'
 
 
 
@@ -27,6 +28,10 @@ function PlayerRoutes() {
         {/* {player ? <PlayerNavbar /> : ""}  */}
         <div className="pages">
           <Routes>
+          <Route
+              path="/player/chat"
+              element={player ? <Chat/> : <Navigate to="/player/login" />}
+            />
             <Route
               path="/player/clubs"
               element={player ? <ClubFind /> : <Navigate to="/player/login" />}

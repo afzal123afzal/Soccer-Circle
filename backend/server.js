@@ -29,13 +29,15 @@ app.use((req, res, next) => {
 //     }
 // }
 
-const server = app.listen(process.env.PORT, () => {
-    console.log("listening to the port", process.env.PORT);
-})
+
 
 /////connect to Db
 // db.connectToDb(cb)
 db.connectToDb()
+
+const server = app.listen(process.env.PORT, () => {
+    console.log("listening to the port", process.env.PORT);
+})
 
 
 

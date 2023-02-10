@@ -1,16 +1,19 @@
 import React, { useEffect, useRef, useState } from 'react'
 import './Chat.css'
 // import LogoSearch from '../../components/Clubs/LogoSearch'
-import { useSelector } from 'react-redux'
-import { axiosClubsInstance } from '../../instance/Axios'
-import Conversation from '../../components/Clubs/Conversation'
-import ChatBox from '../../components/Clubs/ChatBox'
+// import { useSelector } from 'react-redux'
+import { useAuthContext } from '../../hooks/Player/useAuthContext'
+import { axiosPlayersInstance } from '../../instance/Axios'
+import Conversation from '../../components/Players/Conversation'
+import ChatBox from '../../components/Players/ChatBox'
 import { io } from 'socket.io-client'
 import { useLocation } from 'react-router-dom'
 
 const Chat = () => {
-  const user = useSelector((state) => state.club.clubDetails)
-  console.log(user._id);
+  // const user = useSelector((state) => state.club.clubDetails)
+  // console.log(user._id);
+  const {player} = useAuthContext()
+  const user = player.data
   const [chats, setChats] = useState([])
   const [currentChat, setCurrentChat] = useState(null)
   const [onlineUsers, setOnlineUsers] = useState([]);
@@ -55,7 +58,7 @@ const locationItem = location.state
   useEffect(() => {
     const getChats = async () => {
       try {
-        const { data } = await axiosClubsInstance.get(`/chat/${user._id}`)
+        const { data } = await axiosPlayersInstance.get(`/chat/${user._id}`)
         setChats(data)
         console.log(data);
       } catch (err) {

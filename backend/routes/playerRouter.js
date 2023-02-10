@@ -8,7 +8,12 @@ const { signUp,
     login,
     getClubs,
     getClub,
-    payment
+    payment,
+    createChat,
+    userChats,
+    findChat,
+    addMessage,
+    getMessages
 } = require('../Controller/playerController')
 const requireAuth = require('../middleware/requireAuth')
 
@@ -48,6 +53,15 @@ router.post('/create-checkout-session',payment)
 
 ///Get all club
 router.get('/clubs',requireAuth, getClubs)
+
+//////////////// Chat
+router.post('/chat/create-chat', createChat);
+router.get('/chat/:userId', userChats);
+router.get('/chat/find/:firstId/:secondId', findChat);
+
+/////////////// Message
+router.post('/message', addMessage);
+router.get('/message/:chatId', getMessages);
 
 
 module.exports = router

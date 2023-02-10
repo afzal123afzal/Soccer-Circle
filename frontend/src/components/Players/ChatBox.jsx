@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { axiosClubsInstance } from '../../instance/Axios'
+import { axiosPlayersInstance } from '../../instance/Axios'
 import './ChatBox.css'
 import dp from '../../assets/dp.png'
 import { format } from 'timeago.js'
@@ -18,7 +18,7 @@ const ChatBox = ({ chat, currentUser, setSendMessage, receiveMessage }) => {
         const userId = chat?.members?.find((id) => id !== currentUser)
         const getUserData = async () => {
             try {
-                const { data } = await axiosClubsInstance.get(`/player/${userId}`)
+                const { data } = await axiosPlayersInstance.get(`/club/${userId}`)
                 setUserData(data)
             } catch (err) {
                 console.log(err);
@@ -31,7 +31,7 @@ const ChatBox = ({ chat, currentUser, setSendMessage, receiveMessage }) => {
     useEffect(() => {
         const fetchMessages = async () => {
             try {
-                const { data } = await axiosClubsInstance.get(`/message/${chat._id}`)
+                const { data } = await axiosPlayersInstance.get(`/message/${chat._id}`)
                 console.log(data);
                 setMessages(data)
             } catch (err) {
@@ -58,7 +58,7 @@ const ChatBox = ({ chat, currentUser, setSendMessage, receiveMessage }) => {
 
         //////// send message to database
         try {
-            const { data } = await axiosClubsInstance.post('/message', message)
+            const { data } = await axiosPlayersInstance.post('/message', message)
             setMessages([...messages, data])
             setNewMessage("")
 
@@ -133,6 +133,7 @@ const ChatBox = ({ chat, currentUser, setSendMessage, receiveMessage }) => {
                             {newMessage !=="" ? <div className="send-button button-one" onClick={handleSend}>
                                 Send
                             </div> : ""}
+                            
                         </div>
                     </>
                 ) : (

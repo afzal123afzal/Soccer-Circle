@@ -1,6 +1,6 @@
 import { Button } from 'antd'
 import React, { useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useAuthContext } from '../../hooks/Player/useAuthContext'
 import PayButton from './util/PayButton'
 import dp from '../../assets/dp.png'
@@ -8,7 +8,10 @@ import { axiosPlayersInstance } from '../../instance/Axios'
 
 function ProfilePage({ club, playerDetail }) {
   const { player } = useAuthContext()
+  const navigate = useNavigate()
+
   console.log(player.data.payment);
+  console.log(player.data,"Player");
   // const payment = player.data.payment
   const payment = playerDetail.payment
   const email = player.data.email
@@ -20,6 +23,14 @@ function ProfilePage({ club, playerDetail }) {
 
   //  }, [])
 
+  const chatHandler = async()=>{
+    const data={
+        senderId:player.data._id,
+        receiverId:club._id
+    }
+    await axiosPlayersInstance.post('/chat/create-chat',data)
+    navigate('/player/chat',{state:player.data._id})
+}
 
 
   return (
@@ -63,8 +74,8 @@ function ProfilePage({ club, playerDetail }) {
 
               <div className="text-center mt-12">
                 {payment && payment ?
-                  <Link>
-                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full ">
+                  <Link to={"/player/chat"} >
+                    <button onClick={chatHandler} class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full ">
                       Connect
                     </button>
                   </Link>
