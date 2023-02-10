@@ -47,7 +47,7 @@ The application is built with:
 - Stripe
 - Material UI
 - Socket.IO
-- Redux(ongoing)
+- Redux
 - Nodemailer(ongoing)
 
 
