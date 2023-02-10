@@ -136,11 +136,11 @@ const getClub = async (req, res) => {
   try {
     console.log("hi");
 
-    // if (!mongoose.Types.ObjectId.isValid(id)) {
-    //   return res.status(400).json({ error: "Invalid Club Id" });
-    // }
-    // const club = await Club.findById({ _id: id }, { _id: 0, password: 0 });
-    const club = await Club.findOne({email}, {  password: 0 });
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ error: "Invalid Club Id" });
+    }
+    const club = await Club.findById({ _id: id }, { password: 0 });
+    // const club = await Club.findOne({email}, {  password: 0 });
     if (!club) {
       return res.status(200).json({ mssg: "Club Not Found" });
     }

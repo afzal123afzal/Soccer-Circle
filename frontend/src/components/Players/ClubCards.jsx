@@ -10,9 +10,10 @@ const ClubCard = ({ club }) => {
     const navigate = useNavigate()
     const handleClick = (e) => {
         console.log(e);
-        // console.log(clubModel);
+        console.log(club);
 
-        navigate('/player/club', { state: club.email })
+        // navigate('/player/club', { state: club.email })
+        navigate('/player/club', { state: club._id })
     }
 
 

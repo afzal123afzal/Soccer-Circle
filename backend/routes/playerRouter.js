@@ -23,8 +23,8 @@ router.post('/login', login)
 
 
 ///Get a club
-// router.get('/club/:id', getClub)
-router.post('/club',getClub)
+router.get('/club/:id', getClub)
+// router.post('/club',getClub)
 
 ///////// add more details
 router.patch('/add-details/:id', addDetails)

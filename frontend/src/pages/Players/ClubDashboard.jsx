@@ -22,7 +22,8 @@ function ClubDashboard() {
   useEffect(() => {
     const fetchClub = async () => {
       try {
-        const response = await axiosPlayersInstance.post('/club', { email: clubDetail })
+        // const response = await axiosPlayersInstance.post('/club', { email: clubDetail })
+        const response = await axiosPlayersInstance.get(`/club/${clubDetail}`)
         console.log(response);
         if (response.status === 200) {
           setClub(response.data)
