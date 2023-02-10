@@ -2,7 +2,10 @@ const Club = require('../model/clubModel')
 const Player = require('../model/playerModel')
 const mongoose = require('mongoose')
 const jwt = require("jsonwebtoken");
-const Stripe = require("stripe")
+const Stripe = require("stripe");
+const Chat = require('../model/chatModel');
+const Message = require('../model/messageModel');
+
 
 const stripe = Stripe(process.env.STRIPE_KEY)
 
@@ -128,7 +131,7 @@ const getPlayer = async (req, res) => {
         if (!mongoose.Types.ObjectId.isValid(id)) {
             return res.status(400).json({ error: 'Invalid Player Id' })
         }
-        const player = await Player.findById({ _id: id }, { _id: 0, password: 0 })
+        const player = await Player.findById({ _id: id }, {  password: 0 })
         if (!player) {
             return res.status(200).json({ mssg: "No such player" })
         }
@@ -165,7 +168,81 @@ const payment = async (req, res) => {
   
     res.send({url:session.url})
   };
+
+  ///////////////////// Chat Controller
+
+  const createChat = async (req, res) => {
+    const newChat = new Chat({
+      members: [req.body.senderId, req.body.receiverId],
+    });
+    try {
+      const chat = await Chat.findOne({
+        members: { $all: [req.body.senderId, req.body.receiverId] },
+      });
+      if(chat){
+        res.status(200).json({mssg:"Already Existed"})
+      }
+      if(!chat){
+        const result = await newChat.save();
+        res.status(200).json(result);
+      }
+      
+    } catch (error) {
+      res.status(500).json(error);
+    }
+  };
+
+  const userChats = async (req, res) => {
+    try {
+        if (!mongoose.Types.ObjectId.isValid(req.params.userId)) {
+            return res.status(500).json({ error: 'Invalid Id' })
+        }
+      const chat = await Chat.find({
+        members: { $in: [req.params.userId] },
+      });
+      res.status(200).json(chat);
+    } catch (error) {
+      res.status(500).json(error);
+    }
+  };
+
+  const findChat = async (req, res) => {
+    try {
+      const chat = await Chat.findOne({
+        members: { $all: [req.params.firstId, req.params.secondId] },
+      });
+      res.status(200).json(chat)
+    } catch (error) {
+      res.status(500).json(error)
+    }
+  };
+
+  ////////////////// Message Controller
+
+  const addMessage = async (req, res) => {
+    const { chatId, senderId, text } = req.body;
+    const message = new Message({
+      chatId,
+      senderId,
+      text,
+    });
+    try {
+      const result = await message.save();
+      res.status(200).json(result);
+    } catch (error) {
+      res.status(500).json(error);
+    }
+  };
   
+  const getMessages = async (req, res) => {
+    const { chatId } = req.params;
+    try {
+      const result = await Message.find({ chatId });
+      res.status(200).json(result);
+    } catch (error) {
+      res.status(500).json(error);
+    }
+  };
 
 module.exports = {
     signUp,
@@ -175,7 +252,12 @@ module.exports = {
     editDetails,
     getPlayers,
     getPlayer,
-    payment
+    payment,
+    createChat,
+    userChats,
+    findChat,
+    addMessage,
+    getMessages
 }
 
 

@@ -6,7 +6,7 @@ const chatSchema = new mongoose.Schema(
             type: Array
         }
 
-    },
+    }, 
     {
         timestamps: true
     }

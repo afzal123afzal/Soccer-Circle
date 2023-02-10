@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useAuthContext } from '../../hooks/Player/useAuthContext'
 // import PayButton from './util/PayButton'
 import dp from '../../assets/dp.png'
-import { axiosPlayersInstance } from '../../instance/Axios'
+import { axiosClubsInstance, axiosPlayersInstance } from '../../instance/Axios'
 import Subscribe from './util/Subscribe'
 import { useSelector } from 'react-redux'
 
@@ -23,15 +23,20 @@ function PlayerProfile({ player }) {
 
     //  }, [])
     const clubDet = useSelector((state) => state.club.paymentDetails)
-    // const payment = clubDet.payment
+    const clubId = useSelector((state) => state.club.clubDetails._id)
     const payment = clubDet.payment
-    console.log(payment);
+    console.log(clubId);
     const navigate = useNavigate()
     
 
 
-    const chatHandler = ()=>{
-        navigate(`/club/chat`,{state:"hi"})
+    const chatHandler = async()=>{
+        const data={
+            senderId:clubId,
+            receiverId:player._id
+        }
+        await axiosClubsInstance.post('/chat/create-chat',data)
+        navigate('/club/chat',{state:clubId})
     }
     
 
@@ -80,7 +85,7 @@ function PlayerProfile({ player }) {
                             <div className="text-center mt-12">
                                 {payment && payment ?
                                     <Link to={'/club/chat'}>
-                                        <button   class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full ">
+                                        <button onClick={chatHandler}  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full ">
                                             Connect
                                         </button>
                                     </Link>

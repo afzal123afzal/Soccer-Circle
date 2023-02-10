@@ -6,8 +6,13 @@ const { signUp,
     getClub,
     editDetails,
     getPlayers,
-    getPlayer,
-    payment
+    getPlayer,  
+    payment,
+    createChat,
+    userChats,
+    findChat,
+    addMessage,
+    getMessages
 } = require('../Controller/clubController')
 
 const requireClubAuth = require('../middleware/requireClubAuth')
@@ -40,6 +45,15 @@ router.patch('/edit-club/:id', editDetails)
 
 ///////////// Stripe payment
 router.post('/create-checkout-session',payment)
+
+//////////////// Chat
+router.post('/chat/create-chat', createChat);
+router.get('/chat/:userId', userChats);
+router.get('/chat/find/:firstId/:secondId', findChat);
+
+/////////////// Message
+router.post('/message', addMessage);
+router.get('/message/:chatId', getMessages);
 
 
 

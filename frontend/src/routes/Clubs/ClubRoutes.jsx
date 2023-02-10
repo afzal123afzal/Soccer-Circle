@@ -13,6 +13,7 @@ import Home from '../../pages/Clubs/Home';
 import PlayerDashboard from '../../pages/Clubs/PlayerDashboard';
 import CheckoutSuccess from '../../pages/Clubs/CheckoutSuccess';
 import ClubChat from '../../pages/Clubs/ClubChat';
+import Chat from '../../pages/Clubs/Chat';
 
 function ClubRoutes() {
   // const { club } = useClubAuthContext()
@@ -24,9 +25,13 @@ function ClubRoutes() {
         {/* {club ? <ClubNavbar /> : ""} */}
         <div className="pages">
           <Routes>
-          <Route
+          {/* <Route
               path="/club/chat"
               element={club ? <ClubChat/> : <Navigate to='/club/login' />}
+            /> */}
+            <Route
+              path="/club/chat"
+              element={club ? <Chat/> : <Navigate to='/club/login' />}
             />
           <Route
               path="/club/checkout-success"

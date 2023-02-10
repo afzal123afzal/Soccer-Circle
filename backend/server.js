@@ -21,16 +21,21 @@ app.use((req, res, next) => {
 })
 
 /////////////
-cb = (error) => {
-    if (!error) {
-        app.listen(process.env.PORT, () => {
-            console.log("listening to the port", process.env.PORT);
-        })
-    }
-}
+// cb = (error) => {
+//     if (!error) {
+//         app.listen(process.env.PORT, () => {
+//             console.log("listening to the port", process.env.PORT);
+//         })
+//     }
+// }
+
+const server = app.listen(process.env.PORT, () => {
+    console.log("listening to the port", process.env.PORT);
+})
 
 /////connect to Db
-db.connectToDb(cb)
+// db.connectToDb(cb)
+db.connectToDb()
 
 
 
@@ -39,3 +44,47 @@ app.use('/admin', adminRouter)
 app.use('/api/player', playerRouter)
 app.use('/api/club', clubRouter)
 
+
+const io = require("socket.io")(server, {
+    cors: {
+        origin: "http://127.0.0.1:5173"
+    },
+});
+
+let activeUsers = []
+
+io.on("connection", (socket) => {
+
+    /////add new User
+    socket.on('new-user-add', (newUserId) => {
+        ///// if user is not added previously
+        if (!activeUsers.some((user) => user.userId === newUserId)) {
+            activeUsers.push({
+                userId: newUserId,
+                socketId: socket.id
+            })
+        }
+        // send all active users to new user
+        console.log("Connected Users",activeUsers);
+        io.emit("get-users", activeUsers);
+    })
+
+    // send message to a specific user
+  socket.on("send-message", (data) => {
+    const { receiverId } = data;
+    const user = activeUsers.find((user) => user.userId === receiverId);
+    console.log("Sending from socket to :", receiverId)
+    console.log("Data: ", data)
+    if (user) {
+      io.to(user.socketId).emit("receive-message", data);
+    }
+  });
+
+    socket.on("disconnect", () => {
+        // remove user from active users
+        activeUsers = activeUsers.filter((user) => user.socketId !== socket.id);
+        console.log("User Disconnected", activeUsers);
+        // send all active users to all users
+        io.emit("get-users", activeUsers);
+    });
+})
