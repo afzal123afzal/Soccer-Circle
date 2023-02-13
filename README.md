@@ -46,10 +46,9 @@ The application is built with:
 - Tailwind
 - Stripe
 - Material UI
-- Socket.IO(ongoing)
-- Nodemaile(ongoing)
--Redux(ongoing)
-
+- Socket.IO
+- Redux
+- Nodemailer(ongoing)
 
 
 ## Features
