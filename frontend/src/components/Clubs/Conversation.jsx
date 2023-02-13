@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { axiosClubsInstance } from '../../instance/Axios'
 import dp from '../../assets/dp.png'
 
-const Conversation = ({ data, currentUserId, online }) => {
+const Conversation = ({ data, currentUserId, online,clubAuth }) => {
 
     const [userData, setUserData] = useState(null)
 
@@ -11,7 +11,9 @@ const Conversation = ({ data, currentUserId, online }) => {
         console.log(userId);
         const getUserData = async () => {
             try {
-                const { data } = await axiosClubsInstance.get(`/player/${userId}`)
+                const { data } = await axiosClubsInstance.get(`/player/${userId}`,
+                { headers: { 'Authorization': `Bearer ${clubAuth.token}` }}
+                )
                 setUserData(data)
                 console.log(data);
             } catch (err) {

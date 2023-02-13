@@ -24,6 +24,7 @@ function PlayerProfile({ player }) {
     //  }, [])
     const clubDet = useSelector((state) => state.club.paymentDetails)
     const clubId = useSelector((state) => state.club.clubDetails._id)
+    const clubAuth = useSelector((state) => state.club.clubDetails)
     const payment = clubDet.payment
     console.log(clubId);
     const navigate = useNavigate()
@@ -35,7 +36,9 @@ function PlayerProfile({ player }) {
             senderId:clubId,
             receiverId:player._id
         }
-        await axiosClubsInstance.post('/chat/create-chat',data)
+        await axiosClubsInstance.post('/chat/create-chat',data,
+        { headers: { 'Authorization': `Bearer ${clubAuth.token}` }}
+        )
         navigate('/club/chat',{state:clubId})
     }
     

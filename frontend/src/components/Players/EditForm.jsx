@@ -2,8 +2,8 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { axiosPlayersInstance } from '../../instance/Axios';
-function EditForm(props) {
-  console.log(props._id);
+function EditForm({state,_id}) {
+  // console.log(props._id);
 
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
@@ -15,16 +15,28 @@ function EditForm(props) {
 
   useEffect(() => {
     try {
+      // const userInfo = async () => {
+      //   const response = await axiosPlayersInstance.post('/player', { email: props.detail })
+      //   console.log(response);
+      //   setName(response.data[0].name)
+      //   setEmail(response.data[0].email)
+      //   setMobile(response.data[0].mobile)
+      //   setAge(response.data[0].age)
+      //   setPosition(response.data[0].position)
+      //   setClub(response.data[0].club)
+      //   setPlace(response.data[0].place)
+      // }
+
       const userInfo = async () => {
-        const response = await axiosPlayersInstance.post('/player', { email: props.detail })
+        const response = await axiosPlayersInstance.get(`/player/${_id}`)
         console.log(response);
-        setName(response.data[0].name)
-        setEmail(response.data[0].email)
-        setMobile(response.data[0].mobile)
-        setAge(response.data[0].age)
-        setPosition(response.data[0].position)
-        setClub(response.data[0].club)
-        setPlace(response.data[0].place)
+        setName(response.data.name)
+        setEmail(response.data.email)
+        setMobile(response.data.mobile)
+        setAge(response.data.age)
+        setPosition(response.data.position)
+        setClub(response.data.club)
+        setPlace(response.data.place)
       }
       userInfo()
 
@@ -37,7 +49,7 @@ function EditForm(props) {
     console.log("hi");
     try{
       const data = {name,email,mobile,age,position,club,place}
-      const response = await axiosPlayersInstance.patch('/add-details/'+props._id,data)
+      const response = await axiosPlayersInstance.patch(`/add-details/${_id}`,data)
       console.log(response);
     }catch(err){
       console.log(err.message);
@@ -49,7 +61,7 @@ function EditForm(props) {
     
      await updateDetails()
      
-     props.state()
+     state()
   }
 
   return (

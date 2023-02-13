@@ -5,6 +5,7 @@ import { useLogout } from "../../hooks/Player/useLogout";
 import { useAuthContext } from "../../hooks/Player/useAuthContext";
 import { useDispatch, useSelector } from 'react-redux'
 import { logoutAdmin } from "../../redux-toolkit/loginReducer";
+import { toast } from "react-toastify";
 
 function AdminNav() {
     const [isOpen, setIsOpen] = useState(false);
@@ -24,6 +25,7 @@ function AdminNav() {
     const handleClick = () => {
         console.log('hi');
         dispatch(logoutAdmin())
+        toast.success("Logout Successfully")
         // logout()
     }
     return (

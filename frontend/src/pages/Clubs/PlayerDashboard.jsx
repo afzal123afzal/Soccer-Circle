@@ -19,15 +19,19 @@ function ClubDashboard() {
     const [player, setPlayer] = useState('')
     const location = useLocation()
     console.log(location.state)
-    const playerDetail = location.state 
+    const playerDetail = location.state
     //   const { player } = useAuthContext()
-const clubDet = useSelector((state)=>state.club.clubDetails)
-console.log(clubDet.email);
+    const clubDet = useSelector((state) => state.club.clubDetails)
+    console.log(clubDet.email);
+    const club = useSelector((state) => state.club.clubDetails)
+
 
     useEffect(() => {
         const fetchClub = async () => {
             try {
-                const response = await axiosClubsInstance.get(`/player/${playerDetail}`)
+                const response = await axiosClubsInstance.get(`/player/${playerDetail}`,
+                { headers: { 'Authorization': `Bearer ${club.token}` }}
+                )
                 console.log(response);
                 if (response.status === 200) {
                     setPlayer(response.data)

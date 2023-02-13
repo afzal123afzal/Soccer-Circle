@@ -4,9 +4,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import ClubNavbar from '../../components/Clubs/ClubNavbar'
 import { axiosClubsInstance } from '../../instance/Axios'
 import './ClubDashboard.css'
-import { clubProfile,nameNav } from '../../redux-toolkit/clubLoginReducer'
+import { clubProfile, nameNav } from '../../redux-toolkit/clubLoginReducer'
 import ClubProfileStatistics from '../../components/Clubs/ClubProfileStatistics'
 import ClubEditForm from '../../components/Clubs/ClubEditForm'
+import { toast } from 'react-toastify'
 
 
 function ClubDashboard() {
@@ -19,9 +20,13 @@ function ClubDashboard() {
 
 
 
+
+
   const fetchClub = async () => {
     try {
-      const response = await axiosClubsInstance.get(`/${_id}`)
+      const response = await axiosClubsInstance.get(`/${_id}`,
+        { headers: { 'Authorization': `Bearer ${club.token}` } }
+      )
       console.log(response);
       if (response.status === 200) {
         dispatch(clubProfile(response.data))
@@ -43,6 +48,7 @@ function ClubDashboard() {
   }
   const editMode = () => {
     setEdit(false)
+    toast.success("Updated Successfully!!!!")
   }
 
   return (
@@ -50,7 +56,7 @@ function ClubDashboard() {
       <ClubNavbar />
       <div className='carousel' id="grad1"><span className='name-center'>{clubSpec.name}</span></div>
       <div className="container1">
-        {edit ? <ClubEditForm state={editMode} _id={_id} /> : <ClubProfileStatistics club={clubSpec} edit={handleClick} />}
+        {edit ? <ClubEditForm state={editMode} clubAuth={club} _id={_id} /> : <ClubProfileStatistics club={clubSpec} clubAuth={club} edit={handleClick} />}
         {/* <ClubProfileStatistics club={clubSpec} edit={handleClick} /> */}
       </div >
     </div>

@@ -28,7 +28,9 @@ function CheckoutSuccess() {
         // const id = player.data._id
 
         try {
-          const response = await axiosClubsInstance.patch(`/edit-club/${id}`, { payment: true })
+          const response = await axiosClubsInstance.patch(`/edit-club/${id}`, { payment: true },
+          { headers: { 'Authorization': `Bearer ${club.token}` }}
+          )
           const data = response.data
           console.log(data);
 

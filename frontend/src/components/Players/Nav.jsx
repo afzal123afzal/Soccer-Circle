@@ -3,15 +3,25 @@ import { Transition } from "@headlessui/react";
 import { Link } from "react-router-dom";
 import { useLogout } from "../../hooks/Player/useLogout";
 import { useAuthContext } from "../../hooks/Player/useAuthContext";
+import { toast } from "react-toastify";
+import { useDispatch, useSelector } from 'react-redux'
+import { logoutPlayer } from "../../redux-toolkit/playerLoginReducer";
 
 function Nav() {
     const [isOpen, setIsOpen] = useState(false);
-    const { logout } = useLogout()
-    const { player } = useAuthContext()
+    // const { logout } = useLogout()
+    // const { player } = useAuthContext()
+    const dispatch = useDispatch()
+    const playerState = useSelector((state) => state.player)
+    const player = playerState.navName
+    const player1 = playerState.playerDetails
+    console.log(player);
 
     const handleClick = () => {
         console.log('hi');
-        logout()
+        // logout()
+        dispatch(logoutPlayer())
+        toast.success("Logout Successfully")
     }
     return (
         <div>
@@ -47,17 +57,17 @@ function Nav() {
                                     </Link>
 
                                     <Link
+                                        to="/player/chat"
+                                        className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                                    >
+                                        Chat
+                                    </Link>
+
+                                    <Link
                                         to="/player/dashboard"
                                         className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                                     >
                                         Dashboard
-                                    </Link>
-
-                                    <Link
-                                        to=""
-                                        className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                                    >
-                                        About Us
                                     </Link>
 
                                     {/* <Link
@@ -66,21 +76,25 @@ function Nav() {
                                     >
                                         Reports
                                     </Link> */}
-                                    {player && (
+                                    {player1 ? (
                                         <>
-                                            <Link className="text-cyan-300">{player.data.name}</Link>
+                                            <Link className="text-cyan-300">{player}</Link>
                                             <button onClick={handleClick} class="bg-blue-500 hover:bg-blue-300 text-white font-bold py-2 px-3 align-center rounded-full">
                                                 LogOut
                                             </button>
                                         </>
 
-                                    )}
-                                    {!player && (
+                                    ) :
+                                        <div>
+                                            <Link className="text-cyan-300" to="/player/login">Login</Link>
+                                            <Link className="text-cyan-300" to="/player/signup">Signup</Link>
+                                        </div>}
+                                    {/* {!player && (
                                         <div>
                                             <Link className="text-cyan-300" to="/player/login">Login</Link>
                                             <Link className="text-cyan-300" to="/player/signup">Signup</Link>
                                         </div>
-                                    )}
+                                    )} */}
                                 </div>
                             </div>
                         </div>
@@ -158,6 +172,13 @@ function Nav() {
                                 </Link>
 
                                 <Link
+                                    to="/player/chat"
+                                    className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                                >
+                                    Chat
+                                </Link>
+
+                                <Link
                                     to="/player/dashboard"
                                     className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
                                 >
@@ -168,30 +189,27 @@ function Nav() {
                                     href="#"
                                     className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
                                 >
-                                    About Us
-                                </a>
-
-                                <a
-                                    href="#"
-                                    className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-                                >
                                     Reports
                                 </a>
-                                {player && (
+                                {player1 ? (
                                     <>
-                                        <Link className="block px-3 py-2 font-medium " >{player.data.name}</Link> <br></br>
+                                        <Link className="block px-3 py-2 font-medium " >{player}</Link> <br></br>
                                         <button onClick={handleClick} class="bg-blue-500 hover:bg-blue-300 text-white font-bold py-2 px-3 align-center rounded">
                                             LogOut
                                         </button>
                                     </>
 
-                                )}
-                                {!player && (
+                                ) : <div>
+                                    <Link to="/player/login">Login</Link>
+                                    <Link to="/player/signup">Signup</Link>
+                                </div>
+                                }
+                                {/* {!player && (
                                     <div>
                                         <Link to="/player/login">Login</Link>
                                         <Link to="/player/signup">Signup</Link>
                                     </div>
-                                )}
+                                )} */}
 
                             </div>
 

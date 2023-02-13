@@ -7,19 +7,21 @@ import { axiosClubsInstance } from '../../instance/Axios'
 import axios from 'axios';
 import dp from '../../assets/dp.png'
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 
 function ClubProfileStatistics(props) {
   const [imageSelected, setImageSelected] = useState('')
   const [url, setUrl] = useState('')
   const club = props.club
+  const clubAuth = props.clubAuth
   const _id = club._id
   console.log(club.image);
   // const image = club.image
-  
 
-  useEffect(()=>{
+
+  useEffect(() => {
     setProfile()
-  },[url,imageSelected])
+  }, [url, imageSelected])
 
   const uploadImage = async () => {
     try {
@@ -36,8 +38,12 @@ function ClubProfileStatistics(props) {
         const imageUrl = response.data.url
         console.log(imageUrl);
 
-        const profile = await axiosClubsInstance.patch(`/edit-club/${_id}`, { image: imageUrl })
-
+        const profile = await axiosClubsInstance.patch(`/edit-club/${_id}`, { image: imageUrl },
+          { headers: { 'Authorization': `Bearer ${clubAuth.token}` } }
+        )
+        if (profile) {
+          toast.success("Profile Pic Updated!!!!!!")
+        }
         // const image = profile.data[0].image
         // setProfile()
         console.log(profile);
@@ -52,16 +58,18 @@ function ClubProfileStatistics(props) {
   }
 
   const setProfile = async () => {
-  
-    
-      const response = await axiosClubsInstance.get(`${_id}`)
-    console.log(response.data.image);
-      const image = response.data.image
-      setUrl(image)
 
- 
+
+    const response = await axiosClubsInstance.get(`${_id}`,
+      { headers: { 'Authorization': `Bearer ${clubAuth.token}` } }
+    )
+    console.log(response.data.image);
+    const image = response.data.image
+    setUrl(image)
+
+
   }
-setProfile()
+  setProfile()
 
   return (
     <div>
@@ -102,7 +110,7 @@ setProfile()
                 </div>
               </div>
               <div className="text-center mt-12">
-              <>
+                <>
                   <IconButton color="primary" aria-label="upload picture" component="label">
                     <input onChange={(event) => { setImageSelected(event.target.files[0]) }} hidden accept="image/*" type="file" />
                     <PhotoCamera />

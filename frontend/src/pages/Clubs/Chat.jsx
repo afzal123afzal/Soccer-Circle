@@ -7,6 +7,7 @@ import Conversation from '../../components/Clubs/Conversation'
 import ChatBox from '../../components/Clubs/ChatBox'
 import { io } from 'socket.io-client'
 import { useLocation } from 'react-router-dom'
+import ClubNavbar from '../../components/Clubs/ClubNavbar'
 
 const Chat = () => {
   const user = useSelector((state) => state.club.clubDetails)
@@ -20,9 +21,9 @@ const Chat = () => {
 
 
   const socket = useRef()
-const location = useLocation()
-console.log(location.state,"Location");
-const locationItem = location.state
+  const location = useLocation()
+  console.log(location.state, "Location");
+  const locationItem = location.state
 
 
   // Connect to Socket.io
@@ -55,7 +56,9 @@ const locationItem = location.state
   useEffect(() => {
     const getChats = async () => {
       try {
-        const { data } = await axiosClubsInstance.get(`/chat/${user._id}`)
+        const { data } = await axiosClubsInstance.get(`/chat/${user._id}`,
+          { headers: { 'Authorization': `Bearer ${user.token}` } }
+        )
         setChats(data)
         console.log(data);
       } catch (err) {
@@ -63,7 +66,7 @@ const locationItem = location.state
       }
     }
     getChats()
-  }, [user,locationItem])
+  }, [user, locationItem])
 
   const checkOnlineStatus = (chat) => {
     const chatMember = chat.members.find((member) => member !== user._id);
@@ -71,34 +74,38 @@ const locationItem = location.state
     return online ? true : false;
   };
   return (
-    <div className="Chat">
-      {/* Left Side */}
-      <div className="Left-side-chat">
-        {/* <LogoSearch /> */}
-        <div className="Chat-container">
-          <h2>Chats</h2>
-          <div className="Chat-list">
-            {chats.map((chat) => {
-              return (
-                <div onClick={() => setCurrentChat(chat)} >
-                  <Conversation data={chat} currentUserId={user._id} online={checkOnlineStatus(chat)} />
-                </div>
-              )
-            })}
+    <>
+      <div>
+        <ClubNavbar />
+        <div className="Chat">
+          {/* Left Side */}
+          <div className="Left-side-chat">
+            {/* <LogoSearch /> */}
+            <div className="Chat-container">
+              <h2>Chats</h2>
+              <div className="Chat-list">
+                {chats.map((chat) => {
+                  return (
+                    <div onClick={() => setCurrentChat(chat)} >
+                      <Conversation data={chat} clubAuth={user} currentUserId={user._id} online={checkOnlineStatus(chat)} />
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+
+          </div>
+          {/* Right Side */}
+          <div className="Right-side-chat">
+            <div style={{ width: "20rem", alignSelf: "flex-end" }}></div>
+            {/* Chat Body */}
+            <ChatBox chat={currentChat} clubAuth={user} currentUser={user._id} setSendMessage={setSendMessage}
+              receiveMessage={receiveMessage}
+            />
           </div>
         </div>
-
       </div>
-      {/* Right Side */}
-      <div className="Right-side-chat">
-        <div style={{ width: "20rem", alignSelf: "flex-end" }}></div>
-        {/* Chat Body */}
-        <ChatBox chat={currentChat} currentUser={user._id} setSendMessage={setSendMessage}
-          receiveMessage={receiveMessage}
-        />
-      </div>
-    </div>
-
+    </>
   )
 
 

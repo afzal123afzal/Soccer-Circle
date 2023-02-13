@@ -6,7 +6,7 @@ import { format } from 'timeago.js'
 import InputEmoji from 'react-input-emoji'
 
 
-const ChatBox = ({ chat, currentUser, setSendMessage, receiveMessage }) => {
+const ChatBox = ({ chat, currentUser, setSendMessage, receiveMessage ,clubAuth}) => {
 
     const [userData, setUserData] = useState(null)
     const [messages, setMessages] = useState([])
@@ -18,7 +18,9 @@ const ChatBox = ({ chat, currentUser, setSendMessage, receiveMessage }) => {
         const userId = chat?.members?.find((id) => id !== currentUser)
         const getUserData = async () => {
             try {
-                const { data } = await axiosClubsInstance.get(`/player/${userId}`)
+                const { data } = await axiosClubsInstance.get(`/player/${userId}`,
+                { headers: { 'Authorization': `Bearer ${clubAuth.token}` }}
+                )
                 setUserData(data)
             } catch (err) {
                 console.log(err);
@@ -31,7 +33,9 @@ const ChatBox = ({ chat, currentUser, setSendMessage, receiveMessage }) => {
     useEffect(() => {
         const fetchMessages = async () => {
             try {
-                const { data } = await axiosClubsInstance.get(`/message/${chat._id}`)
+                const { data } = await axiosClubsInstance.get(`/message/${chat._id}`,
+                { headers: { 'Authorization': `Bearer ${clubAuth.token}` }}
+                )
                 console.log(data);
                 setMessages(data)
             } catch (err) {
@@ -58,7 +62,9 @@ const ChatBox = ({ chat, currentUser, setSendMessage, receiveMessage }) => {
 
         //////// send message to database
         try {
-            const { data } = await axiosClubsInstance.post('/message', message)
+            const { data } = await axiosClubsInstance.post('/message', message,
+            { headers: { 'Authorization': `Bearer ${clubAuth.token}` }}
+            )
             setMessages([...messages, data])
             setNewMessage("")
 

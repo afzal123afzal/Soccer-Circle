@@ -40,8 +40,8 @@ router.patch('/add-details/:id', addDetails)
 router.get('/', getPlayers)
 
 ///////// Get a specific player
-router.post('/player', getPlayer)
-// router.get('/player/:id', getPlayer)
+// router.post('/player', getPlayer)
+router.get('/player/:id', getPlayer)
 
 
 ///////////// Stripe payment

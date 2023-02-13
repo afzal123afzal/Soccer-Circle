@@ -1,3 +1,22 @@
+.playersOne {
+  max-width: 950px;
+  margin: 10px auto;
+  margin-left: 96;
+  padding: 20px;
+  border-radius: 4px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+/* .MuiBox-root{
+  margin-left: 210px !important;
+} */
+
+.css-1gqtk00{
+  margin-left: 228px !important;
+}
+
 .players {
     max-width: 950px;
     margin: 40px auto;

@@ -17,7 +17,7 @@ const adminSlice = createSlice({
             // return { ...state, adminDetails }
           
         },
-        logoutAdmin : (state,action)=>{
+        logoutAdmin : (state)=>{
             state.adminDetails=false
         }
     }

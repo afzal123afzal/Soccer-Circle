@@ -1,11 +1,16 @@
 import { useState } from "react";
 import { useAuthContext } from './useAuthContext'
 import { axiosPlayersInstance } from "../../instance/Axios";
+import { useDispatch } from 'react-redux'
+import { loginPlayer, nameNav, paymentCheck } from "../../redux-toolkit/playerLoginReducer";
+
 
 export const useSignup = () => {
     const [error, setError] = useState(null)
     const [isLoading, setIsLoading] = useState(null)
-    const { dispatch } = useAuthContext()
+    // const { dispatch } = useAuthContext()
+    const dispatch = useDispatch()
+
 
 
 
@@ -23,7 +28,11 @@ export const useSignup = () => {
                 localStorage.setItem('player', JSON.stringify(result))
 
                 //update the authContext
-                dispatch({ type: 'LOGIN', payload: result })
+                // dispatch({ type: 'LOGIN', payload: result })
+                console.log(result.data);
+                dispatch(loginPlayer(result.data))
+                dispatch(paymentCheck(result.data))
+                dispatch(nameNav(result.data.name))
                 setIsLoading(false)
             }
 

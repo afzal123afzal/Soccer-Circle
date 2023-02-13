@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import { useClubAuthContext} from './useClubAuthContext'
 import { axiosClubsInstance } from '../../instance/Axios'
-import { useDispatch,useSelector } from 'react-redux'
-import { loginClub,paymentCheck, clubProfile,nameNav} from '../../redux-toolkit/clubLoginReducer'
+import { useDispatch} from 'react-redux'
+import { loginClub,paymentCheck,nameNav} from '../../redux-toolkit/clubLoginReducer'
+import { toast } from 'react-toastify'
 
 
 export const useClubSignup = () => {
@@ -10,6 +11,7 @@ export const useClubSignup = () => {
   const [isLoading, setIsLoading] = useState(null)
   // const { dispatch } = useClubAuthContext()
   const dispatch = useDispatch()
+
 
   const signup = async (name,email,mobile, password,regNo) => {
     setIsLoading(true)
@@ -29,7 +31,7 @@ export const useClubSignup = () => {
             dispatch(paymentCheck(result.data))
             dispatch(nameNav(result.data.name))
 
-
+            toast.success(`Welcome ${result.data.name}`)
 
             setIsLoading(false)
         }

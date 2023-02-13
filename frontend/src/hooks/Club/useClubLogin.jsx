@@ -28,7 +28,7 @@ export const useClubLogin = () => {
             dispatch(paymentCheck(result.data))
             dispatch(nameNav(result.data.name))
            
-
+          return result.data.name
 
             setIsLoading(false)
         }

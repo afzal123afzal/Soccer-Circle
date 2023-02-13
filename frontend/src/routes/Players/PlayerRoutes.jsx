@@ -16,11 +16,13 @@ import PlayerDashboard from '../../pages/Players/PlayerDashboard'
 import { useLocation } from 'react-router-dom'
 import CheckoutSuccess from '../../pages/Players/CheckoutSuccess'
 import Chat from '../../pages/Players/Chat'
+import { useSelector } from 'react-redux'
 
 
 
 function PlayerRoutes() {
-  const { player } = useAuthContext()
+  // const { player } = useAuthContext()
+  const player = useSelector((state)=>state.player.playerDetails)
   return (
     <div>
 

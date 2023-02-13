@@ -4,6 +4,7 @@ import { axiosAdminInstance } from "../../instance/Axios";
 import { useDispatch } from "react-redux";
 import loginReducer from "../../redux-toolkit/loginReducer";
 import { loginAdmin } from "../../redux-toolkit/loginReducer";
+import {toast} from 'react-toastify'
 
 export const useLogin = () => {
     const [error, setError] = useState(null)
@@ -31,6 +32,7 @@ export const useLogin = () => {
             //     //update the authContext
             //     dispatch({ type: 'LOGIN', payload: result })
             dispatch(loginAdmin(result.data))
+            toast.success(`Welcome ${result.data.email}`)
             
                 // setIsLoading(false)
             }

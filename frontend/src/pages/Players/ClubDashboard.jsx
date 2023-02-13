@@ -7,16 +7,19 @@ import ClubProfileStatistics from '../../components/Players/ClubProfileStatistic
 import { axiosPlayersInstance } from '../../instance/Axios'
 import './ClubDashboard.css'
 import { useAuthContext } from '../../hooks/Player/useAuthContext'
+import { useSelector } from 'react-redux'
 
 
 
 function ClubDashboard() {
   const [club, setClub] = useState('')
-  const [playerDetail, setPlayerDetail] = useState('')
+  // const [playerDetail, setPlayerDetail] = useState('')
   const location = useLocation()
   console.log(location.state)
   const clubDetail = location.state
-  const { player } = useAuthContext()
+  // const { player } = useAuthContext()
+  const player = useSelector((state)=>state.player.playerDetails)
+  console.log(player,"Plaaaayers");
 
 
   useEffect(() => {
@@ -36,28 +39,28 @@ function ClubDashboard() {
     fetchClub()
   }, [])
 
-  useEffect(() => {
-    const fetchPlayer = async () => {
-      if (player != null) {
-        console.log(player);
-        const email = player.data.email
+  // useEffect(() => {
+  //   const fetchPlayer = async () => {
+  //     if (player != null) {
+  //       console.log(player);
+  //       const email = player.data.email
 
-        try {
-          const response = await axiosPlayersInstance.post('/player', { email: email })
-          console.log(response.data[0].payment);
-          if (response.status === 200) {
-            setPlayerDetail(response.data[0])
-          }
+  //       try {
+  //         const response = await axiosPlayersInstance.post('/player', { email: email })
+  //         console.log(response.data[0].payment);
+  //         if (response.status === 200) {
+  //           setPlayerDetail(response.data[0])
+  //         }
 
-        } catch (err) {
-          console.log(err.message);
-        }
-      }
+  //       } catch (err) {
+  //         console.log(err.message);
+  //       }
+  //     }
 
-    }
-    fetchPlayer()
+  //   }
+  //   fetchPlayer()
 
-  }, [player])
+  // }, [player])
 
 
   return (
@@ -68,7 +71,7 @@ function ClubDashboard() {
 
       {/* <div className="container1"> */}
       {/* <h1 className='dash'>PlayerDashboard</h1> */}
-      <ClubProfileStatistics club={club} playerDetail={playerDetail} />
+      <ClubProfileStatistics club={club} playerDetails={player} />
       {/* </div> */}
     </div>
   )

@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 /////////////////
 import { useDispatch, useSelector } from 'react-redux'
 import { logoutClub } from "../../redux-toolkit/clubLoginReducer";
+import { toast } from "react-toastify";
 
 
 function ClubNavbar() {
@@ -21,6 +22,7 @@ function ClubNavbar() {
     const handleClick = () => {
         console.log('hi');
         dispatch(logoutClub())
+        toast.success("Logout Successfully")
         // logout()
     }
     return (
@@ -57,17 +59,17 @@ function ClubNavbar() {
                                     </Link>
 
                                     <Link
+                                        to="/club/chat"
+                                        className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                                    >
+                                        Chat
+                                    </Link>
+
+                                    <Link
                                         to="/club/dashboard"
                                         className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                                     >
                                         Dashboard
-                                    </Link>
-
-                                    <Link
-                                        to=""
-                                        className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                                    >
-                                        About Us
                                     </Link>
 
                                     {/* <Link
@@ -172,17 +174,17 @@ function ClubNavbar() {
                                 </Link>
 
                                 <Link
-                                    to="/club/dashboard"
+                                    to="/club/chat"
                                     className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
                                 >
-                                    Dashboard
+                                    Chat
                                 </Link>
 
                                 <a
-                                    href="#"
+                                    href="/club/dashboard"
                                     className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
                                 >
-                                    About Us
+                                    Dashboard
                                 </a>
 
                                 <a

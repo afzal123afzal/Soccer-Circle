@@ -20,6 +20,7 @@ import { useLogin } from '../../hooks/Player/useLogin'
 
 
 
+
 function Copyright(props) {
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -109,7 +110,7 @@ const PlayerLogin1 = () => {
                         <Grid container>
                             <Grid item xs>
                                 <Link to="#" variant="body2">
-                                    Forgot password?
+                                    {/* Forgot password? */}
                                 </Link>
                             </Grid>
                             <Grid item>

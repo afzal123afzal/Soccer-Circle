@@ -11,11 +11,14 @@ function ClubEditForm(props) {
   const [mobile, setMobile] = useState('')
   const [regNo, setRegNo] = useState('')
   const [place, setPlace] = useState('')
+  const clubAuth = props.clubAuth
 
   useEffect(() => {
     try {
       const userInfo = async () => {
-        const response = await axiosClubsInstance.get(`${_id}`)
+        const response = await axiosClubsInstance.get(`${_id}`,
+      { headers: { 'Authorization': `Bearer ${clubAuth.token}` }}
+        )
         console.log(response.data);
         setName(response.data.name)
         setEmail(response.data.email)
@@ -34,7 +37,9 @@ function ClubEditForm(props) {
     console.log("hi");
     try{
       const data = {name,email,mobile,regNo,place}
-      const response = await axiosClubsInstance.patch(`/edit-club/${_id}`,data)
+      const response = await axiosClubsInstance.patch(`/edit-club/${_id}`,data,
+      { headers: { 'Authorization': `Bearer ${clubAuth.token}` }}
+      )
       console.log(response);
     }catch(err){
       console.log(err.message);

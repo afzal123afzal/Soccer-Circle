@@ -14,7 +14,7 @@ const requireAuth = async (req, res, next) => {
   try {
     const { _id } = jwt.verify(token, process.env.SECRET)
 
-    req.player = await Player.findOne({ _id }).select('_id')
+    req.player = await Player.findOne({ _id }).select('-password')
     console.log("next");
     next()
 

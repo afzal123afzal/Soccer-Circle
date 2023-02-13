@@ -18,6 +18,8 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 // import { useLogin } from '../../hooks/Player/useLogin'
 import { useClubLogin } from '../../hooks/Club/useClubLogin';
+import {toast} from 'react-toastify'
+import { useSelector } from 'react-redux';
 
 
 
@@ -42,7 +44,7 @@ const ClubLoginForm = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const { login, error, isLoading } = useClubLogin()
-
+    // const name = useSelector((state)=state.club.navName)
  
 
     const handleSubmit = async (event) => {
@@ -53,8 +55,11 @@ const ClubLoginForm = () => {
             email1: data.get('email'),
             password1: data.get('password'),
         }
-        await login(loginData.email1, loginData.password1)
-        console.log("login succesfully");
+        const response =await login(loginData.email1, loginData.password1)
+        console.log("data",response);
+        if(response){
+            toast.success(`Welcome ${response} !!!`)
+        }
 
     };
     return (

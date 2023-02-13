@@ -87,6 +87,7 @@ const addDetails = async (req, res) => {
 ///////// get All Players
 
 const getPlayers = async (req, res) => {
+  
   try {
     const players = await Player.find({}, {  password: 0 }).sort({ createdAt: -1 });
     res.status(200).json(players);
@@ -102,8 +103,11 @@ const getPlayer = async (req, res) => {
   const email = req.body.email
   const id = req.params.id;
   try {
-    // const player = await Player.findById({ _id: id }, { password: 0 })
-    const player = await Player.find({email:email},{_password:0})
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ error: 'Invalid Club Id' })
+    }
+    const player = await Player.findById({ _id: id }, { password: 0 })
+    // const player = await Player.find({email:email},{_password:0})
     
     if (!player) {
       return res.status(200).json({ mssg: "No such player" });
@@ -116,10 +120,10 @@ const getPlayer = async (req, res) => {
 
 //////Get All Clubs
 const getClubs = async (req, res) => {
-  console.log("hi");
+  console.log(req.query); ////// this technique I used it for filter
   try {
     // const players = await Club.find({}).sort({ createdAt: -1 });
-    const players = await Club.find({}, {  password: 0 }).sort({ createdAt: -1 });
+    const players = await Club.find({...req.query}, {  password: 0 }).sort({ createdAt: -1 });
     if (!players) {
      return res.status(400).json({ mssg: "No Clubs" });
     }

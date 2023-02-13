@@ -5,17 +5,21 @@ import { useAuthContext } from '../../hooks/Player/useAuthContext'
 import PayButton from './util/PayButton'
 import dp from '../../assets/dp.png'
 import { axiosPlayersInstance } from '../../instance/Axios'
+import { useSelector } from 'react-redux'
 
-function ProfilePage({ club, playerDetail }) {
-  const { player } = useAuthContext()
+function ProfilePage({ club, playerDetails}) {
+  // const { player } = useAuthContext()
   const navigate = useNavigate()
+const payment = useSelector((state)=>state.player.paymentDetails.payment)
+console.log(payment,"Payment!!!!!");
 
-  console.log(player.data.payment);
-  console.log(player.data,"Player");
+
+  // console.log(player.data.payment);
+  // console.log(player.data,"Player");
   // const payment = player.data.payment
-  const payment = playerDetail.payment
-  const email = player.data.email
-  console.log(playerDetail.payment);
+  // const payment = playerDetail.payment
+  // const email = player.data.email
+  // console.log(playerDetail.payment);
   //  useEffect(() => {
   //    const response = axiosPlayersInstance.post('/club',{email:email})
   //    console.log();
@@ -25,11 +29,11 @@ function ProfilePage({ club, playerDetail }) {
 
   const chatHandler = async()=>{
     const data={
-        senderId:player.data._id,
+        senderId:playerDetails._id,
         receiverId:club._id
     }
     await axiosPlayersInstance.post('/chat/create-chat',data)
-    navigate('/player/chat',{state:player.data._id})
+    navigate('/player/chat',{state:playerDetails._id})
 }
 
 

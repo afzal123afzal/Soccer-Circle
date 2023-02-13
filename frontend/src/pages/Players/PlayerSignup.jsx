@@ -14,6 +14,7 @@ const PlayerSignup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     await signup(name, email, mobile, password)
+    
     console.log(name, email, mobile, password)
   }
 

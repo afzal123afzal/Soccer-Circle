@@ -11,9 +11,10 @@ import { useEffect } from 'react';
 import { Image } from 'cloudinary-react'
 // import playerModel from '../../../../backend/model/playerModel';
 import { axiosPlayersInstance } from '../../instance/Axios';
+import { toast } from 'react-toastify';
 
-function ProfilePage(props) {
-  console.log(props.edit);
+function ProfilePage({ player, edit }) {
+  // console.log(props.edit);
   const [imageSelected, setImageSelected] = useState('')
   const [url, setUrl] = useState('')
   // useEffect(()=>{
@@ -38,10 +39,12 @@ function ProfilePage(props) {
       if (response.status === 200) {
         const imageUrl = response.data.url
         console.log(imageUrl);
-        const id = props.user[0]._id
+        // const id = props.user[0]._id
 
-        const profile = await axiosPlayersInstance.patch('/add-details/' + id, { image: imageUrl })
-
+        // const profile = await axiosPlayersInstance.patch('/add-details/' + id, { image: imageUrl })
+        const profile = await axiosPlayersInstance.patch(`/add-details/${player._id}`, { image: imageUrl })
+        console.log(profile, "Profile Picture");
+        toast.success("Profile Pic Updated!!!!")
         // const image = profile.data[0].image
         setProfile()
 
@@ -52,16 +55,29 @@ function ProfilePage(props) {
       console.log(err.message);
     }
   }
+  // const setProfile = async () => {
+  //   if (props.user[0]) {
+  //     const email = props.user[0].email
+  //     const response = await axiosPlayersInstance.post('/player', { email: email })
+  //     // console.log(response.data[0].image);
+  //     const imageUrl = response.data[0].image
+  //     setUrl(imageUrl)
+
+  //   }
+  // }
   const setProfile = async () => {
-    if (props.user[0]) {
-      const email = props.user[0].email
-      const response = await axiosPlayersInstance.post('/player', { email: email })
+    
+      
+      const response = await axiosPlayersInstance.get(`/player/${player._id}`)
       // console.log(response.data[0].image);
-      const imageUrl = response.data[0].image
+      const imageUrl = response.data.image
+      console.log(imageUrl,"Imaaaage");
       setUrl(imageUrl)
 
-    }
+    
   }
+
+
   setProfile()
 
 
@@ -125,31 +141,36 @@ function ProfilePage(props) {
                     Update
                   </Button>
                 </>
-                <button onClick={props.edit} className='p-3'><i class="fas fa-edit"></i></button>
+                <button onClick={edit} className='p-3'><i class="fas fa-edit"></i></button>
 
                 <h3 className="text-xl font-semibold leading-normal mb-2 text-blueGray-700 mt-2">
-                  {props.user != null ? props.user[0].email : ''}
+                  {/* {props.user != null ? props.user[0].email : ''} */}
+                  {player.email}
                 </h3>
                 <div className="text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
                   <i className="fas fa-map-marker-alt mr-2 text-lg text-blueGray-400"></i>
-                  {props.user != null ? props.user[0].place : ''}
-                  
+                  {/* {props.user != null ? props.user[0].place : ''} */}
+                  {player.place}
+
                 </div>
                 <div className="mb-2 text-blueGray-600 mt-10">
                   <i className="fas fa-phone mr-2 text-lg text-blueGray-400"></i>
-                  {props.user != null ? props.user[0].mobile : ''}
+                  {/* {props.user != null ? props.user[0].mobile : ''} */}
+                  {player.mobile}
 
 
                 </div>
                 <div className="mb-2 text-blueGray-600">
                   <i className="fas fa-football mr-2 text-lg text-blueGray-400"></i>
-                  {props.user != null ? props.user[0].position : ''}
-                  
+                  {/* {props.user != null ? props.user[0].position : ''} */}
+                  {player.position}
+
                 </div>
                 <div className="mb-2 text-blueGray-600">
                   <i className="fas fa-futbol mr-2 text-lg text-blueGray-400"></i>
-                  {props.user != null ? props.user[0].club : ''}
-                  
+                  {/* {props.user != null ? props.user[0].club : ''} */}
+                  {player.club}
+
                 </div>
               </div>
               <div className="mt-10 py-10 border-t border-blueGray-200 text-center">

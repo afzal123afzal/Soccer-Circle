@@ -2,6 +2,8 @@ import { useState } from "react"
 import { useClubSignup } from "../../hooks/Club/useClubSignup"
 import './ClubSignup.css'
 import ClubNavbar from "../../components/Clubs/ClubNavbar"
+import { toast } from "react-toastify"
+
 
 const ClubSignup = () => {
   const [name, setName] = useState('')
@@ -10,10 +12,12 @@ const ClubSignup = () => {
   const [password, setPassword] = useState('')
   const [regNo, setRegNo] = useState('')
   const { signup, error, isLoading } = useClubSignup()
+ 
+
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    await signup(name, email, mobile, password, regNo)
+    const response = await signup(name, email, mobile, password, regNo)
     console.log(name, email, password, mobile, regNo)
   }
 

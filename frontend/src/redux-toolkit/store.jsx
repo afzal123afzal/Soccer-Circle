@@ -38,6 +38,7 @@ import {
 
 import loginReducer from './loginReducer'
 import clubLoginReducer from './clubLoginReducer';
+import playerLoginReducer from './playerLoginReducer';
 const persistConfig = {
     key: 'counter',
     storage,
@@ -46,7 +47,9 @@ const persistConfig = {
 const reducers = combineReducers(
     { 
         admin:loginReducer ,
-        club:clubLoginReducer
+        player:playerLoginReducer,
+        club:clubLoginReducer,
+
     });
 const persistedReducer = persistReducer(persistConfig, reducers);
 
