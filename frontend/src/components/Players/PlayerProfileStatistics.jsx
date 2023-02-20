@@ -1,25 +1,17 @@
-
-import React, { useState, useMemo } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState} from 'react'
 import dp from '../../assets/dp.png'
-import { useAuthContext } from '../../hooks/Player/useAuthContext'
 import { IconButton } from '@mui/material';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import axios from 'axios'
 import { Button } from '@mui/material';
 import { useEffect } from 'react';
-import { Image } from 'cloudinary-react'
-// import playerModel from '../../../../backend/model/playerModel';
+
 import { axiosPlayersInstance } from '../../instance/Axios';
 import { toast } from 'react-toastify';
 
-function ProfilePage({ player, edit }) {
-  // console.log(props.edit);
+function ProfilePage({ player, edit, playerAuth }) {
   const [imageSelected, setImageSelected] = useState('')
   const [url, setUrl] = useState('')
-  // useEffect(()=>{
-
-  // },[imageSelected])
 
   useEffect(() => {
     setProfile()
@@ -33,19 +25,13 @@ function ProfilePage({ player, edit }) {
       const response = await axios.post('https://api.cloudinary.com/v1_1/des6t3rkt/image/upload',
         formData
       )
-      console.log(response.data.url);
-      // setUrl(response.data.url)
 
       if (response.status === 200) {
         const imageUrl = response.data.url
-        console.log(imageUrl);
-        // const id = props.user[0]._id
-
-        // const profile = await axiosPlayersInstance.patch('/add-details/' + id, { image: imageUrl })
-        const profile = await axiosPlayersInstance.patch(`/add-details/${player._id}`, { image: imageUrl })
-        console.log(profile, "Profile Picture");
+        const profile = await axiosPlayersInstance.patch(`/add-details/${player._id}`, { image: imageUrl },
+          { headers: { 'Authorization': `Bearer ${playerAuth.token}` } }
+        )
         toast.success("Profile Pic Updated!!!!")
-        // const image = profile.data[0].image
         setProfile()
 
 
@@ -55,38 +41,21 @@ function ProfilePage({ player, edit }) {
       console.log(err.message);
     }
   }
-  // const setProfile = async () => {
-  //   if (props.user[0]) {
-  //     const email = props.user[0].email
-  //     const response = await axiosPlayersInstance.post('/player', { email: email })
-  //     // console.log(response.data[0].image);
-  //     const imageUrl = response.data[0].image
-  //     setUrl(imageUrl)
-
-  //   }
-  // }
+  
   const setProfile = async () => {
-    
-      
-      const response = await axiosPlayersInstance.get(`/player/${player._id}`)
-      // console.log(response.data[0].image);
-      const imageUrl = response.data.image
-      console.log(imageUrl,"Imaaaage");
-      setUrl(imageUrl)
 
-    
+
+    const response = await axiosPlayersInstance.get(`/player/${player._id}`,
+      { headers: { 'Authorization': `Bearer ${playerAuth.token}` } }
+    )
+    const imageUrl = response.data.image
+    setUrl(imageUrl)
+
+
   }
-
 
   setProfile()
 
-
-
-
-
-
-  // console.log('props1',props.user[0].name);
-  // const { player } = useAuthContext()
   return (
     <div>
       <link rel="stylesheet" href="https://demos.creative-tim.com/notus-js/assets/styles/tailwind.css"></link>
@@ -100,34 +69,11 @@ function ProfilePage({ player, edit }) {
                 <div className="w-full px-4 flex justify-center">
                   <div className="relative">
                     <img alt="..." src={url ? url : dp} className="shadow-xl rounded-full h-auto align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-150-px"></img>
-                    {/* <Image cloudName='des6t3rkt'
-                      publicId={url ? url : }
-                    /> */}
 
                   </div>
 
                 </div>
                 <div className="w-full px-4 text-center mt-20">
-                  {/* <div className="flex justify-center py-4 lg:pt-4 pt-8">
-            <div className="mr-4 p-3 text-center">
-              <span className="text-xl font-bold block uppercase tracking-wide text-blueGray-600">
-                22
-              </span>
-              <span className="text-sm text-blueGray-400">Friends</span>
-            </div>
-            <div className="mr-4 p-3 text-center">
-              <span className="text-xl font-bold block uppercase tracking-wide text-blueGray-600">
-                10
-              </span>
-              <span className="text-sm text-blueGray-400">Photos</span>
-            </div>
-            <div className="lg:mr-4 p-3 text-center">
-              <span className="text-xl font-bold block uppercase tracking-wide text-blueGray-600">
-                89
-              </span>
-              <span className="text-sm text-blueGray-400">Comments</span>
-            </div>
-          </div> */}
                 </div>
               </div>
 
@@ -144,31 +90,26 @@ function ProfilePage({ player, edit }) {
                 <button onClick={edit} className='p-3'><i class="fas fa-edit"></i></button>
 
                 <h3 className="text-xl font-semibold leading-normal mb-2 text-blueGray-700 mt-2">
-                  {/* {props.user != null ? props.user[0].email : ''} */}
                   {player.email}
                 </h3>
                 <div className="text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
                   <i className="fas fa-map-marker-alt mr-2 text-lg text-blueGray-400"></i>
-                  {/* {props.user != null ? props.user[0].place : ''} */}
                   {player.place}
 
                 </div>
                 <div className="mb-2 text-blueGray-600 mt-10">
                   <i className="fas fa-phone mr-2 text-lg text-blueGray-400"></i>
-                  {/* {props.user != null ? props.user[0].mobile : ''} */}
                   {player.mobile}
 
 
                 </div>
                 <div className="mb-2 text-blueGray-600">
                   <i className="fas fa-football mr-2 text-lg text-blueGray-400"></i>
-                  {/* {props.user != null ? props.user[0].position : ''} */}
                   {player.position}
 
                 </div>
                 <div className="mb-2 text-blueGray-600">
                   <i className="fas fa-futbol mr-2 text-lg text-blueGray-400"></i>
-                  {/* {props.user != null ? props.user[0].club : ''} */}
                   {player.club}
 
                 </div>
@@ -183,9 +124,6 @@ function ProfilePage({ player, edit }) {
                       giving it a warm, intimate feel with a solid groove
                       structure. An artist of considerable range.
                     </p>
-                    {/* <a href="javascript:void(0);" className="font-normal text-pink-500">
-              Show more
-            </a> */}
 
                   </div>
                 </div>

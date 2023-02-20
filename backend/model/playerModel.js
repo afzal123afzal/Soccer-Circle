@@ -17,10 +17,13 @@ const playerSchema = new Schema(
     blockStatus: { type: Boolean },
 
     payment: { type: Boolean },
-    
+
     image: { type: String },
 
+    otp: { type: String },
 
+    isVerified: { type: Boolean, default: false},
+    
     age: { type: Number },
 
     position: { type: String },
@@ -37,7 +40,7 @@ const playerSchema = new Schema(
 );
 
 //////////// static signup method
-playerSchema.statics.signup = async function (name, email, mobile, password) {
+playerSchema.statics.signup = async function (name, email, mobile, password, confirmPassword) {
   if (!name) {
     throw Error("Please fill the name");
   }
@@ -47,6 +50,9 @@ playerSchema.statics.signup = async function (name, email, mobile, password) {
   if (!password) {
     throw Error("Please fill the password");
   }
+  if (!confirmPassword) {
+    throw Error("Please fill the confirm password");
+  }
   if (!mobile) {
     throw Error("Please fill the mobile details");
   }
@@ -55,12 +61,15 @@ playerSchema.statics.signup = async function (name, email, mobile, password) {
     throw Error('Email not valid')
   }
 
-  if (!validator.isMobilePhone(mobile)) {
+  if (!validator.isMobilePhone(mobile, 'en-IN')) {
     throw Error('Phone number is not valid')
   }
 
   if (!validator.isStrongPassword(password)) {
     throw Error('Password not strong enough')
+  }
+  if (!validator.equals(password, confirmPassword)) {
+    throw Error('Passwords do not match');
   }
 
   const exists = await this.findOne({ email })
@@ -76,7 +85,7 @@ playerSchema.statics.signup = async function (name, email, mobile, password) {
   const salt = await bcrypt.genSalt(10)
   const hash = await bcrypt.hash(password, salt)
 
-  const player = await this.create({ name, email, mobile, password: hash, blockStatus: false ,payment:false})
+  const player = await this.create({ name, email, mobile, password: hash, blockStatus: false, payment: false })
 
   return player
 }
@@ -103,6 +112,38 @@ playerSchema.statics.login = async function (email, password) {
   if (player.blockStatus) {
     throw Error('You are Blocked')
   }
+  if (!player.isVerified) {
+    throw Error('Verify the code sent to your email')
+  }
+  return player
+
+}
+
+/////// static Otp login method
+
+playerSchema.statics.otpLogin = async function (email, otp) {
+  if (!email) {
+    throw Error("Please fill the email");
+  }
+  if (!otp) {
+    throw Error("Please fill the otp");
+  }
+
+
+  const player = await this.findOne({ email })
+  console.log(player.otp, otp, "Player Test");
+  if (!player) {
+    throw Error('Incorrect email')
+  }
+  if (otp != player.otp) {
+    throw Error('Incorrect otp')
+  }
+  if (player.blockStatus) {
+    throw Error('You are Blocked')
+  }
+  // if (player.isVerified) {
+  //   throw Error('Verify the code sent to your email')
+  // }
   return player
 
 }

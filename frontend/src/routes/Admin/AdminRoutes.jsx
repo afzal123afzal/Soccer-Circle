@@ -10,6 +10,7 @@ import AdminLogin from '../../pages/Admin/AdminLogin';
 import Clubs from '../../pages/Admin/Clubs';
 import Players from '../../pages/Admin/Players';
 import { useSelector } from 'react-redux';
+import ErrorPage from '../../pages/Players/ErrorPage';
 
 
 
@@ -21,30 +22,30 @@ function AdminRoutes() {
 
   return (
     <div>
-      <BrowserRouter>
         {/* {club ? <ClubNavbar /> : ""} */}
         <div className="pages">
           <Routes>
             <Route
-              path="/admin/home"
+              path="/home"
               element={ admin ? <Home /> : <Navigate to="/admin/login" />}
             />
             <Route
-              path="/admin/clubs"
+              path="/clubs"
               element={admin ?  <Clubs /> : <Navigate to="/admin/login" /> }
             />
             <Route
-              path="/admin/players"
+              path="/players"
               element={ admin ?  <Players /> : <Navigate to="/admin/login" />}
             />
             <Route
-              path="/admin/login"
+              path="/login"
               element={ admin  ? <Navigate to="/admin/home" /> : <AdminLogin/>}
             />
+          <Route path="*" element={<ErrorPage />} />
+
             
           </Routes>
         </div>
-      </BrowserRouter>
     </div>
 
   );

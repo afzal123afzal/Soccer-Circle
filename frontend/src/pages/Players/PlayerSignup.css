@@ -24,6 +24,19 @@ form button {
   cursor: pointer;
 }
 
+div.success {
+  padding: 10px;
+  background: #d7f3c9;
+  border: 1px solid var(--primary);
+  color: var(--primary);
+  border-radius: 4px;
+  margin: 20px 0;
+}
+
+input.success {
+  border: 1px solid var(--primary);
+}
+
 div.error {
   padding: 10px;
   background: #ffefef;

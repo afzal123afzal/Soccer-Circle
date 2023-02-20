@@ -13,11 +13,11 @@ export const useClubSignup = () => {
   const dispatch = useDispatch()
 
 
-  const signup = async (name,email,mobile, password,regNo) => {
+  const signup = async (name,email,mobile, password,confirmPassword,regNo) => {
     setIsLoading(true)
     setError(null)
     try {
-        const result = await axiosClubsInstance.post("/signup", { name, email, mobile, password,regNo })
+        const result = await axiosClubsInstance.post("/signup", { name, email, mobile, password,confirmPassword,regNo })
         console.log(result);
 
         if (result.status === 200) {

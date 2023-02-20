@@ -122,7 +122,7 @@ const ClubLoginForm = () => {
                         <Grid container>
                             <Grid item xs>
                                 <Link to="#" variant="body2">
-                                    Forgot password?
+                                    {/* Forgot password? */}
                                 </Link>
                             </Grid>
                             <Grid item>

@@ -1,6 +1,5 @@
 
 
-
 import './PlayerDetails.css'
 // date fns
 import formatDistanceToNow from 'date-fns/formatDistanceToNow'

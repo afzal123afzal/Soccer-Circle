@@ -1,6 +1,4 @@
 import { useEffect, useState } from "react"
-// import { useClubsContext } from '../../hooks/Club/useClubsContext'
-import { useClubAuthContext } from "../../hooks/Club/useClubAuthContext"
 import { axiosClubsInstance } from "../../instance/Axios"
 
 // components
@@ -10,13 +8,10 @@ import ClubNavbar from "../../components/Clubs/ClubNavbar"
 import Filter from "../../components/Clubs/util/Filter"
 import { toast } from "react-toastify"
 import { useSelector } from "react-redux"
-// import WorkoutForm from "../components/WorkoutForm"
 
 const ClubFindPlayers = () => {
-  // const { clubs, dispatch } =  useClubsContext()
   const [clubs, setClubs] = useState('')
   const [filterObjects, setFilterObjects] = useState('')
-  // const { club } = useClubAuthContext()
   const club = useSelector((state)=>state.club.clubDetails)
   
 
@@ -27,13 +22,13 @@ const ClubFindPlayers = () => {
         const response = await axiosClubsInstance.get("/players"
            ,{ headers: { 'Authorization': `Bearer ${club.token}` },
            params:{
-            payment:true
+            payment:true,
+            blockStatus:false
            }
           }
         );
         console.log(response);
         if (response.status === 200) {
-          // dispatch({ type: 'SET_CLUBS', payload: response.data })
           setClubs(response.data)
         }
       } catch (err) {
@@ -41,14 +36,9 @@ const ClubFindPlayers = () => {
       }
     }
 
-    // if (club) {
-    //   console.log(club.data.token);
-    //   fetchClubs()
-    // }
     fetchClubs()
 
   }, [club])
-  console.log(clubs, "ClubFind");
 
   const filterHandler = async (data) => {
     console.log(data, "Data");
@@ -60,7 +50,6 @@ const ClubFindPlayers = () => {
     if (JSON.stringify(response.data) === JSON.stringify([])) {
       toast.error("Players Not Found")
     }
-    console.log(response);
     setFilterObjects(response.data)
 
   }

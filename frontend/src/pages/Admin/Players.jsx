@@ -6,7 +6,7 @@ function Players() {
   return (
     <div>
         <AdminNav/>
-        <h2>Players</h2>
+        <h2 style={{textAlign:'center',marginTop:'20px',marginBottom:'20px'}}>Players</h2>
         <div>
             <PlayerTable/>
         </div>

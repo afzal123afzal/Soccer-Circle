@@ -11,7 +11,7 @@ import ClubNavbar from '../../components/Clubs/ClubNavbar'
 
 const Chat = () => {
   const user = useSelector((state) => state.club.clubDetails)
-  console.log(user._id);
+  // console.log(user._id);
   const [chats, setChats] = useState([])
   const [currentChat, setCurrentChat] = useState(null)
   const [onlineUsers, setOnlineUsers] = useState([]);
@@ -22,7 +22,7 @@ const Chat = () => {
 
   const socket = useRef()
   const location = useLocation()
-  console.log(location.state, "Location");
+  // console.log(location.state, "Location");
   const locationItem = location.state
 
 
@@ -32,7 +32,7 @@ const Chat = () => {
     socket.current.emit("new-user-add", user._id);
     socket.current.on("get-users", (users) => {
       setOnlineUsers(users);
-      console.log(onlineUsers);
+      // console.log(onlineUsers);
     });
   }, [user]);
 
@@ -46,7 +46,7 @@ const Chat = () => {
   // Get the message from socket server
   useEffect(() => {
     socket.current.on("receive-message", (data) => {
-      console.log(data)
+      // console.log(data)
       setReceiveMessage(data);
     }
 
@@ -60,7 +60,7 @@ const Chat = () => {
           { headers: { 'Authorization': `Bearer ${user.token}` } }
         )
         setChats(data)
-        console.log(data);
+        // console.log(data);
       } catch (err) {
         console.log(err);
       }
@@ -75,8 +75,8 @@ const Chat = () => {
   };
   return (
     <>
-      <div>
-        <ClubNavbar />
+      <div class="chat-wrapper">
+      <ClubNavbar />
         <div className="Chat">
           {/* Left Side */}
           <div className="Left-side-chat">

@@ -1,27 +1,3 @@
-// import { configureStore } from '@reduxjs/toolkit'
-
-// import loginReducer from './loginReducer'
-
-// const store = configureStore({
-//     reducer:{
-//         admin:loginReducer
-//     }
-// })
-
-
-
-
-
-// export default store
-
-
-
-
-
-
-
-
-///////////////////////////////
 
 import { configureStore } from '@reduxjs/toolkit'
 import storage from 'redux-persist/lib/storage';

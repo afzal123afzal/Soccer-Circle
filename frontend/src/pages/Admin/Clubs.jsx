@@ -6,7 +6,7 @@ function Clubs() {
     return (
         <div className='pages'>
             <AdminNav />
-            <h2>Clubs</h2>
+            <h2 style={{textAlign:'center',marginTop:'20px',marginBottom:'20px'}}>Clubs</h2>
             <div>
                 <ClubTable />
             </div>

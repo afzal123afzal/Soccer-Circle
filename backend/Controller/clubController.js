@@ -16,10 +16,10 @@ const createToken = (_id) => {
 
 //////////signUp
 const signUp = async (req, res) => {
-  const { name, email, mobile, password, regNo } = req.body
+  const { name, email, mobile, password,confirmPassword, regNo } = req.body
 
   try {
-    const club = await Club.signup(name, email, mobile, password, regNo);
+    const club = await Club.signup(name, email, mobile, password,confirmPassword, regNo);
     const _id = club._id
 
 
@@ -111,6 +111,7 @@ const getPlayers = async (req, res) => {
   console.log(req.query); ////// this technique I used it for filter
   try {
     const player = await Player.find({ ...req.query }, { password: 0 }).sort({ createdAt: -1 });
+    console.log(player,"Player");
     if (!player) {
       return res.status(400).json({ mssg: "No Players" });
      }

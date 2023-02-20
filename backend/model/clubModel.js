@@ -27,7 +27,7 @@ const clubSchema = new Schema(
 );
 
 ///////////////////// static signup method
-clubSchema.statics.signup = async function (name, email, mobile, password, regNo) {
+clubSchema.statics.signup = async function (name, email, mobile, password, confirmPassword, regNo) {
   if (!name) {
     throw Error("Please fill the name");
   }
@@ -40,9 +40,13 @@ clubSchema.statics.signup = async function (name, email, mobile, password, regNo
   if (!password) {
     throw Error("Please fill the password");
   }
+  if (!confirmPassword) {
+    throw Error("Please fill the confirm password");
+  }
   if (!regNo) {
     throw Error("Please fill the register number");
   }
+
   if (!validator.isEmail(email)) {
     throw Error('Email not valid')
   }
@@ -53,6 +57,10 @@ clubSchema.statics.signup = async function (name, email, mobile, password, regNo
 
   if (!validator.isStrongPassword(password)) {
     throw Error('Password not strong enough')
+  }
+
+  if (!validator.equals(password, confirmPassword)) {
+    throw Error('Passwords do not match');
   }
 
   const exist = await this.findOne({ email })

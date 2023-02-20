@@ -20,7 +20,7 @@ const login = async (req, res) => {
         // create a token
         const token = createToken(admin._id)
 
-        res.status(200).json({id,email, token })
+        res.status(200).json({ id, email, token })
     } catch (error) {
         res.status(400).json({ error: error.message })
     }
@@ -38,11 +38,33 @@ const getAllPlayers = async (req, res) => {
     }
 }
 
+//////////GEt all Player Count
+const getAllPlayersCount = async (req, res) => {
+    try {
+        const players = await Player.find({...req.query}, { password: 0 }).count();
+        console.log(players, "hello");
+        res.status(200).json(players)
+    } catch (err) {
+        res.status(400).json({ error: err.message })
+    }
+}
+
 //////////GEt all Clubs
 const getAllClubs = async (req, res) => {
     try {
         const clubs = await Club.find({}, { password: 0 }).sort({ createdAt: -1 });
-       
+
+        res.status(200).json(clubs)
+    } catch (err) {
+        res.status(400).json({ error: err.message })
+    }
+}
+
+//////////GEt all Clubs Count
+const getAllClubsCount = async (req, res) => {
+    try {
+        const clubs = await Club.find({...req.query}, { password: 0 }).count();
+
         res.status(200).json(clubs)
     } catch (err) {
         res.status(400).json({ error: err.message })
@@ -61,7 +83,7 @@ const deletePlayer = async (req, res) => {
         if (!deleted) {
             return res.status(400).json({ mssg: "No such player" })
         }
-        res.status(200).json({ mssg: "Deleted" })
+        res.status(200).json({ mssg: `${deleted.name} has been deleted!!!` })
 
     } catch (error) {
 
@@ -80,7 +102,7 @@ const deleteClub = async (req, res) => {
         if (!deleted) {
             return res.status(400).json({ mssg: "No such club" })
         }
-        res.status(200).json({ mssg: "Deleted" })
+        res.status(200).json({ mssg: `${deleted.name} has been deleted` })
 
     } catch (error) {
 
@@ -98,7 +120,7 @@ const blockPlayer = async (req, res) => {
         if (!player) {
             return res.status(400).json({ mssg: "No such player" })
         }
-        res.status(200).json({ mssg: "Player has Blocked!!!!" })
+        res.status(200).json({ mssg: `${player.name} has been blocked!!!!` })
     } catch (error) {
         res.status(404).json({ mssg: error.message })
     }
@@ -115,7 +137,7 @@ const unblockPlayer = async (req, res) => {
         if (!player) {
             return res.status(400).json({ mssg: "No such player" })
         }
-        res.status(200).json({ mssg: "Player has Unblocked!!!!" })
+        res.status(200).json({ mssg: `${player.name} has Unblocked!!!!` })
     } catch (error) {
         res.status(404).json({ mssg: error.message })
     }
@@ -132,7 +154,7 @@ const blockClub = async (req, res) => {
         if (!club) {
             return res.status(400).json({ mssg: "No such club" })
         }
-        res.status(200).json({ mssg: "Club has Blocked!!!" })
+        res.status(200).json({ mssg: `${club.name} has been Blocked!!!` })
     } catch (error) {
         res.status(404).json({ mssg: error.message })
 
@@ -150,7 +172,7 @@ const unblockClub = async (req, res) => {
         if (!club) {
             return res.status(400).json({ mssg: "No such club" })
         }
-        res.status(200).json({ mssg: "Club has Unblocked!!!!!!!" })
+        res.status(200).json({ mssg: `${club.name} has been unblocked!!!!!!!` })
     } catch (error) {
         res.status(404).json({ mssg: error.message })
 
@@ -184,7 +206,10 @@ module.exports = {
     login,
     signUp,
     getAllPlayers,
-    getAllClubs
+    getAllClubs,
+    getAllPlayersCount,
+    getAllClubsCount
+
 }
 
 //////login

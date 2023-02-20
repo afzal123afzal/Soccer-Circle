@@ -11,7 +11,9 @@ const { deletePlayer,
     login,
     signUp,
     getAllPlayers,
-    getAllClubs
+    getAllClubs,
+    getAllPlayersCount,
+    getAllClubsCount
 } = require('../Controller/adminController')
 
 ////////////login
@@ -20,11 +22,17 @@ router.post('/login', login)
 //////////////getAllPlayers
 router.get('/players',getAllPlayers)
 
+//////////////getAllPlayersCount
+router.get('/players/count',getAllPlayersCount)
+
 //////////delete player
 router.delete('/player/:id', deletePlayer)
 
 //////////////getAllClubs
 router.get('/clubs',getAllClubs)
+
+//////////////getAllClubs
+router.get('/clubs/count',getAllClubsCount)
 
 ///////////delete club
 router.delete('/club/:id', deleteClub)
@@ -43,6 +51,7 @@ router.patch('/club/unblock/:id', unblockClub)
 
 //////////signup
 router.post('/signup', signUp)
+
 
 
 

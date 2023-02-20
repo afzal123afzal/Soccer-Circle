@@ -22,7 +22,7 @@
     background-image: linear-gradient(rgb(5, 177, 188), rgb(165, 212, 231));
 }
 
-///////////banner/////
+/* ///////////banner///// */
 .object-fit-fill {
     object-fit: fill;
   }

@@ -1,25 +1,19 @@
 import React, { useState } from "react";
 import { Transition } from "@headlessui/react";
 import { Link } from "react-router-dom";
-import { useLogout } from "../../hooks/Player/useLogout";
-import { useAuthContext } from "../../hooks/Player/useAuthContext";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from 'react-redux'
 import { logoutPlayer } from "../../redux-toolkit/playerLoginReducer";
+import '../../components/Players/PlayerNavbar.css'
 
 function Nav() {
     const [isOpen, setIsOpen] = useState(false);
-    // const { logout } = useLogout()
-    // const { player } = useAuthContext()
     const dispatch = useDispatch()
     const playerState = useSelector((state) => state.player)
     const player = playerState.navName
     const player1 = playerState.playerDetails
-    console.log(player);
 
     const handleClick = () => {
-        console.log('hi');
-        // logout()
         dispatch(logoutPlayer())
         toast.success("Logout Successfully")
     }
@@ -32,18 +26,16 @@ function Nav() {
                             <Link to='/player/home'> <h1 className='text-3xl font-bold mr-4 text-emerald-300'>Soccer Circle</h1></Link>
                             <div className="flex-shrink-0">
                                 {/* <img
-                  className="h-8 w-8"
-                  src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg"
-                  alt="Workflow"
-                /> */}
+                                    className="h-8 w-8"
+                                    src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg"
+                                    alt="Workflow"
+                                /> */}
 
                             </div>
                             <div className="hidden md:block">
                                 <div className="ml-10 flex items-baseline space-x-4">
                                     <Link
                                         to='/player/home'
-
-
                                         className=" hover:bg-gray-700 text-white px-3 py-2 rounded-md text-sm font-medium"
                                     >
                                         Home
@@ -89,12 +81,7 @@ function Nav() {
                                             <Link className="text-cyan-300" to="/player/login">Login</Link>
                                             <Link className="text-cyan-300" to="/player/signup">Signup</Link>
                                         </div>}
-                                    {/* {!player && (
-                                        <div>
-                                            <Link className="text-cyan-300" to="/player/login">Login</Link>
-                                            <Link className="text-cyan-300" to="/player/signup">Signup</Link>
-                                        </div>
-                                    )} */}
+
                                 </div>
                             </div>
                         </div>
@@ -223,3 +210,6 @@ function Nav() {
 }
 
 export default Nav;
+
+
+

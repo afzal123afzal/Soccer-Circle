@@ -14,7 +14,7 @@ function AdminHome() {
   return (
     <div>
       <AdminNav/>
-      <h2>AdminHome  </h2>
+      <h2 style={{textAlign:'center',marginTop:'20px'}}>Dashboard  </h2>
       <AdminBox/>
       {/* <button onClick={handleClick}>login</button> */}
       </div>

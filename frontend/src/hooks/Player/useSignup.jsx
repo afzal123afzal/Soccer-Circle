@@ -1,38 +1,36 @@
 import { useState } from "react";
-import { useAuthContext } from './useAuthContext'
 import { axiosPlayersInstance } from "../../instance/Axios";
 import { useDispatch } from 'react-redux'
 import { loginPlayer, nameNav, paymentCheck } from "../../redux-toolkit/playerLoginReducer";
+import { toast } from "react-toastify";
 
 
 export const useSignup = () => {
     const [error, setError] = useState(null)
+    const [success,setSuccess] = useState(null)
     const [isLoading, setIsLoading] = useState(null)
-    // const { dispatch } = useAuthContext()
     const dispatch = useDispatch()
 
 
 
 
-    const signup = async (name, email, mobile, password) => {
-        // const user = { email, password }
+    const signup = async (name, email, mobile, password,confirmPassword) => {
         setIsLoading(true)
         setError(null)
 
         try {
-            const result = await axiosPlayersInstance.post("/signup", { name, email, mobile, password })
+            const result = await axiosPlayersInstance.post("/signup", { name, email, mobile, password ,confirmPassword})
 
             if (result.status === 200) {
-                console.log("success");
                 //save the user to local storage
                 localStorage.setItem('player', JSON.stringify(result))
 
                 //update the authContext
-                // dispatch({ type: 'LOGIN', payload: result })
-                console.log(result.data);
-                dispatch(loginPlayer(result.data))
-                dispatch(paymentCheck(result.data))
-                dispatch(nameNav(result.data.name))
+                // dispatch(loginPlayer(result.data))
+                // dispatch(paymentCheck(result.data))
+                // dispatch(nameNav(result.data.name))
+                setSuccess(result.data.message)
+                toast.success("Verification has been sent to your mail!!!")
                 setIsLoading(false)
             }
 
@@ -43,12 +41,13 @@ export const useSignup = () => {
                 const Error = err.response.data.mssg
                 setIsLoading(false)
                 setError(Error)
+                setSuccess(null)
             }
 
         }
 
     }
-    return { signup, isLoading, error }
+    return { signup, isLoading, error,success }
 }
 
 

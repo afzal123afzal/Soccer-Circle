@@ -13,7 +13,13 @@ const { signUp,
     userChats,
     findChat,
     addMessage,
-    getMessages
+    getMessages,
+    forgotPassword,
+    verifyOtp,
+    resetPassword,
+    otpLoginGenerator,
+    otpLogin,
+    verifyToken
 } = require('../Controller/playerController')
 const requireAuth = require('../middleware/requireAuth')
 
@@ -26,13 +32,15 @@ router.post('/signup', signUp)
 router.post('/login', login)
 
 
+///Get all club
+router.get('/clubs',requireAuth, getClubs)
 
 ///Get a club
-router.get('/club/:id', getClub)
+router.get('/club/:id',requireAuth, getClub)
 // router.post('/club',getClub)
 
 ///////// add more details
-router.patch('/add-details/:id', addDetails)
+router.patch('/add-details/:id',requireAuth, addDetails)
 // router.patch('/add-details', addDetails)
 
 
@@ -41,27 +49,37 @@ router.get('/', getPlayers)
 
 ///////// Get a specific player
 // router.post('/player', getPlayer)
-router.get('/player/:id', getPlayer)
+router.get('/player/:id',requireAuth, getPlayer)
 
 
 ///////////// Stripe payment
-router.post('/create-checkout-session',payment)
-
+router.post('/create-checkout-session',requireAuth,payment)
 
 // require auth for all workout routes
 // router.use(requireAuth)
 
-///Get all club
-router.get('/clubs',requireAuth, getClubs)
-
 //////////////// Chat
-router.post('/chat/create-chat', createChat);
-router.get('/chat/:userId', userChats);
+router.post('/chat/create-chat',requireAuth, createChat);
+router.get('/chat/:userId',requireAuth, userChats);
 router.get('/chat/find/:firstId/:secondId', findChat);
-
+    
 /////////////// Message
-router.post('/message', addMessage);
-router.get('/message/:chatId', getMessages);
+router.post('/message',requireAuth, addMessage);
+router.get('/message/:chatId',requireAuth, getMessages);
+
+//////////////// reset
+router.post('/forgot-password',forgotPassword)
+router.post('/verify-otp',verifyOtp)
+router.post('/reset-password',resetPassword)
+
+//////////// Otp Login
+router.post('/otp-login-generator',otpLoginGenerator)
+router.post('/otp-login',otpLogin)
+
+////////////verify Email
+router.post('/verify/:token',verifyToken)
+
+
 
 
 module.exports = router

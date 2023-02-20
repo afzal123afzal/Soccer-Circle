@@ -1,57 +1,9 @@
 // import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import DataTable from 'react-data-table-component'
+import { toast } from 'react-toastify'
 import { axiosAdminInstance } from '../../../instance/Axios'
 function PlayerTable() {
-    // const [user,setUser]=useState([])
-    //     useEffect(()=>{
-
-    //     const token = localStorage.getItem('adminToken');
-    //      getAllUsers();
-    //     async function getAllUsers(){
-    //         const config={
-    //             headers:{
-    //                 Accept:'application/json',
-    //                 Authorization:token,
-    //                 'Content-Type':'application/json',
-    //             },
-    //         }
-    //             const response = await axios.get('http://localhost:4000/api/admin/userInfo',config)
-    //             setUser(response.data.details)
-
-
-    //     }
-    // },[user])
-
-    // async function block(id){
-    //     const token =localStorage.getItem('adminToken');
-    //     const config={
-    //         headers:{
-    //             Accept:'application/json',
-    //         Authorization:token,
-    //         'Content-Type':'application/json'
-    //     }
-    // }
-    // const data = await axios.put(`http://localhost:4000/api/admin/block/${id}`,config) 
-    // if(data.blocked){
-    //     setUser(data.user)
-    //     }
-    // }
-    // async function unblock(id){
-    //     const token =localStorage.getItem('adminToken');
-    //     const config={
-    //         headers:{
-    //             Accept:'application/json',
-    //         Authorization:token,
-    //         'Content-Type':'application/json'
-    //     }
-    // }
-    // const data = await axios.put(`http://localhost:4000/api/admin/unblock/${id}`,config)
-    // if(data.unblocked){
-    //     window.relocation.reload(true)
-    // setUser(data.user)
-    // }
-    // }
 
     const [user, setUser] = useState([])
     useEffect(() => {
@@ -69,6 +21,7 @@ function PlayerTable() {
         const response = await axiosAdminInstance.patch(`/player/block/${id}`)
         console.log(response);
         if (response.status === 200) {
+            toast.error(`${response.data.mssg}`)
             getAllPlayers()
         }
     }
@@ -76,6 +29,7 @@ function PlayerTable() {
         const response = await axiosAdminInstance.patch(`/player/unblock/${id}`)
         console.log(response);
         if (response.status === 200) {
+            toast.success(`${response.data.mssg}`)
             getAllPlayers()
         }
     }
@@ -83,6 +37,7 @@ function PlayerTable() {
         const response = await axiosAdminInstance.delete(`/player/${id}`)
         console.log(response);
         if (response.status === 200) {
+            toast.error(`${response.data.mssg}`)
             getAllPlayers()
         }
     }
@@ -105,42 +60,39 @@ function PlayerTable() {
         },
         {
             name: 'Payment',
-            selector: (row) => row.payment.toString()
-        },
+            selector: (row) => (
+              row.payment  ? (
+                <div>
+                  <i className="fa fa-check" style={{fontSize: '24px',color:"green"}} />
+                </div>
+              )
+              :
+              <div>
+              <i className="fa fa-times" style={{fontSize: '24px',color:"red"}} />
+            </div>
+            )
+          },
+          
         {
             name: 'Action',
             selector: (row) => {
                 return (
-                    <div>
-                        {/* {row.blockStatus?(
-                <button
-                onClick={()=>unblock(row._id)}
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
-                    Unblock
-                </button>
-            
-            ):(<button onClick={()=>block(row._id)}
-            className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full">Block
-            </button>)} */}
-
+                    <div className='d-flex'>
                         {!row.blockStatus && (
-                            <button onClick={() => blockPlayer(row._id)}
-                                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-2  rounded-full">
-                                <i class="fa fa-ban" aria-hidden="true"></i>
-
-                            </button>)}
+                            <div  className="" onClick={() => blockPlayer(row._id)}>
+                                <i className="fa fa-ban" style={{fontSize: '24px',color:"red"}}  aria-hidden="true"></i>
+                            </div>
+                            )
+                            }
                         {row.blockStatus && (
-                            <button
-                                onClick={() => unblockPlayer(row._id)}
-                                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded-full">
-                                <i class="fa fa-unlock" aria-hidden="true"></i>
-                            </button>
+                            <div onClick={() => unblockPlayer(row._id)}>
+                                <i className="fa fa-unlock" style={{fontSize: '24px',color:"blue"}} aria-hidden="true"></i>
+                            </div>
                         )}
                         {row.blockStatus && (
-                            <button onClick={() => deletePlayer(row._id)}
-                                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-2 rounded-full">
-                                <i class="fa fa-trash" aria-hidden="true"></i>
-                            </button>
+                            <div onClick={() => deletePlayer(row._id)}>
+                                <i className="fa fa-trash pl-3"  style={{fontSize: '24px',color:"red"}} aria-hidden="true"></i>
+                            </div>
                         )}
 
 

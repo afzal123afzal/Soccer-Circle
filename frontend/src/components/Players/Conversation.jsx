@@ -2,18 +2,19 @@ import React, { useEffect, useState } from 'react'
 import { axiosPlayersInstance } from '../../instance/Axios'
 import dp from '../../assets/dp.png'
 
-const Conversation = ({ data, currentUserId, online }) => {
+const Conversation = ({ data, currentUserId, online, playerAuth }) => {
 
     const [userData, setUserData] = useState(null)
 
     useEffect(() => {
         const userId = data.members.find((id) => id !== currentUserId)
-        console.log(userId);
+        // console.log(userId);
         const getUserData = async () => {
             try {
-                const { data } = await axiosPlayersInstance.get(`/club/${userId}`)
+                const { data } = await axiosPlayersInstance.get(`/club/${userId}`,
+                    { headers: { 'Authorization': `Bearer ${playerAuth.token}` } }
+                )
                 setUserData(data)
-                console.log(data);
             } catch (err) {
                 console.log(err);
             }
@@ -28,8 +29,7 @@ const Conversation = ({ data, currentUserId, online }) => {
         <>
             <div className="follower conversation"  >
                 <div>
-                    { online && <div className="online-dot"></div>}
-                    {/* <div className='my-style' style={{display:"flex"}} > */}
+                    {online && <div className="online-dot"></div>}
                     <img src={userData?.image ? userData.image : dp} alt=""
                         className='followerImage'
                         style={{ width: '50px', height: '50px' }}
@@ -38,7 +38,6 @@ const Conversation = ({ data, currentUserId, online }) => {
                         <span>{userData?.name}</span>
                         <span>{online ? "Online" : "Offline"}</span>
                     </div>
-                    {/* </div> */}
                 </div>
             </div>
             <hr style={{ width: "85%", border: "0.1px solid #ececec" }} />

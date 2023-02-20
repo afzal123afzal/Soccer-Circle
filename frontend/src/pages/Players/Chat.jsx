@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import './Chat.css'
 // import LogoSearch from '../../components/Clubs/LogoSearch'
-import { useAuthContext } from '../../hooks/Player/useAuthContext'
 import { axiosPlayersInstance } from '../../instance/Axios'
 import Conversation from '../../components/Players/Conversation'
 import ChatBox from '../../components/Players/ChatBox'
@@ -11,10 +10,7 @@ import Nav from '../../components/Players/Nav'
 import { useSelector } from 'react-redux'
 
 const Chat = () => {
-  // const {player} = useAuthContext()
-  // const user = player.data
   const user = useSelector((state) => state.player.playerDetails)
-  console.log(user._id);
   const [chats, setChats] = useState([])
   const [currentChat, setCurrentChat] = useState(null)
   const [onlineUsers, setOnlineUsers] = useState([]);
@@ -25,7 +21,6 @@ const Chat = () => {
 
   const socket = useRef()
   const location = useLocation()
-  console.log(location.state, "Location");
   const locationItem = location.state
 
 
@@ -59,7 +54,9 @@ const Chat = () => {
   useEffect(() => {
     const getChats = async () => {
       try {
-        const { data } = await axiosPlayersInstance.get(`/chat/${user._id}`)
+        const { data } = await axiosPlayersInstance.get(`/chat/${user._id}`,
+          { headers: { 'Authorization': `Bearer ${user.token}` } }
+        )
         setChats(data)
         console.log(data);
       } catch (err) {
@@ -76,32 +73,34 @@ const Chat = () => {
   };
   return (
     <>
-      <Nav />
-      <div className="Chat">
-        {/* Left Side */}
-        <div className="Left-side-chat">
-          {/* <LogoSearch /> */}
-          <div className="Chat-container">
-            <h2>Chats</h2>
-            <div className="Chat-list">
-              {chats.map((chat) => {
-                return (
-                  <div onClick={() => setCurrentChat(chat)} >
-                    <Conversation data={chat} currentUserId={user._id} online={checkOnlineStatus(chat)} />
-                  </div>
-                )
-              })}
+      <div class="chat-wrapper">
+        <Nav />
+        <div className="Chat">
+          {/* Left Side */}
+          <div className="Left-side-chat">
+            {/* <LogoSearch /> */}
+            <div className="Chat-container">
+              <h2>Chats</h2>
+              <div className="Chat-list">
+                {chats.map((chat) => {
+                  return (
+                    <div onClick={() => setCurrentChat(chat)} >
+                      <Conversation data={chat} playerAuth={user} currentUserId={user._id} online={checkOnlineStatus(chat)} />
+                    </div>
+                  )
+                })}
+              </div>
             </div>
-          </div>
 
-        </div>
-        {/* Right Side */}
-        <div className="Right-side-chat">
-          <div style={{ width: "20rem", alignSelf: "flex-end" }}></div>
-          {/* Chat Body */}
-          <ChatBox chat={currentChat} currentUser={user._id} setSendMessage={setSendMessage}
-            receiveMessage={receiveMessage}
-          />
+          </div>
+          {/* Right Side */}
+          <div className="Right-side-chat">
+            <div style={{ width: "20rem", alignSelf: "flex-end" }}></div>
+            {/* Chat Body */}
+            <ChatBox chat={currentChat} playerAuth={user} currentUser={user._id} setSendMessage={setSendMessage}
+              receiveMessage={receiveMessage}
+            />
+          </div>
         </div>
       </div>
     </>

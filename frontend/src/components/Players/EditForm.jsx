@@ -1,9 +1,7 @@
 
 import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom';
 import { axiosPlayersInstance } from '../../instance/Axios';
-function EditForm({state,_id}) {
-  // console.log(props._id);
+function EditForm({ state, _id, playerAuth }) {
 
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
@@ -15,21 +13,10 @@ function EditForm({state,_id}) {
 
   useEffect(() => {
     try {
-      // const userInfo = async () => {
-      //   const response = await axiosPlayersInstance.post('/player', { email: props.detail })
-      //   console.log(response);
-      //   setName(response.data[0].name)
-      //   setEmail(response.data[0].email)
-      //   setMobile(response.data[0].mobile)
-      //   setAge(response.data[0].age)
-      //   setPosition(response.data[0].position)
-      //   setClub(response.data[0].club)
-      //   setPlace(response.data[0].place)
-      // }
-
       const userInfo = async () => {
-        const response = await axiosPlayersInstance.get(`/player/${_id}`)
-        console.log(response);
+        const response = await axiosPlayersInstance.get(`/player/${_id}`,
+          { headers: { 'Authorization': `Bearer ${playerAuth.token}` } }
+        )
         setName(response.data.name)
         setEmail(response.data.email)
         setMobile(response.data.mobile)
@@ -45,23 +32,22 @@ function EditForm({state,_id}) {
     }
 
   }, [])
-  const updateDetails = async ()=>{
-    console.log("hi");
-    try{
-      const data = {name,email,mobile,age,position,club,place}
-      const response = await axiosPlayersInstance.patch(`/add-details/${_id}`,data)
-      console.log(response);
-    }catch(err){
+  const updateDetails = async () => {
+    try {
+      const data = { name, email, mobile, age, position, club, place }
+      const response = await axiosPlayersInstance.patch(`/add-details/${_id}`, data,
+        { headers: { 'Authorization': `Bearer ${playerAuth.token}` } }
+      )
+    } catch (err) {
       console.log(err.message);
     }
   }
-  const navigate = useNavigate()
-  const handleSubmit = async(e)=>{
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    
-     await updateDetails()
-     
-     state()
+
+    await updateDetails()
+
+    state()
   }
 
   return (
@@ -112,14 +98,8 @@ function EditForm({state,_id}) {
           onChange={(e) => setClub(e.target.value)}
           value={club}
         />
-
         <button >Update</button>
-        {/* <button disabled={isLoading}>Sign up</button>  */}
-        {/* {error && <div className="error">{error}</div>} */}
       </form>
-
-      {/* <h2>{props.detail}</h2>
-      <button onClick={props.state}>Register1</button> */}
     </div>
   )
 }

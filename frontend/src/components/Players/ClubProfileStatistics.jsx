@@ -1,38 +1,22 @@
-import { Button } from 'antd'
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { useAuthContext } from '../../hooks/Player/useAuthContext'
 import PayButton from './util/PayButton'
 import dp from '../../assets/dp.png'
 import { axiosPlayersInstance } from '../../instance/Axios'
 import { useSelector } from 'react-redux'
 
 function ProfilePage({ club, playerDetails}) {
-  // const { player } = useAuthContext()
   const navigate = useNavigate()
 const payment = useSelector((state)=>state.player.paymentDetails.payment)
-console.log(payment,"Payment!!!!!");
-
-
-  // console.log(player.data.payment);
-  // console.log(player.data,"Player");
-  // const payment = player.data.payment
-  // const payment = playerDetail.payment
-  // const email = player.data.email
-  // console.log(playerDetail.payment);
-  //  useEffect(() => {
-  //    const response = axiosPlayersInstance.post('/club',{email:email})
-  //    console.log();
-
-
-  //  }, [])
 
   const chatHandler = async()=>{
     const data={
         senderId:playerDetails._id,
         receiverId:club._id
     }
-    await axiosPlayersInstance.post('/chat/create-chat',data)
+    await axiosPlayersInstance.post('/chat/create-chat',data,
+    {headers: { 'Authorization': `Bearer ${playerDetails.token}` }}
+    )
     navigate('/player/chat',{state:playerDetails._id})
 }
 
@@ -53,31 +37,11 @@ console.log(payment,"Payment!!!!!");
                   </div>
                 </div>
                 <div className="w-full px-4 text-center mt-20">
-                  {/* <div className="flex justify-center py-4 lg:pt-4 pt-8">
-            <div className="mr-4 p-3 text-center">
-              <span className="text-xl font-bold block uppercase tracking-wide text-blueGray-600">
-                22
-              </span>
-              <span className="text-sm text-blueGray-400">Friends</span>
-            </div>
-            <div className="mr-4 p-3 text-center">
-              <span className="text-xl font-bold block uppercase tracking-wide text-blueGray-600">
-                10
-              </span>
-              <span className="text-sm text-blueGray-400">Photos</span>
-            </div>
-            <div className="lg:mr-4 p-3 text-center">
-              <span className="text-xl font-bold block uppercase tracking-wide text-blueGray-600">
-                89
-              </span>
-              <span className="text-sm text-blueGray-400">Comments</span>
-            </div>
-          </div> */}
                 </div>
               </div>
 
               <div className="text-center mt-12">
-                {payment && payment ?
+                {payment  ?
                   <Link to={"/player/chat"} >
                     <button onClick={chatHandler} class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full ">
                       Connect
@@ -111,11 +75,8 @@ console.log(payment,"Payment!!!!!");
                       by Melbourne-raised, Brooklyn-based Nick Murphy
                       writes, performs and records all of his own music,
                       giving it a warm, intimate feel with a solid groove
-                      structure. An artist of considerable range.
+                      structure. An artist of considerable range1.
                     </p>
-                    {/* <a href="javascript:void(0);" className="font-normal text-pink-500">
-              Show more
-            </a> */}
 
                   </div>
                 </div>
