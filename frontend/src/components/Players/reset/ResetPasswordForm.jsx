@@ -1,32 +1,42 @@
 import React, { useState } from "react";
 import { axiosPlayersInstance } from "../../../instance/Axios";
+import { toast } from 'react-toastify'
+import { useNavigate } from "react-router-dom";
 
 function ResetPasswordForm({ email }) {
   const [otp, setOtp] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [success, setSuccess] = useState(false);
+  const [successOne, setSuccessOne] = useState(false);
+  const navigate = useNavigate()
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     setError("");
+    console.log();
 
     try {
       const response = await axiosPlayersInstance.post("/verify-otp", {
         email,
         otp,
       });
+      console.log(response);
       const token = response.data.token;
       await axiosPlayersInstance.post(
         "/reset-password",
-        { email, password },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        { email, password, otp },
+        // {
+        //   headers: {
+        //     Authorization: `Bearer ${token}`,
+        //   },
+        // }
       );
-      setSuccess(true);
+      console.log("success");
+      setSuccessOne(true);
+        navigate('/player/login')
+      toast.success("The Password has been reset")
+
+
     } catch (err) {
       setError(err.response.data.message);
     }
@@ -34,28 +44,29 @@ function ResetPasswordForm({ email }) {
 
   return (
     <div>
-      {success ? (
-        <p>Your password has been reset.</p>
+      {successOne ? (
+         <div className="success">The Password has been reset</div>
       ) : (
-        <form onSubmit={handleFormSubmit}>
+        <form className="login-reset-one" onSubmit={handleFormSubmit}>
           <label>
             OTP:
-            <input
-              type="text"
-              value={otp}
-              onChange={(e) => setOtp(e.target.value)}
-            />
           </label>
+          <input
+            type="text"
+            value={otp}
+            onChange={(e) => setOtp(e.target.value)}
+          />
+
           <label>
             New Password:
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
           </label>
-          {error && <p>{error}</p>}
-          <button type="submit">Reset Password</button>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <button className="button-test-one" type="submit">Reset Password</button>
+          {error && <div className="error">{error}</div>}
         </form>
       )}
     </div>

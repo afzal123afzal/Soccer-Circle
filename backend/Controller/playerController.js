@@ -61,15 +61,17 @@ const signUp = async (req, res) => {
 
     // create a token
     const token = createToken(player._id);
-    const verificationLink = `${process.env.CLIENT_URL}/player/verify/${token}`;
-    
+    const token1 = token.replace(/\./g, '__');
+    const verificationLink = `${process.env.CLIENT_URL}/player/verify/${token1}`;
+    // const verificationLink = `${process.env.CLIENT_URL}/player/verify/${token}`;
 
-    const parts = verificationLink.split('/'); // Split the URL into parts
-    const tokenIndex = parts.findIndex(part => part === 'verify') + 1; // Get the index of the token part
-    const token1 = parts[tokenIndex].replace(/\./g, '__'); // Remove dots from the token part using a regular expression
+
+    // const parts = verificationLink.split('/'); // Split the URL into parts
+    // const tokenIndex = parts.findIndex(part => part === 'verify') + 1; // Get the index of the token part
+    // const token1 = parts[tokenIndex].replace(/\./g, '__'); // Remove dots from the token part using a regular expression
 
     // Reconstruct the URL with the modified token
-    const modifiedUrl = `${parts.slice(0, tokenIndex).join('/')}/${token1}${parts.slice(tokenIndex + 1).join('/')}`;
+    // const modifiedUrl = `${parts.slice(0, tokenIndex).join('/')}/${token1}${parts.slice(tokenIndex + 1).join('/')}`;
 
     //////////////////////
     const _id = player._id
@@ -81,7 +83,7 @@ const signUp = async (req, res) => {
       from: process.env.EMAIL,
       to: email,
       subject: 'SoccerCircle Email Verification',
-      html: `Please click this link to verify your email: <a href="${modifiedUrl}">The MagicLink !!!!! Click Here</a>`,
+      html: `Please click this link to verify your email: <a href="${verificationLink}">The MagicLink !!!!! Click Here</a>`,
     };
 
     await transporter.sendMail(mailOptions);
@@ -458,17 +460,18 @@ const forgotPassword = async (req, res) => {
       } else {
         console.log(`OTP sent: ${info.response}`);
         // return res.status(200).send({ token });
-        return res.status(200).send({ otp });
+        return res.status(200).json({ otp });
       }
     });
   } catch (err) {
     console.error(err);
-    return res.status(500).send({ message: 'Failed to send OTP' });
+    return res.status(500).json({ message: 'Failed to send OTP' });
   }
 };
 
 const verifyOtp = async (req, res) => {
   const { email, otp } = req.body;
+  console.log(otp);
 
   try {
     // const decoded = jwt.verify(token, 'secret');
@@ -476,10 +479,12 @@ const verifyOtp = async (req, res) => {
     //   return res.status(400).send({ message: 'Invalid token' });
     // }
     const user = await Player.findOne({ email })
+    console.log(user.otp, otp, "user otp");
 
     if (otp === user.otp) {
+      console.log("hi");
       const newToken = jwt.sign({ email }, 'secret', { expiresIn: '15m' });
-      await Player.updateOne({ email }, { $unset: { otp: otp } })
+      // await Player.updateOne({ email }, { $unset: { otp: otp } })
       return res.status(200).send({ message: 'OTP verified', token: newToken });
     } else {
       return res.status(400).send({ message: 'Invalid OTP' });
@@ -491,7 +496,7 @@ const verifyOtp = async (req, res) => {
 };
 
 const resetPassword = async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password,otp } = req.body;
 
   try {
     const user = await Player.findOne({ email });
@@ -506,6 +511,7 @@ const resetPassword = async (req, res) => {
 
     user.password = hash;
     await user.save();
+    await Player.updateOne({ email }, { $unset: { otp: otp } })
     return res.status(200).send({ message: 'Password reset successful' });
   } catch (err) {
     console.error(err);

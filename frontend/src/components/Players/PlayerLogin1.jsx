@@ -101,7 +101,8 @@ const PlayerLogin1 = () => {
                         </Button>
                         <Grid container>
                             <Grid item xs>
-                                <Link to="#" variant="body2">
+                                <Link to="/player/forgot-password" variant="body2">
+                                    {"Forgot Password"}
                                 </Link>
                             </Grid>
                             <Grid item>

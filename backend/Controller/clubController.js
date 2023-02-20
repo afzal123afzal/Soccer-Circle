@@ -9,30 +9,127 @@ const Message = require('../model/messageModel');
 
 const stripe = Stripe(process.env.STRIPE_KEY)
 
+//////////////
+const nodemailer = require('nodemailer')
+const bcrypt = require("bcrypt");
+const validator = require("validator");
+
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: process.env.EMAIL,
+    pass: process.env.PASSWORD,
+  },
+});
+
+
 /////////// create a token
 const createToken = (_id) => {
   return jwt.sign({ _id }, process.env.SECRET, { expiresIn: "3d" });
 };
 
-//////////signUp
+// //////////signUp
+// const signUp = async (req, res) => {
+//   const { name, email, mobile, password,confirmPassword, regNo } = req.body
+
+//   try {
+//     const club = await Club.signup(name, email, mobile, password,confirmPassword, regNo);
+//     const _id = club._id
+
+
+//     // create a token
+//     const token = createToken(club._id);
+
+//     res.status(200).json({ _id, name, token, email });
+
+//   } catch (error) {
+//     res.status(404).json({ mssg: error.message });
+//   }
+
+// }
+
+
+/////////////////////////// test signup
 const signUp = async (req, res) => {
-  const { name, email, mobile, password,confirmPassword, regNo } = req.body
-
   try {
-    const club = await Club.signup(name, email, mobile, password,confirmPassword, regNo);
-    const _id = club._id
+    const { name, email, mobile, password, confirmPassword,regNo } = req.body;
 
+    const club = await Club.signup(name, email, mobile, password, confirmPassword,regNo);
 
     // create a token
     const token = createToken(club._id);
+    const token1 = token.replace(/\./g, '__');
+    const verificationLink = `${process.env.CLIENT_URL}/club/verify/${token1}`;
+    
 
-    res.status(200).json({ _id, name, token, email });
+    // const parts = verificationLink.split('/'); // Split the URL into parts
+    // const tokenIndex = parts.findIndex(part => part === 'verify') + 1; // Get the index of the token part
+    // const token1 = parts[tokenIndex].replace(/\./g, '__'); // Remove dots from the token part using a regular expression
+
+    // Reconstruct the URL with the modified token
+    // const modifiedUrl = `${parts.slice(0, tokenIndex).join('/')}/${token1}${parts.slice(tokenIndex + 1).join('/')}`;
+
+    //////////////////////
+    const _id = club._id
+    // const verificationLink = `${process.env.CLIENT_URL}/club/verify/${_id}`;
+    const payment = club.payment
+    const blockStatus = club.blockStatus
+
+    const mailOptions = {
+      from: process.env.EMAIL,
+      to: email,
+      subject: 'SoccerCircle Email Verification',
+      // html: `Please click this link to verify your email: <a href="${modifiedUrl}">The MagicLink !!!!! Click Here</a>`,
+      html: `Please click this link to verify your email: <a href="${verificationLink}">The MagicLink !!!!! Click Here</a>`,
+    };
+
+    await transporter.sendMail(mailOptions);
+
+    // Send response with success message
+    res.status(200).json({ message: "Verification has been sent to the mail", _id, email, name, payment, blockStatus });
+
+
+    // res.status(200).json({ _id, email, name, payment, token,blockStatus });
 
   } catch (error) {
     res.status(404).json({ mssg: error.message });
   }
+};
 
-}
+/////////////////// Verify Token
+
+// Route for email verification
+const verifyToken = async (req, res) => {
+  const token = req.params.token;
+
+  if (!token) {
+    return res.status(400).json({ message: "Invalid verification token" });
+  }
+
+  try {
+    // Verify the token
+    const decoded = jwt.verify(token, process.env.SECRET);
+
+    //Find the user with the given email
+    const user = await Club.findOne({ _id: decoded._id });
+    // const user = await Player.findOne({ _id: token });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Mark the user as verified
+    user.isVerified = true;
+    await user.save();
+
+    // Send response with success message
+    res.status(200).json({ message: "Email verified successfully" });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err.message);
+  }
+};
+
+
 
 /////////login
 const login = async (req, res) => {
@@ -42,12 +139,13 @@ const login = async (req, res) => {
     const _id = club._id
     const name = club.name
     const payment = club.payment
+    const blockStatus = club.blockStatus
     console.log(payment, "payment");
 
     // create a token
     const token = createToken(club._id)
 
-    res.status(200).json({ _id, name, email, payment, token })
+    res.status(200).json({ _id, name, email, payment, token ,blockStatus})
   } catch (error) {
     res.status(404).json({ mssg: error.message })
   }
@@ -258,7 +356,8 @@ module.exports = {
   userChats,
   findChat,
   addMessage,
-  getMessages
+  getMessages,
+  verifyToken
 }
 
 

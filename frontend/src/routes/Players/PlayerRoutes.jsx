@@ -13,6 +13,7 @@ import Chat from '../../pages/Players/Chat'
 import { useSelector } from 'react-redux'
 import ErrorPage from '../../pages/Players/ErrorPage'
 import SignUpVerify from '../../pages/Players/SignUpVerify'
+import ForgotPassword from '../../pages/Players/ForgotPassword'
 
 
 
@@ -56,6 +57,10 @@ function PlayerRoutes() {
           <Route
             path="/login"
             element={!player ? <PlayerLogin /> : <Navigate to="/player/home" />}
+          />
+          <Route
+            path="/forgot-password"
+            element={<ForgotPassword/>}
           />
           <Route
             path="/verify/:token"

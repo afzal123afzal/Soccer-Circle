@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import tick from '../../assets/tick.jpeg'
-import { axiosPlayersInstance } from "../../instance/Axios";
-import ErrorPage from "../../pages/Players/ErrorPage";
+import tick from '../../../assets/tick.jpeg'
+import { axiosPlayersInstance } from "../../../instance/Axios";
+import ErrorPage from "../../../pages/Players/ErrorPage";
 import './EmailVerify.css'
 
 
@@ -15,7 +15,6 @@ const EmailVerify = () => {
 		const verifyEmailUrl = async () => {
 			try {
                 const token = param.token.replace(/__/g, ".");
-                console.log(token,"TOOOOKKKKEEEEN");
 				// const { data } = await axiosPlayersInstance.post(`/verify/${param.token}`);
 				const { data } = await axiosPlayersInstance.post(`/verify/${token}`);
 				console.log(data);

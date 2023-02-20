@@ -8,6 +8,7 @@ import { toast } from 'react-toastify'
 
 export const useClubSignup = () => {
   const [error, setError] = useState(null)
+  const [success,setSuccess] = useState(null)
   const [isLoading, setIsLoading] = useState(null)
   // const { dispatch } = useClubAuthContext()
   const dispatch = useDispatch()
@@ -27,11 +28,12 @@ export const useClubSignup = () => {
 
             //update the ClubauthContext
             // dispatch({ type: 'CLUBLOGIN', payload: result })
-            dispatch(loginClub(result.data))
-            dispatch(paymentCheck(result.data))
-            dispatch(nameNav(result.data.name))
+            // dispatch(loginClub(result.data))
+            // dispatch(paymentCheck(result.data))
+            // dispatch(nameNav(result.data.name))
+            setSuccess(result.data.message)
 
-            toast.success(`Welcome ${result.data.name}`)
+            toast.success("Verification has been sent to your mail!!!")
 
             setIsLoading(false)
         }
@@ -50,5 +52,5 @@ export const useClubSignup = () => {
      
   }
 
-  return { signup, isLoading, error }
+  return { signup, isLoading, error,success }
 }

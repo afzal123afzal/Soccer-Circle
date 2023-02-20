@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { axiosPlayersInstance } from "../../../instance/Axios";
 import ResetPasswordForm from "./ResetPasswordForm";
+import './ResetForm.css'
 
 function ResetForm() {
   const [email, setEmail] = useState("");
@@ -22,23 +23,28 @@ function ResetForm() {
   return (
     <div>
       {success ? (
-        <div>
-          <p>An email has been sent with instructions to reset your password.</p>
+        <div className="login-reset1">
+          {/* <p>An email has been sent with instructions to reset your password.</p> */}
+          {success && <div className="success">An email has been sent with instructions to reset your password.</div>}
           <ResetPasswordForm email={email} />
         </div>
       ) : (
-        <form onSubmit={handleFormSubmit}>
+
+        <form className="login-reset" onSubmit={handleFormSubmit}>
+          <h3 className="text-header">Forgot Password</h3>
           <label>
             Email:
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
           </label>
-          <button type="submit">Submit</button>
-          {error && <p>{error}</p>}
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+
+          <button className="button-test" type="submit">Submit</button>
+          {error && <div className="error">{error}</div>}
         </form>
+
       )}
     </div>
   );

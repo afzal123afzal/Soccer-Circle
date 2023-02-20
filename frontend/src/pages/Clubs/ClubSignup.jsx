@@ -11,7 +11,7 @@ const ClubSignup = () => {
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [regNo, setRegNo] = useState('')
-  const { signup, error, isLoading } = useClubSignup()
+  const { signup, error, isLoading ,success} = useClubSignup()
  
 
 
@@ -66,6 +66,7 @@ const ClubSignup = () => {
 
         <button disabled={isLoading}>Sign up</button>
         {error && <div className="error">{error}</div>}
+        {success && <div className="success">{success}</div>}
       </form>
     </div>
   )

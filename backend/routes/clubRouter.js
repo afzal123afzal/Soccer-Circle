@@ -12,7 +12,8 @@ const { signUp,
     userChats,
     findChat,
     addMessage,
-    getMessages
+    getMessages,
+    verifyToken
 } = require('../Controller/clubController')
 
 const requireClubAuth = require('../middleware/requireClubAuth')
@@ -55,7 +56,8 @@ router.get('/chat/find/:firstId/:secondId', findChat);
 router.post('/message',requireClubAuth, addMessage);
 router.get('/message/:chatId',requireClubAuth, getMessages);
 
-
+////////////verify Email
+router.post('/verify/:token',verifyToken)
 
 
 

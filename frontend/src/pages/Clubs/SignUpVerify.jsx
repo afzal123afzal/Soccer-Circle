@@ -1,5 +1,5 @@
 import React from 'react'
-import EmailVerify from '../../components/Players/SignupVerify/EmailVerify'
+import EmailVerify from '../../components/Clubs/SignupVerify/EmailVerify'
 
 const SignUpVerify = () => {
   return (

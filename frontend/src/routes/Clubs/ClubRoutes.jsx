@@ -12,6 +12,7 @@ import PlayerDashboard from '../../pages/Clubs/PlayerDashboard';
 import CheckoutSuccess from '../../pages/Clubs/CheckoutSuccess';
 import Chat from '../../pages/Clubs/Chat';
 import ErrorPage from '../../pages/Players/ErrorPage';
+import SignUpVerify from '../../pages/Clubs/SignUpVerify';
 
 function ClubRoutes() {
   const clubState = useSelector((state) => state.club)
@@ -51,6 +52,10 @@ function ClubRoutes() {
           <Route
             path="/signup"
             element={!club ? <ClubSignup /> : <Navigate to="/club/home" />}
+          />
+          <Route
+            path="/verify/:token"
+            element={<SignUpVerify/> }
           />
           <Route path="*" element={<ErrorPage />} />
 

@@ -16,6 +16,8 @@ const clubSchema = new Schema(
 
     regNo: { type: String, required: true },
 
+    isVerified: { type: Boolean, default: false},
+
     blockStatus: { type: Boolean },
     payment: { type: Boolean },
     image: { type: String },
@@ -103,6 +105,9 @@ clubSchema.statics.login = async function (email, password) {
   }
   if (club.blockStatus) {
     throw Error('You are Blocked')
+  }
+  if (!club.isVerified) {
+    throw Error('Verify the code sent to your email')
   }
   return club
 
