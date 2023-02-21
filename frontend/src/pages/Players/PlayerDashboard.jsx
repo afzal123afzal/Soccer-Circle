@@ -60,7 +60,7 @@ const PlayerDashboard = () => {
         {edit ? <EditForm state={editMode} playerAuth={player} _id={_id} /> :
           <>
             <PlayerProfileStatistics player={playerSpec} playerAuth={player} edit={handleClick} />
-            <Skills video = {"_uuqsGCiM9I"}/>
+            { playerSpec.video && <Skills video = {playerSpec.video}/>}
           </>
         }
 

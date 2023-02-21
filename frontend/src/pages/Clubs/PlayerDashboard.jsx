@@ -6,6 +6,7 @@ import './ClubDashboard.css'
 import ClubNavbar from '../../components/Clubs/ClubNavbar'
 import PlayerProfile from '../../components/Clubs/PlayerProfile'
 import { useSelector } from 'react-redux'
+import Skills from '../../components/Players/util/Skills'
 
 
 
@@ -14,6 +15,7 @@ function ClubDashboard() {
     const location = useLocation()
     const playerDetail = location.state
     const club = useSelector((state) => state.club.clubDetails)
+    const clubPay = useSelector((state) => state.club.paymentDetails)
 
 
     useEffect(() => {
@@ -40,6 +42,7 @@ function ClubDashboard() {
             <ClubNavbar />
             <div className='carousel' id="grad1"><span className='name-center'>{player.name}</span></div>
             <PlayerProfile player={player} />
+            { player.video && clubPay.payment && <Skills video={player.video}/>}
         </div>
     )
 }

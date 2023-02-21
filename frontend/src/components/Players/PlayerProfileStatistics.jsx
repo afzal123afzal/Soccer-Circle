@@ -92,27 +92,27 @@ function ProfilePage({ player, edit, playerAuth }) {
                 <h3 className="text-xl font-semibold leading-normal mb-2 text-blueGray-700 mt-2">
                   {player.email}
                 </h3>
-                <div className="text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
+                { player.place && <div className="text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
                   <i className="fas fa-map-marker-alt mr-2 text-lg text-blueGray-400"></i>
-                  {player.place}
+                  {player.place} 
 
-                </div>
-                <div className="mb-2 text-blueGray-600 mt-10">
+                </div>}
+               { player.mobile && <div className="mb-2 text-blueGray-600 mt-10">
                   <i className="fas fa-phone mr-2 text-lg text-blueGray-400"></i>
                   {player.mobile}
 
 
-                </div>
-                <div className="mb-2 text-blueGray-600">
+                </div>}
+                { player.position && <div className="mb-2 text-blueGray-600">
                   <i className="fas fa-football mr-2 text-lg text-blueGray-400"></i>
                   {player.position}
 
-                </div>
-                <div className="mb-2 text-blueGray-600">
+                </div>}
+                {player.club && <div className="mb-2 text-blueGray-600">
                   <i className="fas fa-futbol mr-2 text-lg text-blueGray-400"></i>
                   {player.club}
 
-                </div>
+                </div>}
               </div>
               <div className="mt-10 py-10 border-t border-blueGray-200 text-center">
                 <div className="flex flex-wrap justify-center">
@@ -124,9 +124,9 @@ function ProfilePage({ player, edit, playerAuth }) {
                       giving it a warm, intimate feel with a solid groove
                       structure. An artist of considerable range.
                     </p> */}
-                    <p className="mb-4 text-3xl leading-relaxed text-blueGray-700">
+                    {player.video &&  <p className="mb-4 text-3xl leading-relaxed text-blueGray-700">
                           Skills
-                    </p>
+                    </p>}
                   </div>
                 </div>
               </div>

@@ -19,6 +19,7 @@ const playerSchema = new Schema(
     payment: { type: Boolean },
 
     image: { type: String },
+    video: { type: String },
 
     otp: { type: String },
 

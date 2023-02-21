@@ -5,20 +5,20 @@ import dp from '../../assets/dp.png'
 import { axiosPlayersInstance } from '../../instance/Axios'
 import { useSelector } from 'react-redux'
 
-function ProfilePage({ club, playerDetails}) {
+function ProfilePage({ club, playerDetails }) {
   const navigate = useNavigate()
-const payment = useSelector((state)=>state.player.paymentDetails.payment)
+  const payment = useSelector((state) => state.player.paymentDetails.payment)
 
-  const chatHandler = async()=>{
-    const data={
-        senderId:playerDetails._id,
-        receiverId:club._id
+  const chatHandler = async () => {
+    const data = {
+      senderId: playerDetails._id,
+      receiverId: club._id
     }
-    await axiosPlayersInstance.post('/chat/create-chat',data,
-    {headers: { 'Authorization': `Bearer ${playerDetails.token}` }}
+    await axiosPlayersInstance.post('/chat/create-chat', data,
+      { headers: { 'Authorization': `Bearer ${playerDetails.token}` } }
     )
-    navigate('/player/chat',{state:playerDetails._id})
-}
+    navigate('/player/chat', { state: playerDetails._id })
+  }
 
 
   return (
@@ -41,7 +41,7 @@ const payment = useSelector((state)=>state.player.paymentDetails.payment)
               </div>
 
               <div className="text-center mt-12">
-                {payment  ?
+                {payment ?
                   <Link to={"/player/chat"} >
                     <button onClick={chatHandler} class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full ">
                       Connect
@@ -54,28 +54,24 @@ const payment = useSelector((state)=>state.player.paymentDetails.payment)
                 <h3 className="text-xl font-semibold leading-normal mb-2 text-blueGray-700 mt-2">
                   {club.email}
                 </h3>
-                <div className="text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
+                { payment &&  club.place && <div className="text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
                   <i className="fas fa-map-marker-alt mr-2 text-lg text-blueGray-400"></i>
-                  {club.place} Kerala
-                </div>
-                <div className="mb-2 text-blueGray-600 mt-10">
+                  {club.place } Kerala
+                </div>}
+                { payment &&<div className="mb-2 text-blueGray-600 mt-10">
                   <i className="fas fa-phone mr-2 text-lg text-blueGray-400"></i>
                   {club.mobile}
-                </div>
-                <div className="mb-2 text-blueGray-600">
+                </div>}
+                { payment &&<div className="mb-2 text-blueGray-600">
                   <i className="fas fa-football mr-2 text-lg text-blueGray-400"></i>
-                  Forward
-                </div>
+                  {club.regNo}
+                </div>}
               </div>
               <div className="mt-10 py-10 border-t border-blueGray-200 text-center">
                 <div className="flex flex-wrap justify-center">
                   <div className="w-full lg:w-9/12 px-4">
                     <p className="mb-4 text-lg leading-relaxed text-blueGray-700">
-                      An artist of considerable range, Jenna the name taken
-                      by Melbourne-raised, Brooklyn-based Nick Murphy
-                      writes, performs and records all of his own music,
-                      giving it a warm, intimate feel with a solid groove
-                      structure. An artist of considerable range1.
+                      We are more than just a football club. It's a community of passionate players, dedicated coaches, and loyal fans united by a love of the game and a shared commitment to excellence on and off the field.
                     </p>
 
                   </div>

@@ -28,23 +28,23 @@ function PlayerProfile({ player }) {
     const payment = clubDet.payment
     console.log(clubId);
     const navigate = useNavigate()
-    
 
 
-    const chatHandler = async()=>{
-        const data={
-            senderId:clubId,
-            receiverId:player._id
+
+    const chatHandler = async () => {
+        const data = {
+            senderId: clubId,
+            receiverId: player._id
         }
-        await axiosClubsInstance.post('/chat/create-chat',data,
-        { headers: { 'Authorization': `Bearer ${clubAuth.token}` }}
+        await axiosClubsInstance.post('/chat/create-chat', data,
+            { headers: { 'Authorization': `Bearer ${clubAuth.token}` } }
         )
-        navigate('/club/chat',{state:clubId})
+        navigate('/club/chat', { state: clubId })
     }
-    
 
 
-   
+
+
 
     return (
         <div>
@@ -88,7 +88,7 @@ function PlayerProfile({ player }) {
                             <div className="text-center mt-12">
                                 {payment && payment ?
                                     <Link to={'/club/chat'}>
-                                        <button onClick={chatHandler}  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full ">
+                                        <button onClick={chatHandler} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full ">
                                             Connect
                                         </button>
                                     </Link>
@@ -96,48 +96,51 @@ function PlayerProfile({ player }) {
                                         <Subscribe />
                                     </Link>}
 
-                                <h3 className="text-xl font-semibold leading-normal mb-2 text-blueGray-700 mt-2">
+                            
+                               <h3 className="text-xl font-semibold leading-normal mb-2 text-blueGray-700 mt-2">
                                     {player.email}
                                 </h3>
-                                <div className="text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
+                                
+                               { payment && <div className="text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
                                     <i className="fas fa-map-marker-alt mr-2 text-lg text-blueGray-400"></i>
                                     {player.place},Kerala
-                                </div>
-                                <div className="mb-2 text-blueGray-600 mt-10">
+                                </div>}
+                               { payment && <div className="mb-2 text-blueGray-600 mt-10">
                                     <i className="fas fa-phone mr-2 text-lg text-blueGray-400"></i>
                                     {player.mobile}
-                                </div>
-                                <div className="mb-2 text-blueGray-600">
+                                </div>}
+                                { player.position && <div className="mb-2 text-blueGray-600">
                                     <i className="fas fa-football mr-2 text-lg text-blueGray-400"></i>
                                     {player.position ? player.position : ""}
-                                </div>
-                                <div className="mb-2 text-blueGray-600">
+                                </div>}
+                                { payment && <div className="mb-2 text-blueGray-600">
                                     <i className="fas fa-futbol mr-2 text-lg text-blueGray-400"></i>
                                     {player.club ? player.club : ""}
 
-                                </div>
+                                </div> }
                             </div>
                             <div className="mt-10 py-10 border-t border-blueGray-200 text-center">
                                 <div className="flex flex-wrap justify-center">
                                     <div className="w-full lg:w-9/12 px-4">
-                                        <p className="mb-4 text-lg leading-relaxed text-blueGray-700">
+                                        {/* <p className="mb-4 text-lg leading-relaxed text-blueGray-700">
                                             An artist of considerable range, Jenna the name taken
                                             by Melbourne-raised, Brooklyn-based Nick Murphy
                                             writes, performs and records all of his own music,
                                             giving it a warm, intimate feel with a solid groove
                                             structure. An artist of considerable range.
-                                        </p>
-                                        {/* <a href="javascript:void(0);" className="font-normal text-pink-500">
-              Show more
-            </a> */}
+                                        </p> */}
+                                        {player.video && payment && <p className="mb-4 text-3xl leading-relaxed text-blueGray-700">
+                                            Skills
+                                        </p>}
 
-                                    </div>
+                                    </div> 
+                                     
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <footer className="relative  pt-8 pb-6 mt-8">
+                {/* <footer className="relative  pt-8 pb-6 mt-8">
                     <div className="container mx-auto px-4">
                         <div className="flex flex-wrap items-center md:justify-between justify-center">
                             <div className="w-full md:w-6/12 px-4 mx-auto text-center">
@@ -147,7 +150,7 @@ function PlayerProfile({ player }) {
                             </div>
                         </div>
                     </div>
-                </footer>
+                </footer> */}
             </section>
 
         </div>
