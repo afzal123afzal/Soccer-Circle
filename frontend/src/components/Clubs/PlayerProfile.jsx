@@ -101,7 +101,7 @@ function PlayerProfile({ player }) {
                                     {player.email}
                                 </h3>
                                 
-                               { payment && <div className="text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
+                               { payment && player.place && <div className="text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
                                     <i className="fas fa-map-marker-alt mr-2 text-lg text-blueGray-400"></i>
                                     {player.place},Kerala
                                 </div>}
@@ -113,7 +113,7 @@ function PlayerProfile({ player }) {
                                     <i className="fas fa-football mr-2 text-lg text-blueGray-400"></i>
                                     {player.position ? player.position : ""}
                                 </div>}
-                                { payment && <div className="mb-2 text-blueGray-600">
+                                { payment && player.club && <div className="mb-2 text-blueGray-600">
                                     <i className="fas fa-futbol mr-2 text-lg text-blueGray-400"></i>
                                     {player.club ? player.club : ""}
 

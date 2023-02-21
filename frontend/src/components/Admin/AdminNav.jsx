@@ -68,12 +68,12 @@ function AdminNav() {
                                         Players
                                     </Link>
 
-                                    <Link
+                                    {/* <Link
                                         to=""
                                         className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                                     >
                                         About Us
-                                    </Link>
+                                    </Link> */}
 
                                     {/* <Link
                                         to=''
@@ -172,22 +172,22 @@ function AdminNav() {
                                     Players
                                 </Link>
 
-                                <a
+                                {/* <a
                                     href="#"
                                     className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
                                 >
                                     About Us
-                                </a>
+                                </a> */}
 
-                                <a
+                                {/* <a
                                     href="#"
                                     className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
                                 >
                                     Reports
-                                </a>
+                                </a> */}
 
                                 <>
-                                    <Link className="block px-3 py-2 font-medium " >Admin</Link> <br></br>
+                                    <Link className="text-cyan-300 block px-3 py-2 font-medium " >Admin</Link> <br></br>
                                     <button onClick={handleClick} class="bg-blue-500 hover:bg-blue-300 text-white font-bold py-2 px-3 align-center rounded">
                                         LogOut
                                     </button>

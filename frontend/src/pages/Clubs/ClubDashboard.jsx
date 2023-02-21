@@ -8,6 +8,7 @@ import { clubProfile, nameNav } from '../../redux-toolkit/clubLoginReducer'
 import ClubProfileStatistics from '../../components/Clubs/ClubProfileStatistics'
 import ClubEditForm from '../../components/Clubs/ClubEditForm'
 import { toast } from 'react-toastify'
+import ClubFooter from '../../components/Clubs/ClubFooter'
 
 
 function ClubDashboard() {
@@ -58,6 +59,7 @@ function ClubDashboard() {
       <div className="container1">
         {edit ? <ClubEditForm state={editMode} clubAuth={club} _id={_id} /> : <ClubProfileStatistics club={clubSpec} clubAuth={club} edit={handleClick} />}
       </div >
+      <ClubFooter/>
     </div>
   )
 }

@@ -8,7 +8,7 @@ function EditForm({ state, _id, playerAuth }) {
   const [mobile, setMobile] = useState('')
   const [age, setAge] = useState('')
   const [position, setPosition] = useState('')
-  const [video,setVideo] = useState('')
+  const [video, setVideo] = useState('')
   const [club, setClub] = useState('')
   const [place, setPlace] = useState('')
 
@@ -36,7 +36,7 @@ function EditForm({ state, _id, playerAuth }) {
   }, [])
   const updateDetails = async () => {
     try {
-      const data = { name, email, mobile, age, position, club, place,video }
+      const data = { name, email, mobile, age, position, club, place, video }
       const response = await axiosPlayersInstance.patch(`/add-details/${_id}`, data,
         { headers: { 'Authorization': `Bearer ${playerAuth.token}` } }
       )
@@ -82,7 +82,7 @@ function EditForm({ state, _id, playerAuth }) {
           onChange={(e) => setPlace(e.target.value)}
           value={place}
         />
-          <label>Video:</label>
+        <label>Video:</label>
         <input
           type="text"
           onChange={(e) => setVideo(e.target.value)}

@@ -8,23 +8,25 @@ import ClubNavbar from "../../components/Clubs/ClubNavbar"
 import Filter from "../../components/Clubs/util/Filter"
 import { toast } from "react-toastify"
 import { useSelector } from "react-redux"
+import ClubFooter from "../../components/Clubs/ClubFooter"
 
 const ClubFindPlayers = () => {
   const [clubs, setClubs] = useState('')
   const [filterObjects, setFilterObjects] = useState('')
-  const club = useSelector((state)=>state.club.clubDetails)
-  
+  const club = useSelector((state) => state.club.clubDetails)
+
 
   useEffect(() => {
     const fetchClubs = async () => {
 
       try {
         const response = await axiosClubsInstance.get("/players"
-           ,{ headers: { 'Authorization': `Bearer ${club.token}` },
-           params:{
-            payment:true,
-            blockStatus:false
-           }
+          , {
+            headers: { 'Authorization': `Bearer ${club.token}` },
+            params: {
+              payment: true,
+              blockStatus: false
+            }
           }
         );
         console.log(response);
@@ -74,7 +76,7 @@ const ClubFindPlayers = () => {
           <PlayerCard player={c} key={c._id} />
         ))}
       </div>}
-
+      <ClubFooter />
 
     </div>
 

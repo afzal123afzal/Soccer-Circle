@@ -1,6 +1,7 @@
 import React from 'react'
 import MainPageNav from '../../components/MainPage/MainPageNav'
 import Cards from '../../components/MainPage/Home/Cards'
+import MainPageFooter from '../../components/MainPage/MainPageFooter'
 
 
 const MainPage = () => {
@@ -8,6 +9,7 @@ const MainPage = () => {
     <div>
         <MainPageNav/>
         <Cards/>
+        <MainPageFooter/>
     </div>
   )
 }

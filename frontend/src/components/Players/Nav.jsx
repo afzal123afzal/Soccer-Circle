@@ -172,15 +172,15 @@ function Nav() {
                                     Dashboard
                                 </Link>
 
-                                <a
+                                {/* <a
                                     href="#"
                                     className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
                                 >
                                     Reports
-                                </a>
+                                </a> */}
                                 {player1 ? (
                                     <>
-                                        <Link className="block px-3 py-2 font-medium " >{player}</Link> <br></br>
+                                        <Link className="block px-3 py-2 font-medium text-cyan-300 " >{player}</Link> <br></br>
                                         <button onClick={handleClick} class="bg-blue-500 hover:bg-blue-300 text-white font-bold py-2 px-3 align-center rounded">
                                             LogOut
                                         </button>

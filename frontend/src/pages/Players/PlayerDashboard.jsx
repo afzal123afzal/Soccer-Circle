@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { nameNav, playerProfile } from '../../redux-toolkit/playerLoginReducer'
 import { toast } from 'react-toastify'
 import Skills from '../../components/Players/util/Skills'
+import PlayerFooter from '../../components/Players/PlayerFooter'
 
 
 const PlayerDashboard = () => {
@@ -65,6 +66,7 @@ const PlayerDashboard = () => {
         }
 
       </div>
+      <PlayerFooter/>
     </div>
   )
 }

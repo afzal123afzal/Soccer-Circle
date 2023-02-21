@@ -6,6 +6,7 @@ import ClubProfileStatistics from '../../components/Players/ClubProfileStatistic
 import { axiosPlayersInstance } from '../../instance/Axios'
 import './ClubDashboard.css'
 import { useSelector } from 'react-redux'
+import PlayerFooter from '../../components/Players/PlayerFooter'
 
 
 
@@ -38,6 +39,7 @@ function ClubDashboard() {
       <Nav />
       <div className='carousel' id="grad1"><span className='name-center'>{club.name}</span></div>
       <ClubProfileStatistics club={club} playerDetails={player} />
+      <PlayerFooter/>
     </div>
   )
 }

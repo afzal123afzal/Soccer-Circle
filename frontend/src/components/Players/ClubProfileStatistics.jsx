@@ -80,7 +80,7 @@ function ProfilePage({ club, playerDetails }) {
             </div>
           </div>
         </div>
-        <footer className="relative  pt-8 pb-6 mt-8">
+        {/* <footer className="relative  pt-8 pb-6 mt-8">
           <div className="container mx-auto px-4">
             <div className="flex flex-wrap items-center md:justify-between justify-center">
               <div className="w-full md:w-6/12 px-4 mx-auto text-center">
@@ -90,7 +90,7 @@ function ProfilePage({ club, playerDetails }) {
               </div>
             </div>
           </div>
-        </footer>
+        </footer> */}
       </section>
 
     </div>

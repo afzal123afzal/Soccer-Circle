@@ -7,6 +7,7 @@ import ClubNavbar from '../../components/Clubs/ClubNavbar'
 import PlayerProfile from '../../components/Clubs/PlayerProfile'
 import { useSelector } from 'react-redux'
 import Skills from '../../components/Players/util/Skills'
+import ClubFooter from '../../components/Clubs/ClubFooter'
 
 
 
@@ -43,6 +44,7 @@ function ClubDashboard() {
             <div className='carousel' id="grad1"><span className='name-center'>{player.name}</span></div>
             <PlayerProfile player={player} />
             { player.video && clubPay.payment && <Skills video={player.video}/>}
+            <ClubFooter/>
         </div>
     )
 }
