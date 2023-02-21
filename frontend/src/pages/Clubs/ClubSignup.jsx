@@ -11,21 +11,32 @@ const ClubSignup = () => {
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [regNo, setRegNo] = useState('')
-  const { signup, error, isLoading ,success} = useClubSignup()
- 
+  const { signup, error, isLoading, success } = useClubSignup()
+
 
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const response = await signup(name, email, mobile, password,confirmPassword, regNo)
-    console.log(response)
+    const response = await signup(name, email, mobile, password, confirmPassword, regNo)
+    if (response === "success") {
+      setName("")
+      setEmail("")
+      setMobile("")
+      setPassword("")
+      setConfirmPassword("")
+      setRegNo("")
+    }
+
+
   }
 
   return (
     <div>
       <ClubNavbar />
-      <form className="signup" onSubmit={handleSubmit}>
-        <h3>Sign Up</h3>
+      <form className="login" onSubmit={handleSubmit}>
+        <h3 className="text-header-signup">Sign Up</h3>
+        {error && <div className="error">{error}</div>}
+        {success && <div className="success">{success}</div>}
 
         <label>Name:</label>
         <input
@@ -64,9 +75,7 @@ const ClubSignup = () => {
           value={regNo}
         />
 
-        <button disabled={isLoading}>Sign up</button>
-        {error && <div className="error">{error}</div>}
-        {success && <div className="success">{success}</div>}
+        <button className="button-signup" disabled={isLoading}>Sign up</button>
       </form>
     </div>
   )

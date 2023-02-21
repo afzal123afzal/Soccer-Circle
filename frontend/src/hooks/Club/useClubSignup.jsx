@@ -36,6 +36,7 @@ export const useClubSignup = () => {
             toast.success("Verification has been sent to your mail!!!")
 
             setIsLoading(false)
+            return "success"
         }
 
     }

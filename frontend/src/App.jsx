@@ -92,7 +92,8 @@ import { persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
 let persistor = persistStore(store);
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import ErrorPage from './pages/Players/ErrorPage';
+import ErrorPage from './pages/MainPage/ErrorPage';
+import MainPage from './pages/MainPage/MainPage'
 
 
 
@@ -104,6 +105,7 @@ function App() {
           <PersistGate persistor={persistor}>
             <BrowserRouter>
               <Routes>
+              <Route path="/" element={<MainPage />} />
                 <Route path="/player/*" element={<PlayerRoutes />} />
                 <Route path="/club/*" element={<ClubRoutes />} />
                 <Route path="/admin/*" element={<AdminRoutes />} />

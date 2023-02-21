@@ -11,8 +11,10 @@ import Home from '../../pages/Clubs/Home';
 import PlayerDashboard from '../../pages/Clubs/PlayerDashboard';
 import CheckoutSuccess from '../../pages/Clubs/CheckoutSuccess';
 import Chat from '../../pages/Clubs/Chat';
-import ErrorPage from '../../pages/Players/ErrorPage';
+import ErrorPage from '../../pages/Clubs/ErrorPage'
 import SignUpVerify from '../../pages/Clubs/SignUpVerify';
+import ForgotPassword from '../../pages/Clubs/ForgotPassword';
+import OtpLoginClub from '../../pages/Clubs/OtpLoginClub';
 
 function ClubRoutes() {
   const clubState = useSelector((state) => state.club)
@@ -50,12 +52,21 @@ function ClubRoutes() {
             element={!club ? <ClubLogin /> : <Navigate to='/club/home' />}
           />
           <Route
+            path="/otp-login"
+            element={!club ? <OtpLoginClub /> : <Navigate to="/club/home" />}
+          />
+          <Route
             path="/signup"
             element={!club ? <ClubSignup /> : <Navigate to="/club/home" />}
           />
           <Route
+            path="/forgot-password"
+            element={!club ? <ForgotPassword /> : <Navigate to="/club/home" />}
+          />
+
+          <Route
             path="/verify/:token"
-            element={<SignUpVerify/> }
+            element={!club ? <SignUpVerify /> : <Navigate to="/club/home" />}
           />
           <Route path="*" element={<ErrorPage />} />
 

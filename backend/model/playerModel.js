@@ -141,9 +141,9 @@ playerSchema.statics.otpLogin = async function (email, otp) {
   if (player.blockStatus) {
     throw Error('You are Blocked')
   }
-  // if (player.isVerified) {
-  //   throw Error('Verify the code sent to your email')
-  // }
+  if (!player.isVerified) {
+    throw Error('Verify the code sent to your email')
+  }
   return player
 
 }

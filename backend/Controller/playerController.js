@@ -403,10 +403,11 @@ const otpLoginGenerator = async (req, res) => {
 const otpLogin = async (req, res) => {
 
   const { email, otp } = req.body
+  console.log(req.body);
 
   try {
     const player = await Player.otpLogin(email, otp)
-    console.log(player.name);
+    console.log(player,"from otp player");
     const name = player.name
     const payment = player.payment
     const _id = player._id
@@ -496,7 +497,7 @@ const verifyOtp = async (req, res) => {
 };
 
 const resetPassword = async (req, res) => {
-  const { email, password,otp } = req.body;
+  const { email, password, otp } = req.body;
 
   try {
     const user = await Player.findOne({ email });

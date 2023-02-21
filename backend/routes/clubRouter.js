@@ -6,14 +6,20 @@ const { signUp,
     getClub,
     editDetails,
     getPlayers,
-    getPlayer,  
+    getPlayer,
     payment,
     createChat,
     userChats,
     findChat,
     addMessage,
     getMessages,
-    verifyToken
+    verifyToken,
+    forgotPassword,
+    verifyOtp,
+    resetPassword,
+    otpLoginGenerator,
+    otpLogin
+    
 } = require('../Controller/clubController')
 
 const requireClubAuth = require('../middleware/requireClubAuth')
@@ -30,34 +36,43 @@ router.post('/login', login)
 // router.use(requireClubAuth)
 
 //////Get all player
-router.get('/players',requireClubAuth, getPlayers)
+router.get('/players', requireClubAuth, getPlayers)
 
 //////Get a specific player
-router.get('/player/:id',requireClubAuth, getPlayer)
+router.get('/player/:id', requireClubAuth, getPlayer)
 
 /////Get All Clubs
 router.get('/', getClubs)
 
 //////Get a club
-router.get('/:id',requireClubAuth, getClub)
+router.get('/:id', requireClubAuth, getClub)
 
 //////Edit Details
-router.patch('/edit-club/:id',requireClubAuth, editDetails)
+router.patch('/edit-club/:id', requireClubAuth, editDetails)
 
 ///////////// Stripe payment
-router.post('/create-checkout-session',requireClubAuth,payment)
+router.post('/create-checkout-session', requireClubAuth, payment)
 
 //////////////// Chat
-router.post('/chat/create-chat',requireClubAuth, createChat);
-router.get('/chat/:userId',requireClubAuth, userChats);
+router.post('/chat/create-chat', requireClubAuth, createChat);
+router.get('/chat/:userId', requireClubAuth, userChats);
 router.get('/chat/find/:firstId/:secondId', findChat);
 
 /////////////// Message
-router.post('/message',requireClubAuth, addMessage);
-router.get('/message/:chatId',requireClubAuth, getMessages);
+router.post('/message', requireClubAuth, addMessage);
+router.get('/message/:chatId', requireClubAuth, getMessages);
+
+//////////////// reset
+router.post('/forgot-password',forgotPassword)
+router.post('/verify-otp',verifyOtp)
+router.post('/reset-password',resetPassword)
+
+//////////// Otp Login
+router.post('/otp-login-generator',otpLoginGenerator)
+router.post('/otp-login',otpLogin)
 
 ////////////verify Email
-router.post('/verify/:token',verifyToken)
+router.post('/verify/:token', verifyToken)
 
 
 

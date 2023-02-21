@@ -22,16 +22,21 @@ form button {
   font-family: "Poppins";
   border-radius: 4px;
   cursor: pointer;
+  justify-content: center;
 }
 
-.text-header-signup{
-  margin-left: 110px;
-  margin-bottom: 20px;
+.button-test{
+    margin-left: 122px;
+    margin-top: 15px;
+}
+.button-test-one{
+    margin-left: 83px;
+    margin-top: 15px;
 }
 
-.button-signup{
-  margin-left: 123px;
-  margin-top: 15px;
+.text-header{
+    margin-left: 60px;
+    margin-bottom: 20px;
 }
 
 div.success {
@@ -60,12 +65,31 @@ input.error {
   border: 1px solid var(--error);
 }
 
-/* auth forms */
-form.signup,
-form.login {
-  max-width: 400px;
+.login-reset1{
+    max-width: 400px;
+  /* margin: 40px auto; */
   margin: 40px auto;
   padding: 20px;
   background: #fff;
   border-radius: 4px;
 }
+
+/* auth forms */
+form.signup,
+form.login-reset {
+  max-width: 400px;
+  /* margin: 40px auto; */
+  margin: 107px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 4px;
+}
+
+form.login-reset-one {
+    max-width: 400px;
+    /* margin: 40px auto; */
+    margin: 38px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 4px;
+  }

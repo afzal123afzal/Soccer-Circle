@@ -8,6 +8,7 @@ import './PlayerDashboard.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { nameNav, playerProfile } from '../../redux-toolkit/playerLoginReducer'
 import { toast } from 'react-toastify'
+import Skills from '../../components/Players/util/Skills'
 
 
 const PlayerDashboard = () => {
@@ -57,7 +58,11 @@ const PlayerDashboard = () => {
       <div className='carousel' id="grad1"><span className='name-center'>{playerSpec.name}</span></div>
       <div className="container1">
         {edit ? <EditForm state={editMode} playerAuth={player} _id={_id} /> :
-          <PlayerProfileStatistics player={playerSpec} playerAuth={player} edit={handleClick} />}
+          <>
+            <PlayerProfileStatistics player={playerSpec} playerAuth={player} edit={handleClick} />
+            <Skills video = {"_uuqsGCiM9I"}/>
+          </>
+        }
 
       </div>
     </div>

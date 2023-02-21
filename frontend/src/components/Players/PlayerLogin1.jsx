@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -9,7 +9,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 ////////////custom hooks from my side
 import { useState } from 'react';
 import { useLogin } from '../../hooks/Player/useLogin'
@@ -21,8 +21,8 @@ function Copyright(props) {
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
             {'Copyright © '}
-            <Link color="inherit" href="https://mui.com/">
-                Your Website
+            <Link color="inherit" href="#">
+                Mohammed Afzal
             </Link>{' '}
             {new Date().getFullYear()}
             {'.'}
@@ -35,6 +35,11 @@ const PlayerLogin1 = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const { login, error, isLoading } = useLogin()
+    const navigate = useNavigate()
+
+    const handleNavigate = ()=>{
+        navigate('/player/otp-login')
+    }
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -62,7 +67,7 @@ const PlayerLogin1 = () => {
                         <LockOutlinedIcon />
                     </Avatar>
                     <Typography component="h1" variant="h5">
-                        Sign in
+                        Player Sign in
                     </Typography>
                     <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
                         {error && <div className="error">{error}</div>}
@@ -97,7 +102,7 @@ const PlayerLogin1 = () => {
                             disabled={isLoading}
                             sx={{ mt: 3, mb: 2 }}
                         >
-                            Sign In
+                            Login
                         </Button>
                         <Grid container>
                             <Grid item xs>
@@ -111,11 +116,23 @@ const PlayerLogin1 = () => {
                                 </Link>
                             </Grid>
                         </Grid>
+                        <Button
+                            // type="submit"
+                            fullWidth
+                            variant="contained"
+                            onClick={handleNavigate}
+                            disabled={isLoading}
+                            sx={{ mt: 3, mb: 2 }}
+                        >
+                            {/* <Link  to="/player/signup" variant="body2"> */}
+                                Login with otp
+                            {/* </Link> */}
+                        </Button>
                     </Box>
                 </Box>
                 <Copyright sx={{ mt: 8, mb: 4 }} />
             </Container>
-        </ThemeProvider>
+        </ThemeProvider >
     )
 }
 

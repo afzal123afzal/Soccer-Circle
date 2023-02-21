@@ -10,7 +10,8 @@ import AdminLogin from '../../pages/Admin/AdminLogin';
 import Clubs from '../../pages/Admin/Clubs';
 import Players from '../../pages/Admin/Players';
 import { useSelector } from 'react-redux';
-import ErrorPage from '../../pages/Players/ErrorPage';
+import ErrorPage from '../../pages/Admin/ErrorPage'
+
 
 
 

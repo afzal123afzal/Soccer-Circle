@@ -17,6 +17,7 @@ const clubSchema = new Schema(
     regNo: { type: String, required: true },
 
     isVerified: { type: Boolean, default: false},
+    otp: { type: String },
 
     blockStatus: { type: Boolean },
     payment: { type: Boolean },
@@ -102,6 +103,35 @@ clubSchema.statics.login = async function (email, password) {
   const match = await bcrypt.compare(password, club.password)
   if (!match) {
     throw Error('Incorrect password')
+  }
+  if (club.blockStatus) {
+    throw Error('You are Blocked')
+  }
+  if (!club.isVerified) {
+    throw Error('Verify the code sent to your email')
+  }
+  return club
+
+}
+
+/////// static Otp login method
+
+clubSchema.statics.otpLogin = async function (email, otp) {
+  if (!email) {
+    throw Error("Please fill the email");
+  }
+  if (!otp) {
+    throw Error("Please fill the otp");
+  }
+
+
+  const club = await this.findOne({ email })
+  console.log(club.otp, otp, "Player Test");
+  if (!club){
+    throw Error('Incorrect email')
+  }
+  if (otp != club.otp) {
+    throw Error('Incorrect otp')
   }
   if (club.blockStatus) {
     throw Error('You are Blocked')

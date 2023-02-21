@@ -14,7 +14,16 @@ const PlayerSignup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    await signup(name, email, mobile, password,confirmPassword)
+    const response = await signup(name, email, mobile, password,confirmPassword)
+    console.log(response);
+    if(response === "success"){
+      setName("")
+      setEmail("")
+      setMobile("")
+      setPassword("")
+      setConfirmPassword("")
+    }
+    
     
   }
 
@@ -22,8 +31,9 @@ const PlayerSignup = () => {
     <div>
       <Nav />
       <form className="login" onSubmit={handleSubmit}>
-        <h3>Signup</h3>
-
+        <h3 className="text-header-signup">Sign Up</h3>
+        {error && <div className="error">{error}</div>}
+        {success && <div className="success">{success}</div>}
         <label>Name:</label>
         <input
           type="text"
@@ -55,9 +65,8 @@ const PlayerSignup = () => {
           value={confirmPassword}
         />
 
-        <button disabled={isLoading}>Sign up</button>
-        {error && <div className="error">{error}</div>}
-        {success && <div className="success">{success}</div>}
+        <button className="button-signup" disabled={isLoading}>Sign up</button>
+       
       </form>
     </div>
   )

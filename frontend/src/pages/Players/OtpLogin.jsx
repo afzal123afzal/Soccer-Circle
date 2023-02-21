@@ -1,12 +1,8 @@
-import React from 'react'
-// import * as React from 'react';
+import React, { useEffect } from 'react'
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-// import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -16,12 +12,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link, useNavigate } from 'react-router-dom';
 ////////////custom hooks from my side
 import { useState } from 'react';
-// import { useLogin } from '../../hooks/Player/useLogin'
-import { useClubLogin } from '../../hooks/Club/useClubLogin';
-import {toast} from 'react-toastify'
-import { useSelector } from 'react-redux';
-
-
+import { useLogin } from '../../hooks/Player/useLogin'
 
 
 
@@ -30,7 +21,7 @@ function Copyright(props) {
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
             {'Copyright © '}
-            <Link color="inherit" href="https://mui.com/">
+            <Link color="inherit" href="#">
                 Mohammed Afzal
             </Link>{' '}
             {new Date().getFullYear()}
@@ -40,17 +31,15 @@ function Copyright(props) {
 }
 const theme = createTheme();
 
-const ClubLoginForm = () => {
+const OtpLogin = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const { login, error, isLoading } = useClubLogin()
-    // const name = useSelector((state)=state.club.navName)
+    const { login, error, isLoading } = useLogin()
     const navigate = useNavigate()
 
     const handleNavigate = ()=>{
-        navigate('/club/otp-login')
+        navigate('/player/signup')
     }
- 
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -60,13 +49,7 @@ const ClubLoginForm = () => {
             email1: data.get('email'),
             password1: data.get('password'),
         }
-        console.log(loginData);
-        const response =await login(loginData.email1, loginData.password1)
-        console.log("data",response);
-        if(response){
-            toast.success(`Welcome ${response} !!!`)
-        }
-
+        await login(loginData.email1, loginData.password1)
     };
     return (
         <ThemeProvider theme={theme}>
@@ -84,7 +67,7 @@ const ClubLoginForm = () => {
                         <LockOutlinedIcon />
                     </Avatar>
                     <Typography component="h1" variant="h5">
-                       Club Sign in
+                        Otp Login
                     </Typography>
                     <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
                         {error && <div className="error">{error}</div>}
@@ -112,27 +95,23 @@ const ClubLoginForm = () => {
                             onChange={(e) => setPassword(e.target.value)}
                             value={password}
                         />
-                        {/* <FormControlLabel
-                            control={<Checkbox value="remember" color="primary" />}
-                            label="Remember me"
-                        /> */}
                         <Button
                             type="submit"
                             fullWidth
                             variant="contained"
-                            // disabled={isLoading}
+                            disabled={isLoading}
                             sx={{ mt: 3, mb: 2 }}
                         >
                             Login
                         </Button>
                         <Grid container>
                             <Grid item xs>
-                                <Link to="/club/forgot-password" variant="body2">
-                                    Forgot password
+                                <Link to="/player/forgot-password" variant="body2">
+                                    {"Forgot Password"}
                                 </Link>
                             </Grid>
                             <Grid item>
-                                <Link to="/club/signup" variant="body2">
+                                <Link to="/player/signup" variant="body2">
                                     {"Don't have an account? Sign Up"}
                                 </Link>
                             </Grid>
@@ -153,8 +132,8 @@ const ClubLoginForm = () => {
                 </Box>
                 <Copyright sx={{ mt: 8, mb: 4 }} />
             </Container>
-        </ThemeProvider>
+        </ThemeProvider >
     )
 }
 
-export default ClubLoginForm
+export default OtpLogin

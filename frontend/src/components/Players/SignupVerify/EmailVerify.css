@@ -19,3 +19,9 @@
 	font-size: 14px;
 	cursor: pointer;
 }
+
+@media only screen and (max-width: 1024px) {
+	.container11{
+		margin-left: 31px;
+	}
+  }

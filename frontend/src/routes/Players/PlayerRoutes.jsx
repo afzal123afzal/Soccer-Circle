@@ -14,6 +14,7 @@ import { useSelector } from 'react-redux'
 import ErrorPage from '../../pages/Players/ErrorPage'
 import SignUpVerify from '../../pages/Players/SignUpVerify'
 import ForgotPassword from '../../pages/Players/ForgotPassword'
+import OtpLoginPlayer from '../../pages/Players/OtpLoginPlayer'
 
 
 
@@ -59,12 +60,16 @@ function PlayerRoutes() {
             element={!player ? <PlayerLogin /> : <Navigate to="/player/home" />}
           />
           <Route
+            path="/otp-login"
+            element={!player ? <OtpLoginPlayer /> : <Navigate to="/player/home" />}
+          />
+          <Route
             path="/forgot-password"
-            element={<ForgotPassword/>}
+            element={!player ? <ForgotPassword /> : <Navigate to='/player/home' />}
           />
           <Route
             path="/verify/:token"
-            element={<SignUpVerify/> }
+            element={!player ? <SignUpVerify /> : <Navigate to='/player/home' />}
           />
           <Route path="*" element={<ErrorPage />} />
 

@@ -46,6 +46,15 @@
     /* For browsers that do not support gradients */
     background-image: linear-gradient(rgb(5, 177, 188), rgb(165, 212, 231));
   }
+
+  @media (max-width: 1024px) {
+
+    .css-1gqtk00{
+      margin-left: 144px !important;
+    }
+
+  }
+
   
   @media (max-width: 560px) {
     .players {

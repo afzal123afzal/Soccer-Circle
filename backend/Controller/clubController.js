@@ -343,6 +343,169 @@ const getMessages = async (req, res) => {
   }
 };
 
+
+/////////// Otp Login generator
+
+const otpLoginGenerator = async (req, res) => {
+  const { email } = req.body;
+  console.log(email);
+  try {
+    // Generate random 6-digit OTP
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+    const user = await Club.findOne({ email });
+    if (!user) {
+      return res.status(404).send({ message: 'User not found' });
+    }
+    // Update user's OTP in the database
+    user.otp = otp;
+    await user.save();
+
+    const mailOptions = {
+      from: process.env.EMAIL,
+      to: email,
+      subject: 'Reset Password',
+      text: `Your OTP to login the account is ${otp}`,
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.error(error);
+        return res.status(500).send({ message: 'Failed to send OTP' });
+      } else {
+        console.log(`OTP sent: ${info.response}`);
+        // return res.status(200).send({ token });
+        return res.status(200).send({ otp });
+      }
+    });
+
+  } catch (err) {
+    return res.status(500).send({ message: 'Failed to send OTP' });
+
+  }
+}
+
+//////////// Otp login
+const otpLogin = async (req, res) => {
+
+  const { email, otp } = req.body
+  console.log(req.body);
+
+  try {
+    const club = await Club.otpLogin(email, otp)
+    console.log(club,"from otp player");
+    const name = club.name
+    const payment = club.pclub
+    const _id = club._id
+    const blockStatus = club.blockStatus
+
+
+    // create a token
+    const token = createToken(club._id)
+    await Club.updateOne({ email }, { $unset: { otp: otp } })
+
+
+    res.status(200).json({ _id, email, name, payment, token, blockStatus })
+  } catch (error) {
+    res.status(404).json({ error: error.message })
+  }
+
+};
+
+
+//////////// Password controller
+
+const forgotPassword = async (req, res) => {
+  const { email } = req.body;
+  console.log(email);
+
+  try {
+    // Generate random 6-digit OTP
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+    const user = await Club.findOne({ email });
+    if (!user) {
+      return res.status(404).send({ message: 'User not found' });
+    }
+    // const token = jwt.sign({ email }, 'secret', { expiresIn: '15m' });
+
+    // Update user's OTP in the database
+    user.otp = otp;
+    await user.save();
+
+
+    const mailOptions = {
+      from: process.env.EMAIL,
+      to: email,
+      subject: 'Soccer Circle Reset Password',
+      text: `Your OTP to reset password is ${otp}`,
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.error(error);
+        return res.status(500).send({ message: 'Failed to send OTP' });
+      } else {
+        console.log(`OTP sent: ${info.response}`);
+        // return res.status(200).send({ token });
+        return res.status(200).json({ otp });
+      }
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: 'Failed to send OTP' });
+  }
+};
+
+const verifyOtp = async (req, res) => {
+  const { email, otp } = req.body;
+  console.log(otp);
+
+  try {
+    // const decoded = jwt.verify(token, 'secret');
+    // if (decoded.email !== email) {
+    //   return res.status(400).send({ message: 'Invalid token' });
+    // }
+    const user = await Club.findOne({ email })
+    console.log(user.otp, otp, "user otp");
+
+    if (otp === user.otp) {
+      console.log("hi");
+      const newToken = jwt.sign({ email }, 'secret', { expiresIn: '15m' });
+      // await Club.updateOne({ email }, { $unset: { otp: otp } })
+      return res.status(200).send({ message: 'OTP verified', token: newToken });
+    } else {
+      return res.status(400).send({ message: 'Invalid OTP' });
+    }
+  } catch (err) {
+    console.error(err);
+    return res.status(400).send({ message: 'Invalid token' });
+  }
+};
+
+const resetPassword = async (req, res) => {
+  const { email, password,otp } = req.body;
+
+  try {
+    const user = await Club.findOne({ email });
+    if (!user) {
+      return res.status(404).send({ message: 'User not found' });
+    }
+    if (!validator.isStrongPassword(password)) {
+      throw Error('Password not strong enough')
+    }
+    const salt = await bcrypt.genSalt(10)
+    const hash = await bcrypt.hash(password, salt)
+
+    user.password = hash;
+    await user.save();
+    await Club.updateOne({ email }, { $unset: { otp: otp } })
+    return res.status(200).send({ message: 'Password reset successful' });
+  } catch (err) {
+    console.error(err);
+    return res.status(400).send({ message: err.message });
+  }
+};
+
+
 module.exports = {
   signUp,
   login,
@@ -357,7 +520,12 @@ module.exports = {
   findChat,
   addMessage,
   getMessages,
-  verifyToken
+  verifyToken,
+  forgotPassword,
+  verifyOtp,
+  resetPassword,
+  otpLoginGenerator,
+  otpLogin
 }
 
 

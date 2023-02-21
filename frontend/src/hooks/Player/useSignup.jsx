@@ -32,6 +32,7 @@ export const useSignup = () => {
                 setSuccess(result.data.message)
                 toast.success("Verification has been sent to your mail!!!")
                 setIsLoading(false)
+                return "success"
             }
 
         }

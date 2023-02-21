@@ -22,6 +22,16 @@ label, input {
     border-radius: 4px;
     cursor: pointer;
   }
+
+  .text-header-signup{
+    margin-left: 110px;
+    margin-bottom: 20px;
+}
+
+.button-signup{
+  margin-left: 123px;
+  margin-top: 15px;
+}
   div.error {
     padding: 10px;
     background: #ffefef;
