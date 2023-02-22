@@ -46,10 +46,19 @@ app.use('/admin', adminRouter)
 app.use('/api/player', playerRouter)
 app.use('/api/club', clubRouter)
 
+// Making Build Folder as Public
+app.use(express.static(path.join(__dirname, '../frontend/build/')));
+
+// for server
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/build/index.html'));
+  });
+  
+
 
 const io = require("socket.io")(server, {
     cors: {
-        origin: "http://127.0.0.1:5173"
+        origin: "https://soccercircle.live"
     },
 });
 
