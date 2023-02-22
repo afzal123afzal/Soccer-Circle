@@ -1,31 +1,3 @@
-// // import './PlayerDetails.css'
-// // date fns
-// // import formatDistanceToNow from 'date-fns/formatDistanceToNow'
-
-// // const ClubDetails = ({ club }) => {
-
-// //   return (
-
-// //     <div className="workout-details">
-// //       <div className="card">
-// //         <div className="card-border-top">
-// //         </div>
-// //         <div className="img">
-// //         </div>
-// //         <span> {club.name}</span>
-// //         <p className="job"> {club.email}</p>
-// //         <button> Connect
-// //         </button>
-// //       </div>
-// //     </div>
-
-
-
-
-// //   )
-
-// // }
-// // export default ClubDetails
 
 import React from 'react';
 import { Card, Button } from 'antd';
@@ -38,17 +10,13 @@ const { Meta } = Card;
 const PlayerCard = ({ player }) => {
 
   const navigate = useNavigate()
-  console.log(player);
   const handleClick = (e) => {
-    console.log(e);
-    console.log(player);
 
     navigate('/club/player', { state: player._id })
   }
 
 
   return (
-    // <Link to= "/user/players" >
     <Card
 
       hoverable

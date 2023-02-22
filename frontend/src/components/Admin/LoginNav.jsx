@@ -1,18 +1,11 @@
 import React, { useState } from "react";
 import { Transition } from "@headlessui/react";
 import { Link } from "react-router-dom";
-import { useLogout } from "../../hooks/Player/useLogout";
-import { useAuthContext } from "../../hooks/Player/useAuthContext";
+
 
 function LoginNav() {
     const [isOpen, setIsOpen] = useState(false);
-    // const { logout } = useLogout()
-    // const { player } = useAuthContext()
 
-    const handleClick = () => {
-        console.log('hi');
-        // logout()
-    }
     return (
         <div>
             <nav className="bg-gray-800">

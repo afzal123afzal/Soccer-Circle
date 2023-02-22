@@ -132,7 +132,6 @@ playerSchema.statics.otpLogin = async function (email, otp) {
 
 
   const player = await this.findOne({ email })
-  console.log(player.otp, otp, "Player Test");
   if (!player) {
     throw Error('Incorrect email')
   }

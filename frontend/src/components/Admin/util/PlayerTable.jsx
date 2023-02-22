@@ -12,14 +12,12 @@ function PlayerTable() {
 
     const getAllPlayers = async () => {
         const response = await axiosAdminInstance.get('/players')
-        console.log(response.data);
         const data = response.data
         setUser(data)
     }
 
     const blockPlayer = async (id) => {
         const response = await axiosAdminInstance.patch(`/player/block/${id}`)
-        console.log(response);
         if (response.status === 200) {
             toast.error(`${response.data.mssg}`)
             getAllPlayers()
@@ -27,7 +25,6 @@ function PlayerTable() {
     }
     const unblockPlayer = async (id) => {
         const response = await axiosAdminInstance.patch(`/player/unblock/${id}`)
-        console.log(response);
         if (response.status === 200) {
             toast.success(`${response.data.mssg}`)
             getAllPlayers()
@@ -35,14 +32,12 @@ function PlayerTable() {
     }
     const deletePlayer = async (id) => {
         const response = await axiosAdminInstance.delete(`/player/${id}`)
-        console.log(response);
         if (response.status === 200) {
             toast.error(`${response.data.mssg}`)
             getAllPlayers()
         }
     }
 
-    console.log(user);
 
     const columns = [
 

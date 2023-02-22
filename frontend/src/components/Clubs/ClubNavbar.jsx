@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { Transition } from "@headlessui/react";
 import { Link } from "react-router-dom";
-// import { useLogout } from "../../hooks/Player/useLogout";
-// import { useAuthContext } from "../../hooks/Player/useAuthContext";
 /////////////////
 import { useDispatch, useSelector } from 'react-redux'
 import { logoutClub } from "../../redux-toolkit/clubLoginReducer";
@@ -11,16 +9,13 @@ import { toast } from "react-toastify";
 
 function ClubNavbar() {
     const [isOpen, setIsOpen] = useState(false);
-    // const { logout } = useLogout()
-    // const { player } = useAuthContext()
+    
     const dispatch = useDispatch()
     const clubState = useSelector((state) => state.club)
     const club = clubState.navName
     const club1 = clubState.clubDetails
-    console.log(club);
 
     const handleClick = () => {
-        console.log('hi');
         dispatch(logoutClub())
         toast.success("Logout Successfully")
         // logout()

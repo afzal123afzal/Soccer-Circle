@@ -5,14 +5,14 @@ import ClubNavbar from '../../components/Clubs/ClubNavbar'
 
 
 function ClubChat() {
-const location = useLocation()
-console.log(location.state);
+  const location = useLocation()
+  console.log(location.state);
 
 
   return (
     <div>
-        <ClubNavbar/>
-        <ChatBoxClub/>
+      <ClubNavbar />
+      <ChatBoxClub />
     </div>
   )
 }

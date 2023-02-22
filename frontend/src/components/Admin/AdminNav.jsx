@@ -19,11 +19,7 @@ function AdminNav() {
     const name = state1.admin.adminDetails.email
     
 
-
-    console.log(state1.admin.adminDetails.email, "state1");
-
     const handleClick = () => {
-        console.log('hi');
         dispatch(logoutAdmin())
         toast.success("Logout Successfully")
         // logout()

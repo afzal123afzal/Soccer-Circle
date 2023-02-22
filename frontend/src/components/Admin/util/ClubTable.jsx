@@ -15,7 +15,6 @@ function ClubTable() {
     }, [])
     const getAllClubs = async () => {
         const response = await axiosAdminInstance.get('/clubs')
-        console.log(response.data);
         const data = response.data
         setUser(data)
     }
@@ -24,7 +23,6 @@ function ClubTable() {
 
     const blockClub = async (id) => {
         const response = await axiosAdminInstance.patch(`/club/block/${id}`)
-        console.log(response);
         if (response.status === 200) {
             dispatch(logoutClub())
             toast.error(`${response.data.mssg}`)
@@ -35,7 +33,6 @@ function ClubTable() {
     }
     const unblockClub = async (id) => {
         const response = await axiosAdminInstance.patch(`/club/unblock/${id}`)
-        console.log(response);
         if (response.status === 200) {
             toast.success(`${response.data.mssg}`)
             getAllClubs()
@@ -43,13 +40,11 @@ function ClubTable() {
     }
     const deleteClub = async (id) => {
         const response = await axiosAdminInstance.delete(`/club/${id}`)
-        console.log(response);
         if (response.status === 200) {
             toast.error(`${response.data.mssg}`)
             getAllClubs()
         }
     }
-    console.log(user);
 
 
     const columns = [

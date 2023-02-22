@@ -1,32 +1,17 @@
 import { Button } from 'antd'
 import React, { useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { useAuthContext } from '../../hooks/Player/useAuthContext'
-// import PayButton from './util/PayButton'
+
 import dp from '../../assets/dp.png'
-import { axiosClubsInstance, axiosPlayersInstance } from '../../instance/Axios'
+import { axiosClubsInstance } from '../../instance/Axios'
 import Subscribe from './util/Subscribe'
 import { useSelector } from 'react-redux'
 
 function PlayerProfile({ player }) {
-
-    //   const { player } = useAuthContext()
-    //   console.log(player.data.payment);
-    // const payment = player.data.payment
-    //   const payment = playerDetail.payment
-    //   const email = player.data.email
-    //   console.log(playerDetail.payment);
-    //  useEffect(() => {
-    //    const response = axiosPlayersInstance.post('/club',{email:email})
-    //    console.log();
-
-
-    //  }, [])
     const clubDet = useSelector((state) => state.club.paymentDetails)
     const clubId = useSelector((state) => state.club.clubDetails._id)
     const clubAuth = useSelector((state) => state.club.clubDetails)
     const payment = clubDet.payment
-    console.log(clubId);
     const navigate = useNavigate()
 
 

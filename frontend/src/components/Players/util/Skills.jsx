@@ -2,7 +2,9 @@ import React from 'react'
 import YouTube from 'react-youtube'
 import './Skills.css'
 
-const Skills = ({video}) => {
+const Skills = ({ video }) => {
+
+    const videoId = video.match(/(?:https?:\/\/)?(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]+)/)[1];
     const opts = {
         height: '390',
         width: '100%',
@@ -12,15 +14,17 @@ const Skills = ({video}) => {
             autoplay: 0,
         }
     }
+    console.log(video, "video link");
 
     return (
         <div>
             <div className="skills  m-5" >
-{/* <h2 className='text-header-youtube text-7xl'>Skills</h2> */}
-                
+                {/* <h2 className='text-header-youtube text-7xl'>Skills</h2> */}
+
                 <>
-                    <YouTube videoId={video} opts={opts} />
+                    <YouTube videoId={videoId} opts={opts} />
                 </>
+
             </div>
         </div>
     )

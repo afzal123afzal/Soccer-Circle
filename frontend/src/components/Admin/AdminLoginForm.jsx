@@ -49,10 +49,7 @@ const AdminLoginForm = () => {
             email1: data.get('email'),
             password1: data.get('password'),
         }
-        console.log(loginData);
       await login(loginData.email1, loginData.password1)
-       
-        console.log("login succesfully");
     };
     return (
         

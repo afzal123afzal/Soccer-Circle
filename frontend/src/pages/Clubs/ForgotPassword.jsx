@@ -5,8 +5,8 @@ import ClubNavbar from "../../components/Clubs/ClubNavbar"
 const ForgotPassword = () => {
   return (
     <div>
-        <ClubNavbar/>
-        <ResetForm/>
+      <ClubNavbar />
+      <ResetForm />
     </div>
   )
 }

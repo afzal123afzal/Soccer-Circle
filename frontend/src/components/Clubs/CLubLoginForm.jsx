@@ -60,9 +60,7 @@ const ClubLoginForm = () => {
             email1: data.get('email'),
             password1: data.get('password'),
         }
-        console.log(loginData);
         const response =await login(loginData.email1, loginData.password1)
-        console.log("data",response);
         if(response){
             toast.success(`Welcome ${response} !!!`)
         }

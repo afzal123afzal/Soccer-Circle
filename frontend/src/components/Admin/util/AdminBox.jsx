@@ -24,7 +24,6 @@ function AdminBox() {
         payment: true
       }
     })
-    console.log(data);
     setPaidPlayersCount(data)
   }
   const getClubs = async () => {

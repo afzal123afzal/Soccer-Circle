@@ -140,7 +140,6 @@ const login = async (req, res) => {
     const name = club.name
     const payment = club.payment
     const blockStatus = club.blockStatus
-    console.log(payment, "payment");
 
     // create a token
     const token = createToken(club._id)
@@ -166,9 +165,9 @@ const getClubs = async (req, res) => {
 //////////// get a specific club
 
 const getClub = async (req, res) => {
-  const id = req.params.id
+  // const id = req.params.id
+  const id = req.club.id
   try {
-    console.log("hi");
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return res.status(400).json({ error: 'Invalid Club Id' })
@@ -187,15 +186,14 @@ const getClub = async (req, res) => {
 
 ///////////Edit Club Details
 const editDetails = async (req, res) => {
-  const id = req.params.id
+  // const id = req.params.id
+  const id = req.club.id
   try {
-    // console.log("hi");
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return res.status(400).json({ error: 'Invalid Club Id' })
     }
     const club = await Club.findByIdAndUpdate({ _id: id }, { ...req.body }).select('-password -mobile -regNo ')
-    console.log(club.payment);
     res.status(200).json(club)
   }
   catch (error) {
@@ -209,7 +207,6 @@ const getPlayers = async (req, res) => {
   console.log(req.query); ////// this technique I used it for filter
   try {
     const player = await Player.find({ ...req.query }, { password: 0 }).sort({ createdAt: -1 });
-    console.log(player,"Player");
     if (!player) {
       return res.status(400).json({ mssg: "No Players" });
      }
@@ -245,7 +242,6 @@ const getPlayer = async (req, res) => {
 ////////////////stripe payment
 
 const payment = async (req, res) => {
-  console.log(req.body);
   const email = req.body.email
   const session = await stripe.checkout.sessions.create({
     line_items: [
@@ -348,7 +344,6 @@ const getMessages = async (req, res) => {
 
 const otpLoginGenerator = async (req, res) => {
   const { email } = req.body;
-  console.log(email);
   try {
     // Generate random 6-digit OTP
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
@@ -388,11 +383,9 @@ const otpLoginGenerator = async (req, res) => {
 const otpLogin = async (req, res) => {
 
   const { email, otp } = req.body
-  console.log(req.body);
 
   try {
     const club = await Club.otpLogin(email, otp)
-    console.log(club,"from otp player");
     const name = club.name
     const payment = club.pclub
     const _id = club._id
@@ -416,7 +409,6 @@ const otpLogin = async (req, res) => {
 
 const forgotPassword = async (req, res) => {
   const { email } = req.body;
-  console.log(email);
 
   try {
     // Generate random 6-digit OTP
@@ -457,7 +449,6 @@ const forgotPassword = async (req, res) => {
 
 const verifyOtp = async (req, res) => {
   const { email, otp } = req.body;
-  console.log(otp);
 
   try {
     // const decoded = jwt.verify(token, 'secret');
@@ -465,10 +456,8 @@ const verifyOtp = async (req, res) => {
     //   return res.status(400).send({ message: 'Invalid token' });
     // }
     const user = await Club.findOne({ email })
-    console.log(user.otp, otp, "user otp");
 
     if (otp === user.otp) {
-      console.log("hi");
       const newToken = jwt.sign({ email }, 'secret', { expiresIn: '15m' });
       // await Club.updateOne({ email }, { $unset: { otp: otp } })
       return res.status(200).send({ message: 'OTP verified', token: newToken });

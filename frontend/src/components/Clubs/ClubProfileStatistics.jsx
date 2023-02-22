@@ -15,8 +15,6 @@ function ClubProfileStatistics(props) {
   const club = props.club
   const clubAuth = props.clubAuth
   const _id = club._id
-  console.log(club.image);
-  // const image = club.image
 
 
   useEffect(() => {
@@ -31,12 +29,12 @@ function ClubProfileStatistics(props) {
       const response = await axios.post('https://api.cloudinary.com/v1_1/des6t3rkt/image/upload',
         formData
       )
-      console.log(response.data.url);
-      // setUrl(response.data.url)
+      // console.log(response.data.url);
+      setUrl(response.data.url)
 
       if (response.status === 200) {
         const imageUrl = response.data.url
-        console.log(imageUrl);
+        // console.log(imageUrl);
 
         const profile = await axiosClubsInstance.patch(`/edit-club/${_id}`, { image: imageUrl },
           { headers: { 'Authorization': `Bearer ${clubAuth.token}` } }
@@ -46,7 +44,7 @@ function ClubProfileStatistics(props) {
         }
         // const image = profile.data[0].image
         // setProfile()
-        console.log(profile);
+        // console.log(profile);
         setProfile()
 
 
@@ -63,7 +61,7 @@ function ClubProfileStatistics(props) {
     const response = await axiosClubsInstance.get(`${_id}`,
       { headers: { 'Authorization': `Bearer ${clubAuth.token}` } }
     )
-    console.log(response.data.image);
+    // console.log(response.data.image);
     const image = response.data.image
     setUrl(image)
 

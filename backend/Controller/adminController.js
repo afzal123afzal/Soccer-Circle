@@ -31,7 +31,7 @@ const login = async (req, res) => {
 const getAllPlayers = async (req, res) => {
     try {
         const players = await Player.find({}, { password: 0 }).sort({ createdAt: -1 });
-        console.log(players, "hello");
+
         res.status(200).json(players)
     } catch (err) {
         res.status(400).json({ error: err.message })
@@ -42,7 +42,6 @@ const getAllPlayers = async (req, res) => {
 const getAllPlayersCount = async (req, res) => {
     try {
         const players = await Player.find({...req.query}, { password: 0 }).count();
-        console.log(players, "hello");
         res.status(200).json(players)
     } catch (err) {
         res.status(400).json({ error: err.message })

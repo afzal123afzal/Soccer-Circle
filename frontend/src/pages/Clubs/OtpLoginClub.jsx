@@ -5,8 +5,8 @@ import OtpGenerator from '../../components/Clubs/Otp/OtpGenerator'
 const OtpLoginClub = () => {
   return (
     <div>
-        <ClubNavbar/>
-        <OtpGenerator/>
+      <ClubNavbar />
+      <OtpGenerator />
     </div>
   )
 }

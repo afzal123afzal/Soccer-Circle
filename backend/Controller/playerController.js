@@ -140,7 +140,6 @@ const login = async (req, res) => {
 
   try {
     const player = await Player.login(email, password)
-    console.log(player.name);
     const name = player.name
     const payment = player.payment
     const blockStatus = player.blockStatus
@@ -148,7 +147,6 @@ const login = async (req, res) => {
 
     // create a token
     const token = createToken(player._id)
-    console.log(token);
 
     res.status(200).json({ _id, email, name, payment, token, blockStatus })
   } catch (error) {
@@ -162,10 +160,9 @@ const login = async (req, res) => {
 ///////// add more details
 
 const addDetails = async (req, res) => {
-  const id = req.params.id;
+  // const id = req.params.id;
+  const id = req.player.id;
   const body = req.body
-  console.log(body);
-
 
   try {
     if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -173,7 +170,6 @@ const addDetails = async (req, res) => {
     }
     const player = await Player.findByIdAndUpdate({ _id: id }, { ...req.body });
     // const player = await Player.updateOne({ email:email }, { ...req.body });
-    console.log('hello');
     if (!player) {
       return res.status(200).json({ mssg: "Player Not Found" });
     }
@@ -200,9 +196,9 @@ const getPlayers = async (req, res) => {
 //////////// get a specific player
 
 const getPlayer = async (req, res) => {
-  console.log(req.body);
   const email = req.body.email
-  const id = req.params.id;
+  // const id = req.params.id;
+  const id = req.player.id
   try {
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return res.status(400).json({ error: 'Invalid Club Id' })
@@ -228,7 +224,6 @@ const getClubs = async (req, res) => {
     if (!players) {
       return res.status(400).json({ mssg: "No Clubs" });
     }
-    console.log("get all clubs from player side");
     res.status(200).json(players);
   } catch (error) {
     res.status(404).json({ mssg: error.message });
@@ -238,9 +233,7 @@ const getClubs = async (req, res) => {
 
 const getClub = async (req, res) => {
   const id = req.params.id;
-  console.log(req.body);
   try {
-    console.log("hi");
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return res.status(400).json({ error: "Invalid Club Id" });
@@ -261,7 +254,6 @@ const getClub = async (req, res) => {
 ////////////////stripe payment
 
 const payment = async (req, res) => {
-  console.log(req.body);
   const email = req.body.email
   const session = await stripe.checkout.sessions.create({
     line_items: [
@@ -363,7 +355,6 @@ const getMessages = async (req, res) => {
 
 const otpLoginGenerator = async (req, res) => {
   const { email } = req.body;
-  console.log(email);
   try {
     // Generate random 6-digit OTP
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
@@ -403,11 +394,9 @@ const otpLoginGenerator = async (req, res) => {
 const otpLogin = async (req, res) => {
 
   const { email, otp } = req.body
-  console.log(req.body);
 
   try {
     const player = await Player.otpLogin(email, otp)
-    console.log(player,"from otp player");
     const name = player.name
     const payment = player.payment
     const _id = player._id
@@ -431,7 +420,6 @@ const otpLogin = async (req, res) => {
 
 const forgotPassword = async (req, res) => {
   const { email } = req.body;
-  console.log(email);
 
   try {
     // Generate random 6-digit OTP
@@ -472,7 +460,7 @@ const forgotPassword = async (req, res) => {
 
 const verifyOtp = async (req, res) => {
   const { email, otp } = req.body;
-  console.log(otp);
+
 
   try {
     // const decoded = jwt.verify(token, 'secret');
@@ -480,10 +468,8 @@ const verifyOtp = async (req, res) => {
     //   return res.status(400).send({ message: 'Invalid token' });
     // }
     const user = await Player.findOne({ email })
-    console.log(user.otp, otp, "user otp");
 
     if (otp === user.otp) {
-      console.log("hi");
       const newToken = jwt.sign({ email }, 'secret', { expiresIn: '15m' });
       // await Player.updateOne({ email }, { $unset: { otp: otp } })
       return res.status(200).send({ message: 'OTP verified', token: newToken });

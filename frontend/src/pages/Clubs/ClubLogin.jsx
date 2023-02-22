@@ -5,8 +5,8 @@ import ClubNavbar from '../../components/Clubs/ClubNavbar'
 function ClubLogin() {
   return (
     <div>
-      <ClubNavbar/>
-      <ClubLoginForm/>
+      <ClubNavbar />
+      <ClubLoginForm />
     </div>
   )
 }

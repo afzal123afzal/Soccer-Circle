@@ -31,7 +31,6 @@ export default function Filter(props) {
             club: currentClub,
             payment:true
         }
-        console.log(data);
         props.filter(data)
     }
 

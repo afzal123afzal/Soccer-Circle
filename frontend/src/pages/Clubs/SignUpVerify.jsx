@@ -4,7 +4,7 @@ import EmailVerify from '../../components/Clubs/SignupVerify/EmailVerify'
 const SignUpVerify = () => {
   return (
     <div>
-        <EmailVerify/>
+      <EmailVerify />
     </div>
   )
 }

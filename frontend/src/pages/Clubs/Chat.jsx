@@ -76,7 +76,7 @@ const Chat = () => {
   return (
     <>
       <div class="chat-wrapper">
-      <ClubNavbar />
+        <ClubNavbar />
         <div className="Chat">
           {/* Left Side */}
           <div className="Left-side-chat">

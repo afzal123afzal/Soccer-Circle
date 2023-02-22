@@ -126,7 +126,6 @@ clubSchema.statics.otpLogin = async function (email, otp) {
 
 
   const club = await this.findOne({ email })
-  console.log(club.otp, otp, "Player Test");
   if (!club){
     throw Error('Incorrect email')
   }

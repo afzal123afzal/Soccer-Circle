@@ -25,7 +25,6 @@ function ClubDashboard() {
                 const response = await axiosClubsInstance.get(`/player/${playerDetail}`,
                 { headers: { 'Authorization': `Bearer ${club.token}` }}
                 )
-                console.log(response);
                 if (response.status === 200) {
                     setPlayer(response.data)
                 }

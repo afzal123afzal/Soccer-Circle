@@ -32,99 +32,101 @@
 
 
 .Chat {
-    position: relative;
-    display: grid;
-    grid-template-columns: 22% auto;
-    gap: 1rem;
-    margin-left: 15px;
-    margin-top: 10px;
-  }
-  
-  .Left-side-chat {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-  
-  .Chat-container {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    /* background: var(--cardColor); */
-    background: rgba(255, 255, 255, 0.64);
-    border-radius: 1rem;
-    padding: 1rem;
-    height: auto;
-    min-height: 80vh;
-    overflow: scroll;
-  }
-  
-  .Chat-list {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-  
-  .Right-side-chat {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-  .conversation:hover {
-    background: #80808038;
-    cursor: pointer;
-  }
-  
-  .conversation {
-    border-radius: 0.5rem;
-    padding: 10px;
-  }
-  
-  .conversation > div > {
-    position: relative;
-  }
-  
-  .online-dot {
-    background-color: greenyellow;
-    border-radius: 50%;
-    position: absolute;
-    left: 2rem;
-    width: 1rem;
-    height: 1rem;
-  }
-  
-  
-  .chatbox-empty-message {
-    display: flex;
-    align-self: center;
-    justify-content: center;
-    font-size: 20px;
-  }
-
-  .follower{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  position: relative;
+  display: grid;
+  grid-template-columns: 22% auto;
+  gap: 1rem;
+  margin-left: 15px;
+  margin-top: 10px;
 }
 
-.follower>div{
-    display: flex;
-    gap: 10px;
+.Left-side-chat {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
-.followerImage{
+.Chat-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  /* background: var(--cardColor); */
+  background: rgba(255, 255, 255, 0.64);
+  border-radius: 1rem;
+  padding: 1rem;
+  height: auto;
+  min-height: 80vh;
+  overflow: scroll;
+}
+
+.Chat-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.Right-side-chat {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.conversation:hover {
+  background: #80808038;
+  cursor: pointer;
+}
+
+.conversation {
+  border-radius: 0.5rem;
+  padding: 10px;
+}
+
+.conversation>div> {
+  position: relative;
+}
+
+.online-dot {
+  background-color: greenyellow;
+  border-radius: 50%;
+  position: absolute;
+  left: 2rem;
+  width: 1rem;
+  height: 1rem;
+}
+
+
+.chatbox-empty-message {
+  display: flex;
+  align-self: center;
+  justify-content: center;
+  font-size: 20px;
+}
+
+.follower {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.follower>div {
+  display: flex;
+  gap: 10px;
+}
+
+.followerImage {
   width: 3.2rem;
   height: 3.2rem;
   border-radius: 50%;
 }
-.name{
+
+.name {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
 }
 
-.name>span:nth-of-type(1){
+.name>span:nth-of-type(1) {
   font-weight: bold;
 }
 
@@ -134,46 +136,52 @@
   align-self: center;
   cursor: pointer;
 } */
-  
-  
-  @media screen and (max-width: 768px) {
-   .Chat {
-      grid-template-columns: 16% auto;
-    }
-     .follower.conversation>div>.name{
-      display: none;
-     }
-     .Right-side-chat {
-      max-width: 100%;
-      /* overflow: hidden; */
-      overflow-y: scroll;
-    }
-    /* .chat-wrapper .Chat{ */
-      /* overflow-y: scroll; */
-      /* overflow-x: scroll; */
-    /* } */
-    .react-input-emoji--input {
-      max-width: 100%;
-      width:3.5rem
+
+
+@media screen and (max-width: 768px) {
+  .Chat {
+    grid-template-columns: 16% auto;
+  }
+
+  .follower.conversation>div>.name {
+    display: none;
+  }
+
+  .Right-side-chat {
+    max-width: 100%;
+    /* overflow: hidden; */
+    overflow-y: scroll;
+  }
+
+  /* .chat-wrapper .Chat{ */
+  /* overflow-y: scroll; */
+  /* overflow-x: scroll; */
+  /* } */
+  .react-input-emoji--input {
+    max-width: 100%;
+    width: 3.5rem
       /* word-break: break-word; */
-   }
-   .own{
-    word-break: break-word;
-   }
-   .message{
+  }
+
+  .own {
     word-break: break-word;
   }
-   .chat-sender>div {
+
+  .message {
+    word-break: break-word;
+  }
+
+  .chat-sender>div {
     height: 70%;
     padding: 0px 5px 0px 7px !important;
+  }
+
+
 }
 
-   
+@media screen and (max-width: 380px) {
+  .chat-sender>div {
+    height: 70%;
+    padding: 0px 5px 0px 7px !important;
   }
-
-  @media screen and (max-width: 380px) {
-    .chat-sender>div {
-      height: 70%;
-      padding: 0px 5px 0px 7px !important;
-  }
-  }
+}
